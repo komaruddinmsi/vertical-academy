@@ -1,19 +1,19 @@
 /* Layout: header bar + single column (max 1080px); TP page = status ladder on top, three phase lanes of stage tiles, viewer below. */
 :root{
   --bg:#f3f5f9; --surface:#ffffff; --line:#d9dfea; --fg:#18202f; --muted:#5b6578;
-  --accent:#2445c9; --accent-soft:#e3e8fb; --gate:#b4400f; --gate-soft:#fbe9df;
-  --s0:#c9cfda; --s1:#7d8fb3; --s2:#d39b1c; --s3:#1b9a8f; --s4:#3f8f3a; --s5:#17643a;
+  --accent:#0b38a0; --accent-soft:#e2e9f8; --teal:#00a89f; --gate:#b4400f; --gate-soft:#fbe9df;
+  --s0:#c9cfda; --s1:#7d8fb3; --s2:#d39b1c; --s3:#00a89f; --s4:#3f8f3a; --s5:#17643a;
   --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --body:"Source Sans 3", "Segoe UI", system-ui, sans-serif;
   --mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#10141d; --surface:#181e2a; --line:#2b3446; --fg:#e6eaf2; --muted:#9aa4b8;
-  --accent:#7d97ff; --accent-soft:#222c4d; --gate:#f08a57; --gate-soft:#3a2418;
+  --accent:#7f9cff; --accent-soft:#1f2a4a; --teal:#2fc4b9; --gate:#f08a57; --gate-soft:#3a2418;
   --s0:#3a4252; --s1:#7486ad; --s2:#e0aa31; --s3:#2fb7aa; --s4:#5cb256; --s5:#3fae6c; color-scheme:dark }}
 :root[data-theme="dark"]{
   --bg:#10141d; --surface:#181e2a; --line:#2b3446; --fg:#e6eaf2; --muted:#9aa4b8;
-  --accent:#7d97ff; --accent-soft:#222c4d; --gate:#f08a57; --gate-soft:#3a2418;
+  --accent:#7f9cff; --accent-soft:#1f2a4a; --teal:#2fc4b9; --gate:#f08a57; --gate-soft:#3a2418;
   --s0:#3a4252; --s1:#7486ad; --s2:#e0aa31; --s3:#2fb7aa; --s4:#5cb256; --s5:#3fae6c; color-scheme:dark }
 
 *{box-sizing:border-box}
@@ -27,8 +27,8 @@ h1{font-size:clamp(1.6rem,4vw,2.3rem)} h2{font-size:1.3rem} h3{font-size:1.05rem
 
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
 .bar-in{max-width:1080px;margin:0 auto;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.brand{font:700 1.2rem var(--display);color:var(--fg);text-decoration:none}
-.brand span{color:var(--accent);margin-left:4px}
+.brand{display:block;line-height:0}
+.brand img{height:44px;width:auto;max-width:60vw}
 .nav{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
 .nav a{color:var(--muted);text-decoration:none;font-weight:600}
 .nav a.on{color:var(--fg)}
@@ -71,7 +71,7 @@ input[type=number],select{font:inherit;padding:7px 10px;border:1px solid var(--l
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;text-decoration:none;color:var(--fg);display:grid;gap:10px}
 .card:hover{border-color:var(--accent)}
 .meter{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
-.meter i{display:block;height:100%;background:var(--s5)}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--teal))}
 .layer{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
 
 /* Phase lanes */
