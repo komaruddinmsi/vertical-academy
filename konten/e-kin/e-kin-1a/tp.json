@@ -1,0 +1,13 @@
+{
+  "kode": "E.KIN.1a",
+  "judul": "Grafik s–t dan v–t",
+  "teks": "Menafsirkan grafik s–t dan v–t untuk menentukan kecepatan, perpindahan, dan percepatan.",
+  "bloom": "C3",
+  "urutan_ajar": 5,
+  "prasyarat": [
+    "E.KIN.1-pra",
+    "M.4",
+    "M.5"
+  ],
+  "ambang": 75
+}
