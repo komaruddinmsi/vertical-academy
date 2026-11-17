@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tes Topik Fisika — Usaha & Energi</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+  --bingkai:#D7E6E8; --aturanTebal:#8A6604;
+}
+*{box-sizing:border-box;}
+body{margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:140px; line-height:1.55;}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;}
+.kepala::before,.kepala::after{content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:640px; position:relative;}
+.kepala .takaran{margin-top:10px; font-size:12.5px; position:relative; display:flex; gap:8px; flex-wrap:wrap;}
+.kepala .takaran span{background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.35);
+  border-radius:999px; padding:3px 11px;}
+.kartu{background:#fff; border:1px solid var(--bingkai); border-radius:14px; padding:18px 20px; margin:18px 0;}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+.aturan{background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.aturan strong{color:var(--aturanTebal);}
+.aturan ol,.aturan ul{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+.sah{background:var(--toscaB); border-left:6px solid var(--tosca2); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.sah strong{color:var(--tosca0);}
+.sah ul{margin:6px 0 0; padding-left:20px;}
+.sah li{margin:4px 0;}
+.soal{border:1px solid #E1EBEC; border-radius:12px; margin:14px 0; overflow:hidden; background:#fff;}
+.soal-kep{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:9px 14px;
+  font-size:13.5px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.soal-kep .bentuk{font-weight:400; color:var(--abu);}
+.soal.terisi .soal-kep{background:var(--tosca2); color:#fff;}
+.soal.terisi .soal-kep .bentuk{color:rgba(255,255,255,0.85);}
+.soal.ragu .soal-kep{background:var(--kuning); color:var(--tinta);}
+.soal.ragu .soal-kep .bentuk{color:var(--tinta);}
+.soal.tandaKosong{outline:2px solid var(--oranye); outline-offset:-2px;}
+.soal-isi{padding:14px 16px;}
+.naskah{background:var(--abuB); border-left:4px solid var(--tosca2); border-radius:8px;
+  padding:12px 14px; font-size:14px; margin-bottom:10px;}
+.perintah{font-weight:600; font-size:14px; margin-bottom:10px;}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:-4px 0 12px;}
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;}
+.isi-item input[type=text]:not(:placeholder-shown){border-color:var(--tosca2);}
+.isi-item.kosong input, .isi-item.kosong select{border-color:var(--oranye); background:#FFF7F1;}
+.raguwrap{border-top:1px dashed var(--bingkai); margin-top:10px; padding-top:10px; font-size:13px; color:var(--oranye);}
+.raguwrap input{margin-right:6px;}
+.bilah-bawah{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid var(--bingkai);
+  box-shadow:0 -4px 18px rgba(7,59,68,0.08); padding:10px 0 14px; z-index:50;}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg, var(--tosca2), var(--kuning)); transition:width 0.25s;}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button{cursor:pointer; font-family:inherit;}
+.btn{background:var(--tosca); color:#fff; border:none; border-radius:9px; padding:9px 18px;
+  font-size:13.5px; font-weight:600;}
+.btn:hover{background:var(--tosca0);}
+.btn:disabled{opacity:.5; cursor:not-allowed;}
+.btn.sekunder{background:var(--toscaB); color:var(--tosca0);}
+.btn.selesai{background:var(--oranye);}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%; min-height:16px;}
+.pesan.awas{color:var(--merah); font-weight:700;}
+.kaki{text-align:center; font-size:12px; color:var(--abu); padding:18px 16px 8px;}
+@media (max-width:640px){
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+  body{padding-bottom:160px;}
+}
+@media (max-width:360px){
+  .wrap{padding:0 10px;}
+  .soal-isi{padding:12px 10px;}
+}
+
+.kartu.waktu{border-left:5px solid var(--tosca);}
+.kartu.waktu .baris{display:flex; gap:10px; align-items:end; flex-wrap:wrap; margin-top:8px;}
+.kartu.waktu label{font-size:12px; color:var(--abu); display:block; margin-bottom:3px;}
+.kartu.waktu input{width:110px; padding:8px 10px; border:1px solid var(--bingkai); border-radius:8px; font-size:14px;}
+.kartu.waktu .catatan{font-size:12px; color:var(--abu); margin-top:8px;}
+#tirai{background:var(--merahB); color:var(--merah); border:1px solid #F0B9B9; border-radius:12px;
+  padding:14px 16px; margin:18px 0; font-weight:600;}
+#hasil{background:#fff; border:1px solid var(--bingkai); border-radius:14px; padding:20px; margin:18px 0;}
+#hasil .skor-besar{font-size:48px; font-weight:800; color:var(--tosca0); line-height:1;}
+#hasil .skor-ket{color:var(--abu); font-size:13px; margin:4px 0 14px;}
+#hasil table{width:100%; border-collapse:collapse; font-size:13px;}
+#hasil th,#hasil td{padding:7px 8px; border-bottom:1px solid var(--bingkai); text-align:left;}
+#hasil th{background:var(--toscaB); color:var(--tosca0);}
+#hasil .catatan-hasil{margin-top:12px; font-size:13px; color:var(--tosca0); background:var(--toscaB);
+  border-radius:8px; padding:10px 12px;}
+#navpanel{max-height:46vh; overflow-y:auto; padding:12px 16px; border-bottom:1px solid var(--bingkai); background:#fff;}
+#navpanel .kisinum{display:grid; grid-template-columns:repeat(auto-fill,minmax(42px,1fr)); gap:8px;}
+.navnum{background:var(--abuB); color:var(--tosca0); border:1.5px solid var(--bingkai); border-radius:8px;
+  padding:8px 0; font-size:13px; font-weight:700;}
+.navnum.isi{background:var(--tosca2); color:#fff; border-color:var(--tosca2);}
+.navnum.ragu{background:var(--kuning); color:var(--tinta); border-color:var(--kuning);}
+#navpanel .legenda{display:flex; gap:14px; flex-wrap:wrap; margin-top:10px; font-size:11px; color:var(--abu);}
+#navpanel .legenda span{display:inline-flex; align-items:center; gap:5px;}
+#navpanel .kotak{width:12px; height:12px; border-radius:3px; display:inline-block;}
+#jam{font-variant-numeric:tabular-nums; font-weight:800; font-size:17px; color:var(--tosca0);
+  min-width:64px; text-align:center;}
+#jam.sedikit{color:var(--oranye);}
+#jam.habis{color:var(--merah);}
+.terkunci{opacity:.72;}
+@media (max-width:640px){
+  #hasil table, #hasil thead, #hasil tbody, #hasil th, #hasil td, #hasil tr{display:block;}
+  #hasil thead{display:none;}
+  #hasil tr{margin-bottom:8px; border:1px solid var(--bingkai); border-radius:8px; padding:6px;}
+}
+</style>
+</head>
+<body>
+<div class="kepala"><div class="wrap"><div class="baris-kecil">Fisika &middot; Kelas XI &middot; Usaha &amp; Energi</div><h1>Tes Topik &mdash; Usaha dan Energi</h1><div class="penjelas">Dua belas soal yang mencakup seluruh topik ini: usaha, energi gerak dan energi posisi, jalur licin dan jalur kasar, serta rancangan jalur berlapis. Ceritanya datang dari pekerjaan konstruksi dan pertanian.</div><div class="takaran"><span>12 soal</span><span>60 menit</span><span>satu kali duduk</span><span>tanpa kalkulator</span><span>tanpa catatan</span></div></div></div>
+<div class="wrap">
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 17-11-2026"></div>
+</div>
+<section class="kartu waktu" id="setup">
+  <b>Waktu pengerjaan</b>
+  <div class="baris">
+    <div><label for="menit">Lama pengerjaan (menit)</label><input type="text" id="menit" inputmode="numeric" value="60"></div>
+    <button type="button" class="btn" id="btn_mulai">Mulai mengerjakan</button>
+  </div>
+  <p class="catatan">Isi lama pengerjaan sesuai arahan gurumu, lalu tekan Mulai. Waktu berjalan sejak tombol ini ditekan,
+  dan soalnya baru terbuka setelah itu.</p>
+  <input type="hidden" id="tenggat" value="">
+  <input type="hidden" id="rincian" value="">
+</section>
+<div class="aturan">
+  <strong>Cara mengisi</strong>
+  <ol>
+    <li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li>
+    <li>Tulis angkanya saja, tanpa satuan &mdash; satuannya sudah tercetak di sebelah kotak.</li>
+    <li>Kalau jawabannya nol, tulis <b>0</b>; jangan dikosongkan.</li>
+    <li>Pakai g = 10 m/s&sup2; pada seluruh soal. Nilai sinus dan kosinus yang kamu perlukan sudah tertulis di dalam soalnya.</li>
+    <li>Kotak <b>Tandai ragu-ragu</b> hanya penanda untuk dirimu sendiri dan tidak dinilai.</li>
+    <li>Tombol <b>Periksa kelengkapan</b> menandai kotak yang masih kosong &mdash; bukan benar atau salahnya.</li>
+    <li>Hitung mundur berjalan sejak tombol <b>Mulai mengerjakan</b> ditekan. Sisa waktu tampil di bilah bawah, dan lembar ini <b>terkunci sendiri</b> ketika waktunya habis.</li><li>Tombol <b>Nomor soal</b> membuka peta nomor supaya kamu cepat berpindah soal.</li>
+  </ol>
+</div>
+<div class="sah">
+  <strong>Pekerjaan ini sah bila</strong>
+  <ul>
+    <li>kamu mengerjakannya dalam <b>satu kali duduk</b>, tanpa jeda, dari tombol Mulai sampai tombol Selesai;</li>
+    <li>kamu tidak membuka modul, catatan, berkas lain, atau internet selama mengerjakan;</li>
+    <li>kamu tidak memakai kalkulator &mdash; seluruh angka yang kamu perlukan sudah ada di dalam soal;</li>
+    <li>kamu mengerjakannya sendiri, tanpa bantuan siapa pun;</li>
+    <li>seluruh dua belas soal kamu jawab sebelum kamu menekan Selesai.</li>
+  </ul>
+  <p style="margin:8px 0 0">Bila salah satu syarat di atas tidak terpenuhi, beri tahu gurumu sebelum kamu
+  mengumpulkan. Pekerjaan yang diulang dengan syarat yang benar lebih berguna daripada angka yang tidak bisa dibaca.</p>
+</div>
+<div id="soal" hidden>
+<div id="tirai" hidden></div>
+<section id="hasil" hidden>
+  <div class="skor-besar" id="skorBesar">0</div>
+  <p class="skor-ket" id="skorKet">dari 100 &middot; 0 dari 12 soal terjawab penuh</p>
+  <table><thead><tr><th>Bagian</th><th>Perolehan</th><th>Persentase</th></tr></thead><tbody id="tblRincianIsi"></tbody></table>
+  <p class="catatan-hasil">Angka di atas adalah hasil mentah pekerjaanmu. Gurumu yang membacanya bersama
+  catatan kelas; jangan menyimpulkan apa pun sendiri dari angka ini.</p>
+</section>
+<article class="soal" id="kartu-b01"><div class="soal-kep"><span>Soal 1</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Di lokasi proyek, seorang pekerja menarik gerobak pasir dengan tali yang menyerong 37&deg; terhadap lantai kerja. Gaya tarik pada tali 65 N, dan gerobak berpindah 15 m mendatar. (sin&nbsp;37&deg; = 0,6; cos&nbsp;37&deg; = 0,8) Gerobak itu bernomor lambung 12.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b01m1">Usaha gaya tali sepanjang 15 m <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b01m1"></div><div class="isi-item"><label for="b01m2">Komponen gaya tali yang tegak lurus arah perpindahan</label><select id="b01m2"><option value="">&mdash; pilih &mdash;</option><option value="A">A. ikut menyumbang usaha sebesar F sin&nbsp;37&deg; &times; s</option><option value="B">B. tidak menyumbang usaha sama sekali</option><option value="C">C. menyumbang usaha, tetapi bernilai negatif</option><option value="D">D. menyumbang usaha hanya bila gerobaknya berat</option></select></div></div><div class="raguwrap"><label for="ragu-b01"><input type="checkbox" id="ragu-b01"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b02"><div class="soal-kep"><span>Soal 2</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Mulut silo gabah berada 4,05 m di atas lantai penampung (dipakai sebagai acuan). Sekarung gabah 25 kg dilepas diam dan meluncur turun melalui saluran yang licin. g = 10 m/s&sup2;. Saluran itu dilapisi seng supaya gabah tidak tersangkut.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b02m1">Laju karung gabah saat tiba di lantai penampung <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="b02m1"></div><div class="isi-item"><label for="b02m2">Bila karung yang dipakai dua kali lebih berat dan dilepas dari mulut silo yang sama, lajunya di lantai penampung</label><select id="b02m2"><option value="">&mdash; pilih &mdash;</option><option value="A">A. menjadi dua kali lebih besar</option><option value="B">B. menjadi &radic;2 kali lebih besar</option><option value="C">C. tetap sama</option><option value="D">D. menjadi setengahnya</option></select></div></div><div class="raguwrap"><label for="ragu-b02"><input type="checkbox" id="ragu-b02"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b03"><div class="soal-kep"><span>Soal 3</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Sebuah lori kerikil 80 kg meluncur di jalur datar proyek dengan laju 6 m/s, lalu masuk hamparan kerikil lepas yang menahannya dengan gaya gesek tetap 180 N sampai lori itu berhenti.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b03m1">Jarak yang ditempuh lori sampai berhenti <span class="satuan">(m)</span></label><input type="text" inputmode="decimal" id="b03m1"></div><div class="isi-item"><label for="b03m2">Energi gerak lori sebesar itu, setelah lori berhenti,</label><select id="b03m2"><option value="">&mdash; pilih &mdash;</option><option value="A">A. lenyap sama sekali dari alam semesta</option><option value="B">B. berubah menjadi kalor (dan sedikit bunyi) pada permukaan yang bergesekan</option><option value="C">C. tersimpan di dalam lori sebagai energi posisi</option><option value="D">D. berpindah utuh menjadi energi gerak kerikilnya</option></select></div></div><div class="raguwrap"><label for="ragu-b03"><input type="checkbox" id="ragu-b03"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b04"><div class="soal-kep"><span>Soal 4</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Sebuah kotak panen cabai 12 kg meluncur di lantai gudang panen dengan laju 5 m/s, lalu masuk hamparan jerami kering dan berhenti tepat setelah 2,5 m. Kotak itu bertanda nomor petak 7.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b04m1">Gaya gesek rata-rata dari hamparan jerami <span class="satuan">(N)</span></label><input type="text" inputmode="decimal" id="b04m1"></div><div class="isi-item"><label for="b04m2">Titik awal perhitungannya adalah</label><select id="b04m2"><option value="">&mdash; pilih &mdash;</option><option value="A">A. energi gerak kotak saat mulai memasuki jerami</option><option value="B">B. energi gerak kotak saat pertama kali didorong di gudang</option><option value="C">C. berat kotak dikalikan jarak 2,5 m</option><option value="D">D. lama waktu kotak meluncur di lantai gudang</option></select></div></div><div class="raguwrap"><label for="ragu-b04"><input type="checkbox" id="ragu-b04"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b05"><div class="soal-kep"><span>Soal 5</span><span class="bentuk">Dua isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Sebuah ember adukan semen 15 kg tergantung pada kerekan, 4,5 m di atas lantai kerja lantai dua. Lantai kerja itu sendiri berada 1,2 m di atas tanah. g = 10 m/s&sup2;. Ember itu bertali nilon berwarna kuning.</div><div class="perintah">Jawab tiga hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b05m1">Energi posisi ember bila lantai kerja dipakai sebagai acuan <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b05m1"></div><div class="isi-item"><label for="b05m2">Energi posisi ember bila tanah dipakai sebagai acuan <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b05m2"></div><div class="isi-item"><label for="b05m3">Bila acuan dipindah dari lantai kerja ke tanah, energi gerak ember</label><select id="b05m3"><option value="">&mdash; pilih &mdash;</option><option value="A">A. ikut berubah sebesar selisih kedua energi posisi itu</option><option value="B">B. tidak berubah sama sekali</option><option value="C">C. menjadi nol</option><option value="D">D. berubah hanya bila embernya sedang bergerak</option></select></div></div><div class="raguwrap"><label for="ragu-b05"><input type="checkbox" id="ragu-b05"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b06"><div class="soal-kep"><span>Soal 6</span><span class="bentuk">Pilihan, isian angka, dan pilihan</span></div><div class="soal-isi"><div class="naskah">Jalur luncur material dirancang tiga bagian. Balok beton dilepas diam di A, 1,4 m di atas titik B (acuan, licin). Dari B, lantai datar kasar 2,0 m dengan koefisien gesek kinetik 0,3 menuju C. Dari C, jalur licin menanjak ke bak penadah D, 1,0 m di atas acuan. Syaratnya balok harus tiba di D dengan laju sekurang-kurangnya 2 m/s. g = 10 m/s&sup2;.</div><div class="perintah">Jawab tiga hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b06m1">Rancangan jalur ini</label><select id="b06m1"><option value="">&mdash; pilih &mdash;</option><option value="MEMENUHI">Memenuhi syarat</option><option value="TIDAK">Tidak memenuhi syarat</option></select></div><div class="isi-item"><label for="b06m2">Ketinggian bak penadah tertinggi yang masih dapat dicapai balok itu <span class="satuan">(m)</span></label><input type="text" inputmode="decimal" id="b06m2"></div><div class="isi-item"><label for="b06m3">Seorang pekerja menghitung tanpa mengurangi bagian yang kasar dan memperoleh angka positif yang tampak wajar. Yang membuat hasilnya keliru adalah</label><select id="b06m3"><option value="">&mdash; pilih &mdash;</option><option value="A">A. ia memakai titik acuan yang salah</option><option value="B">B. baris pengurang untuk bagian kasar tidak pernah ia tuliskan</option><option value="C">C. ia lupa memasukkan massa balok ke dalam hitungannya</option><option value="D">D. tidak ada yang keliru, sebab hasilnya positif dan masuk akal</option></select></div></div><div class="raguwrap"><label for="ragu-b06"><input type="checkbox" id="ragu-b06"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b07"><div class="soal-kep"><span>Soal 7</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Sebuah peti bibit 20 kg bergerak mendatar dengan laju 3 m/s di atas ban berjalan rumah kaca, pada ketinggian 2 m di atas lantai (dipakai sebagai acuan). g = 10 m/s&sup2;. Ban berjalan itu digerakkan motor listrik satu fase.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b07m1">Energi gerak peti bibit itu <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b07m1"></div><div class="isi-item"><label for="b07m2">Bila acuan dipindah ke permukaan ban berjalan itu sendiri, yang berubah adalah</label><select id="b07m2"><option value="">&mdash; pilih &mdash;</option><option value="A">A. energi gerak saja</option><option value="B">B. energi posisi saja</option><option value="C">C. keduanya, energi gerak dan energi posisi</option><option value="D">D. tidak ada yang berubah</option></select></div></div><div class="raguwrap"><label for="ragu-b07"><input type="checkbox" id="ragu-b07"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b08"><div class="soal-kep"><span>Soal 8</span><span class="bentuk">Tiga pilihan</span></div><div class="soal-isi"><div class="naskah">Lintasan pengangkut hasil panen disusun empat bagian berurutan: bagian pertama datar dan kasar, bagian kedua licin menurun, bagian ketiga datar dan kasar, bagian keempat licin menanjak.</div><div class="perintah">Susun rencana per bagian untuk lintasan ini — tanpa menghitung hasil akhirnya — lalu jawab tiga pertanyaan di bawah.</div><div class="kisi"><div class="isi-item"><label for="b08m1">Banyak baris rencana yang perlu kamu tulis</label><select id="b08m1"><option value="">&mdash; pilih &mdash;</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></div><div class="isi-item"><label for="b08m2">Banyak suku pengurang (&minus;W<sub>f</sub>) pada rencana itu</label><select id="b08m2"><option value="">&mdash; pilih &mdash;</option><option value="0">0</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select></div><div class="isi-item"><label for="b08m3">Bila seluruh lintasan ditulis sebagai satu persamaan tunggal dari ujung ke ujung, laju akhir yang kamu peroleh akan</label><select id="b08m3"><option value="">&mdash; pilih &mdash;</option><option value="A">A. lebih kecil daripada laju yang sebenarnya</option><option value="B">B. lebih besar daripada laju yang sebenarnya</option><option value="C">C. sama saja dengan laju yang sebenarnya</option><option value="D">D. tidak dapat ditentukan tanpa mengetahui massa bendanya</option></select></div></div><div class="raguwrap"><label for="ragu-b08"><input type="checkbox" id="ragu-b08"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b09"><div class="soal-kep"><span>Soal 9</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Jalur luncur karung pupuk dirancang tiga bagian. Karung 25 kg dilepas diam di A, 2,1 m di atas titik B (acuan, licin). Dari B, lantai datar kasar 2,0 m dengan koefisien gesek kinetik 0,25 menuju C. Dari C, jalur licin menanjak ke lantai gudang D, 0,8 m di atas acuan. Syaratnya karung harus tiba di D dengan laju sekurang-kurangnya 3 m/s. g = 10 m/s&sup2;.</div><div class="perintah">Hitung laju karung di D, lalu nyatakan apakah rancangan ini memenuhi syarat.</div><div class="kisi"><div class="isi-item"><label for="b09m1">Laju karung di D <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="b09m1"></div><div class="isi-item"><label for="b09m2">Rancangan jalur ini</label><select id="b09m2"><option value="">&mdash; pilih &mdash;</option><option value="MEMENUHI">Memenuhi syarat</option><option value="TIDAK">Tidak memenuhi syarat</option></select></div></div><div class="raguwrap"><label for="ragu-b09"><input type="checkbox" id="ragu-b09"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b10"><div class="soal-kep"><span>Soal 10</span><span class="bentuk">Dua isian angka</span></div><div class="soal-isi"><div class="naskah">Sebuah gerobak adukan 50 kg didorong dari keadaan diam dengan gaya mendatar tetap 120 N sejauh 10 m di lantai kerja. Sepanjang jarak itu lantai menahan gerobak dengan gaya gesek tetap 30 N. Gerobak itu beroda karet.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b10m1">Usaha total pada gerobak sepanjang 10 m <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b10m1"></div><div class="isi-item"><label for="b10m2">Laju gerobak tepat setelah 10 m <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="b10m2"></div></div><div class="raguwrap"><label for="ragu-b10"><input type="checkbox" id="ragu-b10"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b11"><div class="soal-kep"><span>Soal 11</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Sebatang balok kuda-kuda atap 24 kg dibawa mendatar sejauh 18 m di atas perancah, dengan laju tetap dan tanpa berubah ketinggian. g = 10 m/s&sup2;. Balok itu sudah dipotong sesuai ukuran kuda-kuda.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b11m1">Usaha gaya berat balok sepanjang 18 m itu <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b11m1"></div><div class="isi-item"><label for="b11m2">Alasannya adalah</label><select id="b11m2"><option value="">&mdash; pilih &mdash;</option><option value="A">A. gaya berat terlalu kecil dibandingkan gaya angkut pekerjanya</option><option value="B">B. gaya berat tegak lurus penuh terhadap arah perpindahan</option><option value="C">C. balok bergerak dengan laju tetap sehingga tidak ada gaya sama sekali padanya</option><option value="D">D. gaya berat memang selalu melakukan usaha nol pada benda apa pun</option></select></div></div><div class="raguwrap"><label for="ragu-b11"><input type="checkbox" id="ragu-b11"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b12"><div class="soal-kep"><span>Soal 12</span><span class="bentuk">Dua isian angka</span></div><div class="soal-isi"><div class="naskah">Sebuah lori pasir 60 kg masuk jalur datar berpasir kasar dengan laju 8 m/s. Jalur kasar itu sepanjang 4 m dengan koefisien gesek kinetik 0,35. g = 10 m/s&sup2;. Jalur itu ditandai cat putih di kedua sisinya.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b12m1">Laju lori saat keluar dari jalur kasar <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="b12m1"></div><div class="isi-item"><label for="b12m2">Energi yang berubah menjadi kalor sepanjang jalur kasar itu <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b12m2"></div></div><div class="raguwrap"><label for="ragu-b12"><input type="checkbox" id="ragu-b12"> Tandai ragu-ragu</label></div></div></article>
+</div>
+</div>
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+<div class="bilah-bawah">
+  <div id="navpanel" hidden>
+    <div class="kisinum" id="kisinum"></div>
+    <div class="legenda">
+      <span><i class="kotak" style="background:var(--tosca2)"></i> sudah dijawab</span>
+      <span><i class="kotak" style="background:var(--kuning)"></i> ditandai ragu-ragu</span>
+      <span><i class="kotak" style="background:var(--abuB);border:1px solid var(--bingkai)"></i> belum dijawab</span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">0 dari 12 soal dijawab</div>
+      <div id="jam">60:00</div>
+      <button class="btn sekunder" id="btn_nomor" type="button" disabled>Nomor soal</button>
+      <button class="btn sekunder" id="btn_periksa" type="button" disabled>Periksa kelengkapan</button>
+      <button class="btn selesai" id="btn_selesai" type="button" disabled>Selesai</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+"use strict";
+var KUNCI_NUM = {
+  b01m1: [780, 1],
+  b02m1: [9, 0.05],
+  b03m1: [8, 0.05],
+  b04m1: [60, 0.5],
+  b05m1: [675, 1],
+  b05m2: [855, 1],
+  b06m2: [0.8, 0.02],
+  b07m1: [90, 0.5],
+  b09m1: [4, 0.05],
+  b10m1: [900, 1],
+  b10m2: [6, 0.05],
+  b11m1: [0, 0.01],
+  b12m1: [6, 0.05],
+  b12m2: [840, 2]
+};
+
+var KUNCI_PIL = {
+  b01m2: "B",
+  b02m2: "C",
+  b03m2: "B",
+  b04m2: "A",
+  b05m3: "B",
+  b06m1: "TIDAK",
+  b06m3: "B",
+  b07m2: "B",
+  b08m1: "4",
+  b08m2: "2",
+  b08m3: "B",
+  b09m2: "MEMENUHI",
+  b11m2: "B"
+};
+
+var MEDAN = {
+  b01: ["b01m1", "b01m2"],
+  b02: ["b02m1", "b02m2"],
+  b03: ["b03m1", "b03m2"],
+  b04: ["b04m1", "b04m2"],
+  b05: ["b05m1", "b05m2", "b05m3"],
+  b06: ["b06m1", "b06m2", "b06m3"],
+  b07: ["b07m1", "b07m2"],
+  b08: ["b08m1", "b08m2", "b08m3"],
+  b09: ["b09m1", "b09m2"],
+  b10: ["b10m1", "b10m2"],
+  b11: ["b11m1", "b11m2"],
+  b12: ["b12m1", "b12m2"]
+};
+
+var URUT = ["b01", "b02", "b03", "b04", "b05", "b06", "b07", "b08", "b09", "b10", "b11", "b12"];
+
+var KELOMPOK = {
+  "1": ["b01", "b04", "b05", "b07", "b10", "b11"],
+  "2": ["b02", "b03", "b06", "b08", "b09", "b12"]
+};
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+
+function idButir(){ return URUT.slice(); }
+
+function medanButir(bid){ return MEDAN[bid] || []; }
+
+function nilaiButir(bid){
+  var medan = medanButir(bid), benar = 0, n = medan.length, i;
+  if (n === 0) return 0;
+  for (i = 0; i < n; i++){
+    var mid = medan[i];
+    if (Object.prototype.hasOwnProperty.call(KUNCI_NUM, mid)){
+      var k = KUNCI_NUM[mid][0], tol = KUNCI_NUM[mid][1];
+      var v = bacaBilangan(nilaiElemen(mid));
+      if (v !== null && Math.abs(v - k) <= tol) benar++;
+    } else if (Object.prototype.hasOwnProperty.call(KUNCI_PIL, mid)){
+      var jawab = nilaiElemen(mid);
+      if (jawab !== null && String(jawab).trim() === String(KUNCI_PIL[mid]).trim()) benar++;
+    }
+  }
+  return benar / n;
+}
+
+function hitungNilai(){
+  cerminSemua();
+  var urut = idButir(), jml = 0, i;
+  for (i = 0; i < urut.length; i++) jml += nilaiButir(urut[i]);
+  if (urut.length === 0) return 0;
+  return Math.round((jml / urut.length) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function daftarMedan(){
+  var out = [], i, j;
+  for (i = 0; i < URUT.length; i++){
+    var m = medanButir(URUT[i]);
+    for (j = 0; j < m.length; j++) out.push(m[j]);
+  }
+  return out;
+}
+
+function statusButir(bid){
+  var m = medanButir(bid), terisi = 0, i;
+  for (i = 0; i < m.length; i++){
+    var el = document.getElementById(m[i]);
+    if (el && String(el.value).trim() !== "") terisi++;
+  }
+  if (terisi === 0) return "kosong";
+  if (terisi === m.length) return "penuh";
+  return "sebagian";
+}
+
+function perbarui(){
+  var urut = idButir(), penuh = 0, i;
+  for (i = 0; i < urut.length; i++){
+    var bid = urut[i], st = statusButir(bid);
+    var kartu = document.getElementById("kartu-" + bid);
+    var raguEl = document.getElementById("ragu-" + bid);
+    var ragu = raguEl && raguEl.checked;
+    if (st === "penuh") penuh++;
+    if (kartu){
+      kartu.classList.remove("terisi", "ragu");
+      if (ragu) kartu.classList.add("ragu");
+      else if (st === "penuh") kartu.classList.add("terisi");
+    }
+    var nav = document.getElementById("nav-" + bid);
+    if (nav){
+      nav.classList.remove("isi", "ragu");
+      if (ragu){ nav.classList.add("ragu"); nav.setAttribute("aria-label", "Soal " + (i+1) + ", ditandai ragu-ragu"); }
+      else if (st === "penuh"){ nav.classList.add("isi"); nav.setAttribute("aria-label", "Soal " + (i+1) + ", sudah dijawab"); }
+      else { nav.setAttribute("aria-label", "Soal " + (i+1) + ", belum dijawab"); }
+    }
+  }
+  var pct = urut.length ? Math.round((penuh / urut.length) * 100) : 0;
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = penuh + " dari " + urut.length + " soal dijawab";
+}
+
+function periksaKelengkapan(){
+  cerminSemua();
+  var urut = idButir(), kosong = [], sebagian = [], pertama = null, i, j;
+  for (i = 0; i < urut.length; i++){
+    var bid = urut[i], st = statusButir(bid), no = i + 1;
+    var kartu = document.getElementById("kartu-" + bid);
+    if (kartu) kartu.classList.remove("tandaKosong");
+    var m = medanButir(bid);
+    for (j = 0; j < m.length; j++){
+      var el = document.getElementById(m[j]);
+      var bungkus = el ? el.closest(".isi-item") : null;
+      if (!el) continue;
+      if (String(el.value).trim() === ""){
+        if (bungkus) bungkus.classList.add("kosong");
+        if (!pertama) pertama = el;
+      } else if (bungkus){
+        bungkus.classList.remove("kosong");
+      }
+    }
+    if (st === "kosong"){ kosong.push(no); if (kartu) kartu.classList.add("tandaKosong"); }
+    else if (st === "sebagian"){ sebagian.push(no); if (kartu) kartu.classList.add("tandaKosong"); }
+  }
+  var pesan = document.getElementById("pesan_teks");
+  if (!pertama){
+    if (pesan){ pesan.className = "pesan"; pesan.textContent = "Seluruh kotak sudah terisi. Periksa lagi soal yang kamu tandai ragu-ragu."; }
+  } else {
+    var bagian = [];
+    if (kosong.length) bagian.push("belum dijawab: nomor " + kosong.join(", "));
+    if (sebagian.length) bagian.push("baru terisi sebagian: nomor " + sebagian.join(", "));
+    if (pesan){ pesan.className = "pesan awas"; pesan.textContent = "Masih ada yang perlu kamu isi — " + bagian.join("; ") + ". Kotaknya ditandai oranye."; }
+    if (pertama.scrollIntoView) pertama.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+  perbarui();
+}
+
+document.addEventListener("input", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("change", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("blur", function(ev){ cermin(ev.target); }, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+/* ---------- rincian per kelompok butir (nama kelompok netral) ---------- */
+function hitungRincian(){
+  cerminSemua();
+  var out = [], adaNol = false, kode;
+  for (kode in KELOMPOK){
+    var ids = KELOMPOK[kode], benar = 0, i;
+    for (i = 0; i < ids.length; i++) benar += nilaiButir(ids[i]);
+    var persen = ids.length ? Math.round((benar / ids.length) * 100) : 0;
+    if (benar === 0 && ids.length > 0) adaNol = true;
+    out.push({kelompok: kode, benar: Math.round(benar * 100) / 100, jumlah: ids.length, persen: persen});
+  }
+  return {nilai: hitungNilai(), bagian: out, adaNol: adaNol};
+}
+window.hitungRincian = hitungRincian;
+
+function simpanRincian(r){
+  var el = document.getElementById("rincian"), i, bagian = [];
+  if (!el) return;
+  for (i = 0; i < r.bagian.length; i++){
+    bagian.push(r.bagian[i].kelompok + "=" + r.bagian[i].benar.toFixed(2) + "/" + r.bagian[i].jumlah);
+  }
+  el.value = "nilai=" + r.nilai + ";" + bagian.join(";") + ";nol=" + (r.adaNol ? "1" : "0");
+  cermin(el);
+}
+
+/* ---------- jam ---------- */
+var timerId = null;
+function formatWaktu(ms){
+  if (ms < 0) ms = 0;
+  var total = Math.floor(ms / 1000);
+  var m = Math.floor(total / 60), d = total % 60;
+  return (m < 10 ? "0" : "") + m + ":" + (d < 10 ? "0" : "") + d;
+}
+function tickJam(){
+  var el = document.getElementById("tenggat");
+  if (!el || !el.value) return;
+  var sisa = parseInt(el.value, 10) - Date.now();
+  var jam = document.getElementById("jam");
+  if (jam){
+    jam.textContent = formatWaktu(sisa);
+    jam.classList.remove("sedikit", "habis");
+    if (sisa <= 0) jam.classList.add("habis");
+    else if (sisa <= 5 * 60000) jam.classList.add("sedikit");
+  }
+  if (sisa <= 0){
+    if (timerId){ clearInterval(timerId); timerId = null; }
+    kunciLembar("Waktu habis. Lembar ini sudah terkunci.", true);
+  }
+}
+function mulaiJam(){
+  if (timerId) clearInterval(timerId);
+  tickJam();
+  timerId = setInterval(tickJam, 250);
+}
+
+/* ---------- kunci lembar ---------- */
+function kunciLembar(alasan, gulir){
+  var soalEl = document.getElementById("soal");
+  if (soalEl && !soalEl.classList.contains("terkunci")){
+    soalEl.classList.add("terkunci");
+    var tahan = function(ev){
+      var tag = ev.target.tagName;
+      if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA" || tag === "LABEL"){
+        ev.preventDefault(); ev.stopPropagation();
+      }
+    };
+    soalEl.addEventListener("click", tahan, true);
+    soalEl.addEventListener("keydown", tahan, true);
+    soalEl.addEventListener("mousedown", tahan, true);
+  }
+  var tirai = document.getElementById("tirai");
+  if (tirai){ tirai.hidden = false; tirai.textContent = alasan; }
+  var panel = document.getElementById("navpanel"); if (panel) panel.hidden = true;
+  var bs = document.getElementById("btn_selesai"); if (bs) bs.disabled = true;
+  tampilkanHasil(gulir);
+}
+
+/* ---------- panel hasil ---------- */
+function tampilkanHasil(gulir){
+  var r = hitungRincian();
+  simpanRincian(r);
+  var besar = document.getElementById("skorBesar");
+  if (besar) besar.textContent = r.nilai;
+  var penuh = 0, i;
+  for (i = 0; i < URUT.length; i++) if (nilaiButir(URUT[i]) === 1) penuh++;
+  var ket = document.getElementById("skorKet");
+  if (ket) ket.textContent = "dari 100 · " + penuh + " dari " + URUT.length + " soal terjawab penuh";
+  var tbody = document.getElementById("tblRincianIsi"), html = "";
+  for (i = 0; i < r.bagian.length; i++){
+    var b = r.bagian[i];
+    html += "<tr><td>Bagian " + b.kelompok + "</td><td>" + b.benar.toFixed(2) + " dari " + b.jumlah
+         + "</td><td>" + b.persen + "%</td></tr>";
+  }
+  if (tbody) tbody.innerHTML = html;
+  var hasilEl = document.getElementById("hasil");
+  if (hasilEl){
+    hasilEl.hidden = false;
+    if (gulir && hasilEl.scrollIntoView) hasilEl.scrollIntoView({behavior:"smooth", block:"start"});
+  }
+}
+
+/* ---------- panel nomor ---------- */
+function bangunNomor(){
+  var kisi = document.getElementById("kisinum");
+  if (!kisi) return;
+  var html = "", i;
+  for (i = 0; i < URUT.length; i++){
+    html += '<button type="button" class="navnum" id="nav-' + URUT[i] + '" data-soal="' + URUT[i]
+         + '" aria-label="Soal ' + (i+1) + ', belum dijawab">' + (i+1) + '</button>';
+  }
+  kisi.innerHTML = html;
+}
+
+/* ---------- mulai & selesai ---------- */
+function bukaLembar(){
+  document.getElementById("setup").hidden = true;
+  document.getElementById("soal").hidden = false;
+  document.getElementById("btn_nomor").disabled = false;
+  document.getElementById("btn_periksa").disabled = false;
+  document.getElementById("btn_selesai").disabled = false;
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+  bangunNomor();
+  cerminSemua();
+  perbarui();
+
+  var bp = document.getElementById("btn_periksa");
+  if (bp) bp.addEventListener("click", periksaKelengkapan);
+
+  var bn = document.getElementById("btn_nomor"), panel = document.getElementById("navpanel");
+  if (bn && panel){
+    bn.addEventListener("click", function(){ panel.hidden = !panel.hidden; });
+    panel.addEventListener("click", function(ev){
+      var t = ev.target.closest ? ev.target.closest(".navnum") : null;
+      if (!t) return;
+      var kartu = document.getElementById("kartu-" + t.getAttribute("data-soal"));
+      if (kartu && kartu.scrollIntoView) kartu.scrollIntoView({behavior:"smooth", block:"start"});
+      panel.hidden = true;
+    });
+  }
+
+  var bm = document.getElementById("btn_mulai");
+  if (bm) bm.addEventListener("click", function(){
+    var elMenit = document.getElementById("menit");
+    var m = bacaBilangan(elMenit.value);
+    var pesan = document.getElementById("pesan_teks");
+    if (m === null || m < 1 || m > 300){
+      if (pesan){ pesan.className = "pesan awas"; pesan.textContent = "Isi lama pengerjaan antara 1 dan 300 menit."; }
+      elMenit.focus();
+      return;
+    }
+    var t = document.getElementById("tenggat");
+    t.value = String(Date.now() + m * 60000);
+    cermin(t);
+    bukaLembar();
+    mulaiJam();
+    perbarui();
+    var soalEl = document.getElementById("soal");
+    if (soalEl.scrollIntoView) soalEl.scrollIntoView({behavior:"smooth", block:"start"});
+  });
+
+  var bs = document.getElementById("btn_selesai");
+  if (bs) bs.addEventListener("click", function(){
+    var belum = 0, i;
+    for (i = 0; i < URUT.length; i++) if (statusButir(URUT[i]) !== "penuh") belum++;
+    var tanya = belum > 0
+      ? "Masih ada " + belum + " soal yang belum lengkap. Yakin ingin menyelesaikan?"
+      : "Yakin ingin menyelesaikan dan mengunci lembar ini?";
+    if (!window.confirm(tanya)) return;
+    if (timerId){ clearInterval(timerId); timerId = null; }
+    kunciLembar("Lembar ini sudah kamu kumpulkan.", true);
+    var pesan = document.getElementById("pesan_teks");
+    if (pesan){ pesan.className = "pesan"; pesan.textContent = URUT.length + " soal tersimpan."; }
+  });
+
+  /* pemulihan saat halaman dimuat ulang */
+  var t = document.getElementById("tenggat");
+  if (t && t.value){
+    bukaLembar();
+    perbarui();
+    var sudah = document.getElementById("rincian") && document.getElementById("rincian").value;
+    var sisa = parseInt(t.value, 10) - Date.now();
+    if (sudah){
+      kunciLembar(sisa > 0 ? "Lembar ini sudah kamu kumpulkan." : "Waktu habis. Lembar ini sudah terkunci.", false);
+      tickJam();
+    } else if (sisa > 0){
+      mulaiJam();
+    } else {
+      kunciLembar("Waktu habis. Lembar ini sudah terkunci.", false);
+    }
+  }
+});
+cerminSemua();
+
+})();
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lembar Kerja Fisika F.USE.1-pra — Usaha & Energi</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:'Segoe UI',Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:130px; line-height:1.5;
+}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{
+  position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;
+}
+.kepala::before,.kepala::after{content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:640px; position:relative;}
+
+.kartu{background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+
+.tujuan{background:var(--hijauB); border-left:6px solid var(--hijau); border-radius:8px; padding:14px 18px; margin:18px 0; font-size:14px;}
+.tujuan .tajuk{font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--hijau); font-weight:700;}
+.tujuan .rumusan{font-size:15px; font-weight:600; margin:6px 0 8px; color:var(--tosca0);}
+
+.aturan{background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px; padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.aturan strong{color:#8A6604;}
+.aturan ol{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+
+.bagian{margin:26px 0;}
+.bagian-judul{
+  background:linear-gradient(100deg, var(--tosca), var(--tosca2));
+  color:#fff; padding:10px 16px; border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px;
+  font-size:15.5px; font-weight:600; flex-wrap:wrap;
+}
+.lencana{background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5); border-radius:999px;
+  padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;}
+.bagian-isi{border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;}
+
+.soal{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.soal-judul{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:8px 14px; font-size:13.5px;}
+.soal-isi{padding:14px 16px;}
+.naskah{background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px; padding:12px 14px; font-size:14px; margin-bottom:10px;}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:-2px 0 12px;}
+.sumber-gambar{font-size:12px; color:var(--abu); margin:4px 0 12px;}
+
+.langkah{border-left:3px solid var(--tosca3); padding:4px 0 4px 12px; margin:10px 0;}
+.langkah .no{font-size:11.5px; font-weight:700; color:var(--tosca); text-transform:uppercase; letter-spacing:0.8px;}
+.langkah .isi{font-size:13.5px;}
+.langkah.kosong{border-left-color:var(--oranye2); background:#FFFCF8;}
+
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;}
+.isi-item input[type=text]:not(:placeholder-shown){border-color:var(--tosca2);}
+.isi-item.kosong input, .isi-item.kosong select{border-color:var(--oranye); background:#FFF7F1;}
+
+.dibaca-guru .tanda{display:inline-block; background:var(--oranyeB); color:var(--oranye); font-size:11px; font-weight:700;
+  border-radius:999px; padding:2px 9px; margin-bottom:6px; letter-spacing:0.3px;}
+textarea{width:100%; min-height:62px; padding:9px 11px; border:1.5px solid #C9DADC; border-radius:8px;
+  font-size:13.5px; font-family:inherit; resize:vertical;}
+
+table.klas{width:100%; border-collapse:collapse; margin:10px 0; font-size:13px;}
+table.klas th{background:var(--tosca); color:#fff; padding:8px 9px; text-align:left; font-size:12px; vertical-align:bottom;}
+table.klas td{padding:6px 8px; border-bottom:1px solid #E5EEEF;}
+table.klas tr:nth-child(even) td{background:#F7FBFB;}
+table.klas input[type=text]{width:100%; min-width:62px; padding:6px 7px; border:1.5px solid #C9DADC; border-radius:6px; font-size:13px;}
+tr.kelompok td{background:var(--toscaB) !important; font-weight:700; color:var(--tosca0); font-size:12.5px; border-bottom:2px solid var(--tosca2);}
+td.terisi{background:var(--abuB) !important; font-weight:600; color:var(--tosca0);}
+
+.svg-bingkai{border:1px solid #E1EBEC; border-radius:10px; padding:8px; background:#fff; margin:10px 0;}
+.svg-bingkai svg{width:100%; height:auto; display:block;}
+
+.awas{background:var(--merahB); border-left:6px solid var(--merah); border-radius:8px; padding:12px 16px; margin:14px 0; font-size:13.5px;}
+.awas strong{color:var(--merah);}
+.awas ul{margin:6px 0 0; padding-left:20px;}
+
+.alat{background:var(--toscaB); border-radius:8px; padding:12px 16px; font-size:13.5px;}
+.alat ol{margin:6px 0 0; padding-left:22px;}
+.alat li{margin:3px 0;}
+
+.prosedur{counter-reset:none;}
+.prosedur ol{padding-left:22px; margin:8px 0;}
+.prosedur li{margin:6px 0; font-size:13.5px;}
+
+.ganti{border:2px dashed var(--oranye2); background:#FFFCF8; border-radius:10px; padding:14px 16px; margin:16px 0;}
+.ganti .tajuk{font-weight:700; color:var(--oranye); font-size:13.5px; margin-bottom:6px;}
+.ganti a{color:var(--tosca); word-break:break-all;}
+
+.cara-baca{background:var(--abuB); border-left:4px solid var(--tosca2); border-radius:6px; padding:10px 14px; font-size:13px; margin-bottom:12px;}
+
+.jangkar{background:var(--hijauB); border-left:5px solid var(--hijau); border-radius:8px; padding:12px 16px; margin:10px 0; font-size:13.5px;}
+.jangkar .urut{font-size:11.5px; font-weight:700; color:var(--hijau); text-transform:uppercase; letter-spacing:0.8px; display:block; margin-bottom:3px;}
+
+.bilah-bawah{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{background:var(--tosca); color:#fff; border:none; border-radius:8px; padding:9px 18px; font-size:13.5px; font-weight:600; cursor:pointer;}
+button.periksa:hover{background:var(--tosca0);}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%;}
+
+.kaki{text-align:center; font-size:12px; color:var(--abu); margin:26px 0 10px;}
+
+@media (max-width:640px){
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+  table.klas, table.klas thead, table.klas tbody, table.klas tr, table.klas th, table.klas td{display:block;}
+  table.klas thead{display:none;}
+  table.klas tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px;}
+  table.klas td{border:none; padding:4px 2px;}
+  table.klas td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca); display:block; font-size:11.5px;}
+  tr.kelompok td::before{content:"";}
+}
+
+@media print{
+  @page{size:A4; margin:12mm;}
+  body{background:#fff; padding-bottom:0; font-size:11.5pt;}
+  .bilah-bawah{display:none !important;}
+  .kepala{background:#fff !important; color:#12333A !important; border-bottom:2px solid #0B4F58; border-image:none; padding:10px 0;}
+  .kepala::before,.kepala::after{display:none;}
+  .bagian-judul{background:#fff !important; color:#073B44 !important; border:1px solid #0B4F58; border-bottom:none;}
+  .lencana{background:#fff !important; color:#073B44 !important; border:1px solid #0B4F58;}
+  .kartu,.bagian-isi,.soal,.naskah,.alat,.tujuan,.aturan,.awas,.ganti,.jangkar,.cara-baca,.svg-bingkai{
+    background:#fff !important; border:1px solid #999 !important; box-shadow:none !important;}
+  table.klas th{background:#fff !important; color:#000 !important; border:1px solid #666;}
+  table.klas td{border:1px solid #999;}
+  table.klas tr:nth-child(even) td, tr.kelompok td, td.terisi{background:#fff !important;}
+  .soal, .bagian, .svg-bingkai, svg, .kartu, table.klas, .jangkar{break-inside:avoid; page-break-inside:avoid;}
+  .bagian{page-break-before:auto;}
+  input[type=text], select{
+    border:none !important; border-bottom:1px solid #333 !important; border-radius:0 !important;
+    background:transparent !important; min-width:150px; min-height:26px;}
+  textarea{border:none !important; border-bottom:1px solid #333 !important; border-radius:0 !important;
+    background:transparent !important; min-height:70px;}
+  table.klas input[type=text]{min-width:50px;}
+  a[href^="http"]::after{content:" (" attr(href) ")"; font-size:9pt; word-break:break-all;}
+}
+</style>
+</head>
+<body>
+
+<div class="kepala"><div class="wrap">
+  <div class="baris-kecil">Fisika &middot; Kelas XI &middot; Kode TP F.USE.1-pra</div>
+  <h1>Lembar Kerja — Usaha, Energi Kinetik &amp; Energi Potensial</h1>
+  <div class="penjelas">Diisi di kelas, sambil gurumu berkeliling. Yang dinilai bukan nilaimu, melainkan apakah lembar ini terisi oleh tulisanmu sendiri. Kumpulkan di akhir jam, selesai atau belum.</div>
+</div></div>
+
+<div class="wrap">
+
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_pasangan">Nama pasangan kerjamu</label><input type="text" id="id_pasangan"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 17-11-2026"></div>
+</div>
+
+<div class="tujuan">
+  <div class="tajuk">Tujuan Pembelajaran hari ini</div>
+  <div class="rumusan">&ldquo;Murid dapat menjelaskan konsep usaha, energi (kinetik &amp; potensial), dan hubungan usaha-energi.&rdquo;</div>
+  <div>Hari ini kamu menulis tiga hal: alasan di balik tiap angka pada dua contoh, angka yang kamu ambil sendiri dari alat, dan satu kalimat penutup yang kamu susun tanpa melihat lembar siapa pun.</div>
+</div>
+
+<div class="aturan">
+  <strong>Cara mengisi</strong>
+  <ol>
+    <li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li>
+    <li>Tulis angkanya saja, tanpa satuan — satuannya sudah tercetak di sebelah kotak atau di kepala kolom.</li>
+    <li>Kalau jawabannya negatif, jangan lupa tanda minus.</li>
+    <li>Kotak bertanda <span style="background:#FDEBDD;color:#C05621;border-radius:999px;padding:1px 8px;font-size:11px;font-weight:700;">dibaca guru</span> tidak dihitung otomatis, tetapi tetap diisi — justru kotak itulah yang dibaca gurumu saat lewat di belakang mejamu.</li>
+    <li>Percepatan gravitasi yang dipakai sepanjang lembar ini: g = 10 m/s&sup2;.</li>
+    <li>Jawabanmu tersimpan begitu kamu berpindah ke kotak berikutnya. Kamu boleh menutup halaman dan melanjutkannya nanti.</li>
+  </ol>
+</div>
+
+<!-- ================= PEMANTIK ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Pemantik</span> Pertanyaan yang belum dijawab siapa pun</div>
+  <div class="bagian-isi dibaca-guru">
+    <div class="naskah">Gurumu baru saja berjalan mendatar sambil menggendong tas yang berat, lalu berhenti kepayahan. Pertanyaannya: <strong>apakah usaha secara fisika sama dengan kerja keras yang kamu rasakan?</strong></div>
+    <div class="bantu">Pertanyaan ini sengaja digantung. Jawabannya tidak ada di lembar ini — kamu sendiri yang akan menemukannya sebelum jam ini habis.</div>
+    <span class="tanda">dibaca guru</span>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="pm_tebakan">Tebakanmu sekarang, satu kata: SAMA atau BEDA</label>
+        <input type="text" id="pm_tebakan">
+      </div>
+      <div class="isi-item">
+        <label for="pm_alasan">Satu kalimat alasanmu</label>
+        <input type="text" id="pm_alasan">
+      </div>
+    </div>
+    <div class="bantu">Tebakan yang meleset tidak mengurangi apa pun. Yang merugikan hanya kotak yang dibiarkan kosong sampai akhir jam.</div>
+  </div>
+</div>
+
+<!-- ================= CONTOH TERKERJAKAN PERTAMA ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.1</span> Contoh Terkerjakan Pertama — kapan gaya benar-benar bekerja</div>
+  <div class="bagian-isi">
+    <div class="soal">
+      <div class="soal-judul">Dikerjakan bersama gurumu — ikuti tiap langkah, jangan lompat ke hasilnya</div>
+      <div class="soal-isi">
+        <div class="naskah">Seorang pekerja gudang menyeret kotak perkakas bermassa 28 kg di atas lantai dengan seutas tali yang dipegangnya miring ke atas. Tali itu membentuk sudut 37&deg; terhadap lantai, gaya tariknya tetap 70 N, dan kotak berpindah 12 m mendatar sepanjang gudang.</div>
+
+        <div class="svg-bingkai">
+<svg id="gbr-F.USE.1-pra-01" viewBox="0 0 640 320" role="img" aria-labelledby="j01 d01" xmlns="http://www.w3.org/2000/svg">
+  <title id="j01">Tali miring menyeret kotak: hanya bagian gaya yang searah perpindahan yang melakukan usaha</title>
+  <desc id="d01">Kotak di atas lantai ditarik tali bersudut 37 derajat dengan gaya 70 newton. Gaya tali digambar sebagai panah garis penuh. Bagian gaya yang mendatar digambar sebagai panah garis putus-putus bertanda persegi, bagian yang tegak digambar titik-titik bertanda lingkaran. Perpindahan kotak 12 meter digambar di bawah lantai pada sumbu jarak dengan skala nol sampai dua belas meter.</desc>
+  <defs>
+    <marker id="mk01a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0B4F58"/></marker>
+    <marker id="mk01b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#C05621"/></marker>
+    <marker id="mk01c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6A7F84"/></marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="320" fill="#FFFFFF"/>
+  <line x1="40" y1="200" x2="600" y2="200" stroke="#12333A" stroke-width="2.5"/>
+  <text x="44" y="217" font-family="Arial" font-size="12" fill="#6A7F84">lantai gudang</text>
+  <rect x="90" y="152" width="78" height="48" fill="#E3F5F6" stroke="#0B4F58" stroke-width="2"/>
+  <text x="97" y="181" font-family="Arial" font-size="12" fill="#073B44">28 kg</text>
+  <line x1="168" y1="156" x2="328" y2="36" stroke="#0B4F58" stroke-width="3" marker-end="url(#mk01a)"/>
+  <circle cx="168" cy="156" r="4" fill="#0B4F58"/>
+  <text x="300" y="28" font-family="Arial" font-size="13" font-weight="bold" fill="#0B4F58">F = 70 N</text>
+  <text x="300" y="44" font-family="Arial" font-size="12" fill="#0B4F58">(garis penuh)</text>
+  <path d="M 208 156 A 40 40 0 0 0 198 127" fill="none" stroke="#12333A" stroke-width="1.5"/>
+  <text x="212" y="146" font-family="Arial" font-size="12" fill="#12333A">&#952; = 37&#176;</text>
+  <line x1="168" y1="156" x2="326" y2="156" stroke="#C05621" stroke-width="3" stroke-dasharray="9 5" marker-end="url(#mk01b)"/>
+  <rect x="244" y="151" width="9" height="9" fill="#C05621"/>
+  <text x="186" y="144" font-family="Arial" font-size="12.5" font-weight="bold" fill="#C05621">F cos &#952; &#8212; bagian yang bekerja</text>
+  <line x1="328" y1="156" x2="328" y2="40" stroke="#6A7F84" stroke-width="2.5" stroke-dasharray="2 5" marker-end="url(#mk01c)"/>
+  <circle cx="328" cy="104" r="5" fill="none" stroke="#6A7F84" stroke-width="2"/>
+  <text x="336" y="104" font-family="Arial" font-size="12.5" fill="#6A7F84">F sin &#952; &#8212; tegak lurus gerak,</text>
+  <text x="336" y="120" font-family="Arial" font-size="12.5" fill="#6A7F84">usahanya nol</text>
+  <line x1="90" y1="252" x2="520" y2="252" stroke="#12333A" stroke-width="2"/>
+  <line x1="90" y1="246" x2="90" y2="258" stroke="#12333A" stroke-width="2"/>
+  <line x1="197" y1="246" x2="197" y2="258" stroke="#12333A" stroke-width="2"/>
+  <line x1="305" y1="246" x2="305" y2="258" stroke="#12333A" stroke-width="2"/>
+  <line x1="412" y1="246" x2="412" y2="258" stroke="#12333A" stroke-width="2"/>
+  <line x1="520" y1="246" x2="520" y2="258" stroke="#12333A" stroke-width="2"/>
+  <text x="86" y="274" font-family="Arial" font-size="12" fill="#12333A">0</text>
+  <text x="191" y="274" font-family="Arial" font-size="12" fill="#12333A">3</text>
+  <text x="299" y="274" font-family="Arial" font-size="12" fill="#12333A">6</text>
+  <text x="406" y="274" font-family="Arial" font-size="12" fill="#12333A">9</text>
+  <text x="512" y="274" font-family="Arial" font-size="12" fill="#12333A">12</text>
+  <text x="200" y="296" font-family="Arial" font-size="12.5" fill="#12333A">jarak mendatar yang ditempuh kotak, s (m)</text>
+  <line x1="90" y1="232" x2="520" y2="232" stroke="#C05621" stroke-width="2.5" stroke-dasharray="9 5" marker-end="url(#mk01b)"/>
+  <rect x="300" y="227" width="9" height="9" fill="#C05621"/>
+  <text x="316" y="224" font-family="Arial" font-size="12.5" font-weight="bold" fill="#C05621">s = 12 m</text>
+</svg>
+        </div>
+        <div class="sumber-gambar">Gambar ini memakai geometri dan satuan dari sub-bab K1.1 pada modul konsepmu.</div>
+
+        <div class="langkah"><span class="no">Langkah 1 &middot; Apa yang ditanyakan</span>
+          <div class="isi">Usaha yang dilakukan gaya tali selama kotak berpindah 12 m mendatar — bukan usaha seluruh gaya yang bekerja pada kotak.</div></div>
+        <div class="langkah"><span class="no">Langkah 2 &middot; Formulasi yang digunakan</span>
+          <div class="isi">W = F &middot; s &middot; cos &theta;, dengan &theta; sudut antara arah gaya dan arah perpindahan.</div></div>
+        <div class="langkah"><span class="no">Langkah 3 &middot; Identifikasi data</span>
+          <div class="isi">F = 70 N &middot; s = 12 m &middot; &theta; = 37&deg; &middot; cos 37&deg; = 0,8.</div></div>
+        <div class="langkah"><span class="no">Langkah 4 &middot; Informasi distraktor</span>
+          <div class="isi">Massa kotak 28 kg tidak dipakai sama sekali. Massa baru diperlukan kalau yang ditanyakan usaha gaya berat atau energi kinetiknya — di sini yang ditanyakan usaha gaya tali.</div></div>
+        <div class="langkah"><span class="no">Langkah 5 &middot; Substitusi nilai ke formula</span>
+          <div class="isi">W = 70 &times; 12 &times; 0,8</div></div>
+        <div class="langkah"><span class="no">Langkah 6 &middot; Penyelesaian</span>
+          <div class="isi">W = 672 J</div></div>
+        <div class="langkah"><span class="no">Langkah 7 &middot; Kesimpulan jawaban</span>
+          <div class="isi">Gaya tali memindahkan energi sebesar 672 J ke kotak. Yang memindahkan energi itu hanya bagian tali yang searah perpindahan; bagian yang menarik ke atas sama sekali tidak menambah usaha, berapa pun besarnya.</div></div>
+
+        <span class="tanda">dibaca guru</span>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="c1_tanya">Tulis dengan kalimatmu sendiri: mengapa cos &theta; muncul di rumus itu?</label>
+            <input type="text" id="c1_tanya">
+          </div>
+          <div class="isi-item">
+            <label for="c1_nol">Seandainya tali itu ditarik tegak lurus arah jalan kotak, berapa usahanya? <span class="satuan">(J)</span></label>
+            <input type="text" id="c1_nol">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CONTOH TERKERJAKAN KEDUA (SETENGAH JADI) ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.2</span> Contoh Terkerjakan Kedua — setengah jadi, tiga langkah terakhir kamu yang menulis</div>
+  <div class="bagian-isi">
+    <div class="soal">
+      <div class="soal-judul">Empat langkah pertama sudah tercetak. Langkah 5, 6, dan 7 kosong — isi sambil gurumu menjelaskan</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah troli bermassa 7 kg meluncur di lantai licin dengan laju 12 m/s. Setelah melewati lantai licin sepanjang 9 m, troli masuk ke karpet panjang dan berhenti tepat 24 m di dalam karpet itu. Berapa besar gaya gesek rata-rata yang diberikan karpet?</div>
+
+        <div class="svg-bingkai">
+<svg id="gbr-F.USE.1-pra-02" viewBox="0 0 640 340" role="img" aria-labelledby="j02 d02" xmlns="http://www.w3.org/2000/svg">
+  <title id="j02">Energi kinetik troli berkurang sedikit demi sedikit sepanjang karpet, tidak habis mendadak di ujungnya</title>
+  <desc id="d02">Grafik energi kinetik troli terhadap jarak yang sudah ditempuh di atas karpet. Sumbu datar jarak nol sampai dua puluh empat meter, sumbu tegak energi kinetik dalam joule. Garis penuh bertanda lingkaran turun lurus dari nilai setengah em ve kuadrat pada jarak nol sampai nol joule pada dua puluh empat meter. Garis putus-putus bertanda persegi menandai nilai awal energi kinetik.</desc>
+  <defs>
+    <marker id="mk02a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#12333A"/></marker>
+  </defs>
+  <rect x="0" y="0" width="640" height="340" fill="#FFFFFF"/>
+  <line x1="110" y1="270" x2="600" y2="270" stroke="#12333A" stroke-width="2.5" marker-end="url(#mk02a)"/>
+  <line x1="110" y1="270" x2="110" y2="40" stroke="#12333A" stroke-width="2.5" marker-end="url(#mk02a)"/>
+  <text x="250" y="300" font-family="Arial" font-size="12.5" fill="#12333A">jarak yang sudah ditempuh di atas karpet, d (m)</text>
+  <text x="16" y="180" font-family="Arial" font-size="12.5" fill="#12333A" transform="rotate(-90 16 180)">energi kinetik troli, Ek (J)</text>
+  <line x1="110" y1="264" x2="110" y2="276" stroke="#12333A" stroke-width="2"/>
+  <line x1="222" y1="264" x2="222" y2="276" stroke="#12333A" stroke-width="2"/>
+  <line x1="334" y1="264" x2="334" y2="276" stroke="#12333A" stroke-width="2"/>
+  <line x1="446" y1="264" x2="446" y2="276" stroke="#12333A" stroke-width="2"/>
+  <line x1="558" y1="264" x2="558" y2="276" stroke="#12333A" stroke-width="2"/>
+  <text x="106" y="292" font-family="Arial" font-size="12" fill="#12333A">0</text>
+  <text x="216" y="292" font-family="Arial" font-size="12" fill="#12333A">6</text>
+  <text x="326" y="292" font-family="Arial" font-size="12" fill="#12333A">12</text>
+  <text x="438" y="292" font-family="Arial" font-size="12" fill="#12333A">18</text>
+  <text x="550" y="292" font-family="Arial" font-size="12" fill="#12333A">24</text>
+  <line x1="104" y1="270" x2="116" y2="270" stroke="#12333A" stroke-width="2"/>
+  <text x="88" y="275" font-family="Arial" font-size="12" fill="#12333A">0</text>
+  <line x1="110" y1="70" x2="558" y2="70" stroke="#C05621" stroke-width="2" stroke-dasharray="9 5"/>
+  <rect x="330" y="65" width="9" height="9" fill="#C05621"/>
+  <text x="348" y="62" font-family="Arial" font-size="12.5" font-weight="bold" fill="#C05621">Ek saat masuk karpet = &#189; m v&#178;</text>
+  <line x1="110" y1="70" x2="558" y2="270" stroke="#0B4F58" stroke-width="3"/>
+  <circle cx="110" cy="70" r="5" fill="#0B4F58"/>
+  <circle cx="222" cy="120" r="5" fill="#0B4F58"/>
+  <circle cx="334" cy="170" r="5" fill="#0B4F58"/>
+  <circle cx="446" cy="220" r="5" fill="#0B4F58"/>
+  <circle cx="558" cy="270" r="5" fill="#0B4F58"/>
+  <text x="200" y="196" font-family="Arial" font-size="12.5" font-weight="bold" fill="#0B4F58">garis penuh: energi gerak yang masih tersisa</text>
+  <line x1="558" y1="270" x2="558" y2="226" stroke="#6A7F84" stroke-width="2" stroke-dasharray="2 5"/>
+  <text x="474" y="218" font-family="Arial" font-size="12.5" fill="#6A7F84">troli berhenti di sini</text>
+  <text x="124" y="322" font-family="Arial" font-size="12" fill="#6A7F84">Lantai licin sebelum karpet tidak digambar: di sana tidak ada gesekan yang mengurangi Ek.</text>
+</svg>
+        </div>
+        <div class="sumber-gambar">Gambar ini memakai geometri dan satuan dari sub-bab K1.2 pada modul konsepmu.</div>
+
+        <div class="langkah"><span class="no">Langkah 1 &middot; Apa yang ditanyakan</span>
+          <div class="isi">Besar gaya gesek rata-rata karpet, yaitu gaya yang menghabiskan seluruh energi gerak troli tepat di ujung lintasan karpetnya.</div></div>
+        <div class="langkah"><span class="no">Langkah 2 &middot; Formulasi yang digunakan</span>
+          <div class="isi">W<sub>gesek</sub> = &Delta;Ek, dengan W<sub>gesek</sub> = &minus;f &middot; d dan &Delta;Ek = 0 &minus; &frac12; m v&sup2;. Dari keduanya: f = (&frac12; m v&sup2;) / d.</div></div>
+        <div class="langkah"><span class="no">Langkah 3 &middot; Identifikasi data</span>
+          <div class="isi">m = 7 kg &middot; v = 12 m/s saat masuk karpet &middot; d = 24 m &middot; laju akhir = nol, sebab troli berhenti tepat di ujung.</div></div>
+        <div class="langkah"><span class="no">Langkah 4 &middot; Informasi distraktor</span>
+          <div class="isi">Panjang lantai licin 9 m tidak dipakai. Lantai itu licin, jadi tidak ada usaha gesek di sana dan energi gerak troli belum berkurang sedikit pun sebelum masuk karpet.</div></div>
+
+        <span class="tanda">dibaca guru</span>
+        <div class="langkah kosong"><span class="no">Langkah 5 &middot; Substitusi nilai ke formula</span>
+          <div class="isi"><label for="c2_l5" style="font-size:12.5px;color:#6A7F84;display:block;margin-bottom:4px;">Tulis rumusnya lengkap dengan angkanya, belum perlu dihitung.</label>
+          <textarea id="c2_l5"></textarea></div></div>
+        <div class="langkah kosong"><span class="no">Langkah 6 &middot; Penyelesaian</span>
+          <div class="isi"><div class="kisi">
+            <div class="isi-item"><label for="c2_ek">Energi gerak troli saat masuk karpet <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="c2_ek"></div>
+            <div class="isi-item"><label for="c2_f">Gaya gesek rata-rata karpet <span class="satuan">(N)</span></label><input type="text" inputmode="decimal" id="c2_f"></div>
+          </div></div></div>
+        <div class="langkah kosong"><span class="no">Langkah 7 &middot; Kesimpulan jawaban</span>
+          <div class="isi"><label for="c2_l7" style="font-size:12.5px;color:#6A7F84;display:block;margin-bottom:4px;">Satu kalimat: berapa gaya geseknya, dan ke mana perginya energi gerak troli itu. Sebut nama bentuk energinya.</label>
+          <textarea id="c2_l7"></textarea></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LATIHAN BERPASANGAN ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Berdua</span> Latihan Berpasangan — empat situasi, kamu dan pasanganmu</div>
+  <div class="bagian-isi dibaca-guru">
+    <div class="naskah">Dua kolom pertama sudah terisi. Kamu dan pasanganmu mengisi dua kolom terakhir: usaha gaya yang disebut itu nol atau tak-nol, dan satu kalimat alasannya. Kerjakan bergantian — satu orang mengisi dua baris, satu orang mengisi dua baris, lalu saling membaca.</div>
+    <span class="tanda">dibaca guru</span>
+    <table class="klas">
+      <thead><tr>
+        <th>Situasi</th><th>Arah gaya yang ditanyakan</th><th>Arah gerak benda</th><th>Usaha: nol / tak-nol</th><th>Alasanmu, satu kalimat</th>
+      </tr></thead>
+      <tbody>
+        <tr>
+          <td data-label="Situasi" class="terisi">Menarik koper beroda dengan tangkai miring</td>
+          <td data-label="Arah gaya" class="terisi">miring ke atas-depan</td>
+          <td data-label="Arah gerak" class="terisi">mendatar ke depan</td>
+          <td data-label="Usaha"><input type="text" id="lb_1_usaha"></td>
+          <td data-label="Alasan"><input type="text" id="lb_1_alasan"></td>
+        </tr>
+        <tr>
+          <td data-label="Situasi" class="terisi">Menahan setumpuk buku diam di depan dada</td>
+          <td data-label="Arah gaya" class="terisi">tegak ke atas</td>
+          <td data-label="Arah gerak" class="terisi">tidak bergerak</td>
+          <td data-label="Usaha"><input type="text" id="lb_2_usaha"></td>
+          <td data-label="Alasan"><input type="text" id="lb_2_alasan"></td>
+        </tr>
+        <tr>
+          <td data-label="Situasi" class="terisi">Mendorong meja guru sekuat tenaga, meja tidak bergeser</td>
+          <td data-label="Arah gaya" class="terisi">mendatar ke depan</td>
+          <td data-label="Arah gerak" class="terisi">tidak bergerak</td>
+          <td data-label="Usaha"><input type="text" id="lb_3_usaha"></td>
+          <td data-label="Alasan"><input type="text" id="lb_3_alasan"></td>
+        </tr>
+        <tr>
+          <td data-label="Situasi" class="terisi">Menurunkan ember berisi air pelan-pelan ke lantai</td>
+          <td data-label="Arah gaya" class="terisi">tegak ke atas</td>
+          <td data-label="Arah gerak" class="terisi">tegak ke bawah</td>
+          <td data-label="Usaha"><input type="text" id="lb_4_usaha"></td>
+          <td data-label="Alasan"><input type="text" id="lb_4_alasan"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cara-baca"><strong>Giliran menjelaskan.</strong> Tutup lembarmu. Jelaskan kepada pasanganmu, kurang dari satu menit, kapan usaha sebuah gaya itu nol. Pasanganmu mendengarkan sambil memegang daftar di bawah ini, lalu kalian bertukar peran.</div>
+    <div class="kisi">
+      <div class="isi-item"><label for="cl_arah">Pendengar: apakah kata <strong>arah</strong> benar-benar terucap? (ya / belum)</label><input type="text" id="cl_arah"></div>
+      <div class="isi-item"><label for="cl_tegak">Pendengar: apakah kata <strong>tegak lurus</strong> benar-benar terucap? (ya / belum)</label><input type="text" id="cl_tegak"></div>
+      <div class="isi-item"><label for="cl_komp">Pendengar: apakah kata <strong>komponen</strong> benar-benar terucap? (ya / belum)</label><input type="text" id="cl_komp"></div>
+      <div class="isi-item"><label for="cl_tanya">Pendengar: tulis satu pertanyaan yang muncul di kepalamu saat mendengarnya</label><input type="text" id="cl_tanya"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PRAKTIKUM ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Praktikum</span> Tiga Perjalanan Satu Beban — angka ini kamu ambil sendiri</div>
+  <div class="bagian-isi">
+
+    <div class="naskah">Satu kantong beban akan kamu bawa menempuh tiga perjalanan yang berbeda arah gayanya. Gaya yang menariknya sama besar pada ketiganya, dan tanganmu sama pegalnya. Yang kamu uji hari ini: apakah usahanya juga sama.</div>
+
+    <div class="awas">
+      <strong>Baca dulu sebelum menyentuh alat</strong>
+      <ul>
+        <li>Gantung kantong beban setinggi pinggang saja. Jangan berdiri atau menaruh kaki di bawah beban yang tergantung.</li>
+        <li>Tarik neraca pegas pelan-pelan. Jangan menyentak — pegas yang tersentak bisa terlepas dari kaitnya dan melenting ke wajah.</li>
+        <li>Pegang papan miring dengan satu tangan sebelum meletakkan buku di atasnya, dan pastikan ganjalnya tidak bisa bergeser.</li>
+        <li>Jangan melebihi angka terbesar yang tercetak pada neraca pegasmu. Kalau jarumnya sudah mentok, ganti bebannya, jangan ditarik lebih keras.</li>
+      </ul>
+    </div>
+
+    <div class="alat">
+      <strong>Alat dan bahan — per pasangan, dan jumlah untuk delapan pasangan di kelas</strong>
+      <ol>
+        <li>Neraca pegas 0&ndash;10 N (ketelitian 0,2 N) &mdash; 1 buah per pasangan, <strong>8 buah</strong> untuk kelas, ditambah 1 cadangan.</li>
+        <li>Kantong kain berisi buku, massanya sudah ditimbang dan ditulis pada label &mdash; 1 buah per pasangan, <strong>8 buah</strong>.</li>
+        <li>Mistar kayu 100 cm atau meteran kain 150 cm &mdash; 1 buah per pasangan, <strong>8 buah</strong>.</li>
+        <li>Papan kayu atau triplek panjang kira-kira 80 cm yang dapat dimiringkan &mdash; 1 keping per pasangan, <strong>8 keping</strong>.</li>
+        <li>Ganjal papan berupa tumpukan buku tebal &mdash; 1 tumpuk per pasangan, <strong>8 tumpuk</strong>.</li>
+        <li>Buku tebal bersampul licin atau troli kecil bertali, sebagai benda yang ditarik naik &mdash; 1 buah per pasangan, <strong>8 buah</strong>.</li>
+        <li>Busur derajat besar untuk membaca sudut tali &mdash; 1 buah per pasangan, <strong>8 buah</strong>.</li>
+        <li>Tali atau benang kuat dengan kait S &mdash; 1 set per pasangan, <strong>8 set</strong>.</li>
+        <li>Timbangan dapur untuk menimbang ulang bila label kantong hilang &mdash; <strong>1 buah untuk seluruh kelas</strong>, diletakkan di meja depan.</li>
+      </ol>
+    </div>
+
+    <div class="prosedur">
+      <strong>Prosedur</strong>
+      <ol>
+        <li>Baca massa yang tertulis pada label kantong bebanmu. Kalau labelnya hilang, timbang di meja depan. Tulis massanya pada kolom pertama seluruh baris tabel.</li>
+        <li><strong>Perjalanan A.</strong> Kaitkan neraca pegas pada tali kantong. Angkat kantong pelan-pelan dengan laju tetap dari lantai sampai setinggi permukaan meja. Baca angka neraca saat gerakannya sudah tetap, bukan saat baru menyentak.</li>
+        <li>Ukur dengan mistar berapa tinggi kantong naik dari lantai ke permukaan meja. Tulis angka itu pada kolom perpindahan baris A.</li>
+        <li>Lihat arah tarikan neracamu dan arah perpindahan kantong pada perjalanan A, lalu tentukan sudut di antara keduanya. Tulis sudut itu pada baris A.</li>
+        <li><strong>Perjalanan B.</strong> Jaga kantong tetap tergantung pada neraca setinggi permukaan meja. Berjalanlah mendatar menyusuri tepi meja sepanjang satu rentang mistar penuh, pelan, tanpa naik-turun. Baca lagi angka neracanya sambil berjalan.</li>
+        <li>Ukur jarak mendatar yang kamu tempuh tadi dan tulis pada baris B. Tentukan lagi sudut antara arah tarikan neraca dan arah perpindahan kantong, lalu tulis pada baris B.</li>
+        <li><strong>Perjalanan C.</strong> Ganjal satu ujung papan dengan tumpukan buku. Ukur panjang papan dari ujung bawah ke ujung atas, dan ukur tinggi ujung atas papan di atas meja. Tulis kedua angka itu pada kotak di bawah tabel.</li>
+        <li>Letakkan buku tebal di ujung bawah papan. Kaitkan neraca pegas pada talinya, lalu tarik pelan-pelan <em>sejajar papan</em> sampai ujung atas. Baca angka neraca saat gerakannya tetap.</li>
+        <li>Tulis angka neraca, panjang papan sebagai perpindahan, dan sudut antara tarikanmu dan arah perpindahan pada baris C.</li>
+        <li>Ulangi sekali lagi ketiga perjalanan itu dan isi baris ulangan keduanya. Pergantian peran: yang tadi menarik sekarang membaca skala.</li>
+        <li>Setelah tabel terisi, baru isi dua kolom terakhir: cos &theta; tiap baris, lalu usaha W = F &middot; s &middot; cos &theta;.</li>
+      </ol>
+    </div>
+
+    <div class="dibaca-guru">
+      <span class="tanda">dibaca guru</span>
+      <div class="kisi">
+        <div class="isi-item"><label for="pr_ramal">Sebelum kamu menarik apa pun: pada perjalanan mana angka usahanya akan paling kecil?</label><input type="text" id="pr_ramal"></div>
+        <div class="isi-item"><label for="pr_ramal2">Kira-kira berapa angkanya, dan mengapa kamu menebak begitu?</label><input type="text" id="pr_ramal2"></div>
+      </div>
+      <div class="bantu">Ramalan yang meleset tidak mengurangi apa pun. Ramalan yang tidak ditulis membuatmu kehilangan kesempatan terkejut.</div>
+    </div>
+    <strong>Tabel data — isi dari angka yang kamu baca sendiri, bukan dari papan tulis</strong>
+    <table class="klas">
+      <thead><tr>
+        <th>Massa beban, m (kg)</th>
+        <th>Angka terbaca pada neraca pegas, F (N)</th>
+        <th>Perpindahan benda, s (m)</th>
+        <th>Sudut antara F dan s, &theta; (&deg;)</th>
+        <th>cos &theta; (tanpa satuan)</th>
+        <th>Usaha W = F &middot; s &middot; cos &theta; (J)</th>
+      </tr></thead>
+      <tbody>
+        <tr class="kelompok"><td colspan="6" data-label="">Perjalanan A — mengangkat kantong tegak ke atas, dari lantai ke permukaan meja (dua kali ulangan)</td></tr>
+        <tr>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="pr_a1_m"></td>
+          <td data-label="F (N)"><input type="text" inputmode="decimal" id="pr_a1_f"></td>
+          <td data-label="s (m)"><input type="text" inputmode="decimal" id="pr_a1_s"></td>
+          <td data-label="sudut (derajat)"><input type="text" inputmode="decimal" id="pr_a1_t"></td>
+          <td data-label="cos sudut"><input type="text" inputmode="decimal" id="pr_a1_c"></td>
+          <td data-label="W (J)"><input type="text" inputmode="decimal" id="pr_a1_w"></td>
+        </tr>
+        <tr>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="pr_a2_m"></td>
+          <td data-label="F (N)"><input type="text" inputmode="decimal" id="pr_a2_f"></td>
+          <td data-label="s (m)"><input type="text" inputmode="decimal" id="pr_a2_s"></td>
+          <td data-label="sudut (derajat)"><input type="text" inputmode="decimal" id="pr_a2_t"></td>
+          <td data-label="cos sudut"><input type="text" inputmode="decimal" id="pr_a2_c"></td>
+          <td data-label="W (J)"><input type="text" inputmode="decimal" id="pr_a2_w"></td>
+        </tr>
+        <tr class="kelompok"><td colspan="6" data-label="">Perjalanan B — membawa kantong yang tetap tergantung, berjalan mendatar (dua kali ulangan)</td></tr>
+        <tr>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="pr_b1_m"></td>
+          <td data-label="F (N)"><input type="text" inputmode="decimal" id="pr_b1_f"></td>
+          <td data-label="s (m)"><input type="text" inputmode="decimal" id="pr_b1_s"></td>
+          <td data-label="sudut (derajat)"><input type="text" inputmode="decimal" id="pr_b1_t"></td>
+          <td data-label="cos sudut"><input type="text" inputmode="decimal" id="pr_b1_c"></td>
+          <td data-label="W (J)"><input type="text" inputmode="decimal" id="pr_b1_w"></td>
+        </tr>
+        <tr>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="pr_b2_m"></td>
+          <td data-label="F (N)"><input type="text" inputmode="decimal" id="pr_b2_f"></td>
+          <td data-label="s (m)"><input type="text" inputmode="decimal" id="pr_b2_s"></td>
+          <td data-label="sudut (derajat)"><input type="text" inputmode="decimal" id="pr_b2_t"></td>
+          <td data-label="cos sudut"><input type="text" inputmode="decimal" id="pr_b2_c"></td>
+          <td data-label="W (J)"><input type="text" inputmode="decimal" id="pr_b2_w"></td>
+        </tr>
+        <tr class="kelompok"><td colspan="6" data-label="">Perjalanan C — menarik buku naik sejajar papan yang dimiringkan (dua kali ulangan)</td></tr>
+        <tr>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="pr_c1_m"></td>
+          <td data-label="F (N)"><input type="text" inputmode="decimal" id="pr_c1_f"></td>
+          <td data-label="s (m)"><input type="text" inputmode="decimal" id="pr_c1_s"></td>
+          <td data-label="sudut (derajat)"><input type="text" inputmode="decimal" id="pr_c1_t"></td>
+          <td data-label="cos sudut"><input type="text" inputmode="decimal" id="pr_c1_c"></td>
+          <td data-label="W (J)"><input type="text" inputmode="decimal" id="pr_c1_w"></td>
+        </tr>
+        <tr>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="pr_c2_m"></td>
+          <td data-label="F (N)"><input type="text" inputmode="decimal" id="pr_c2_f"></td>
+          <td data-label="s (m)"><input type="text" inputmode="decimal" id="pr_c2_s"></td>
+          <td data-label="sudut (derajat)"><input type="text" inputmode="decimal" id="pr_c2_t"></td>
+          <td data-label="cos sudut"><input type="text" inputmode="decimal" id="pr_c2_c"></td>
+          <td data-label="W (J)"><input type="text" inputmode="decimal" id="pr_c2_w"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="dibaca-guru">
+      <span class="tanda">dibaca guru</span>
+      <strong>Pengolahan — pakai angkamu sendiri, rumusnya sudah tertulis</strong>
+      <div class="kisi">
+        <div class="isi-item"><label for="pg_L">Panjang papan yang kamu ukur, L <span class="satuan">(m)</span></label><input type="text" inputmode="decimal" id="pg_L"></div>
+        <div class="isi-item"><label for="pg_dh">Tinggi ujung atas papan di atas meja, &Delta;h <span class="satuan">(m)</span></label><input type="text" inputmode="decimal" id="pg_dh"></div>
+        <div class="isi-item"><label for="pg_ep">Energi potensial yang didapat buku: Ep = m &middot; g &middot; &Delta;h, dengan g = 10 m/s&sup2; <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="pg_ep"></div>
+        <div class="isi-item"><label for="pg_wc">Usaha tarikanmu pada perjalanan C, disalin dari tabel <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="pg_wc"></div>
+        <div class="isi-item"><label for="pg_selisih">Selisih antara usaha tarikanmu dan Ep yang didapat buku <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="pg_selisih"></div>
+        <div class="isi-item"><label for="pg_kemana">Ke mana perginya selisih itu? Sebut namanya, jangan hanya menulis &ldquo;hilang&rdquo;.</label><input type="text" id="pg_kemana"></div>
+        <div class="isi-item"><label for="pg_wb">Usaha pada perjalanan B, disalin dari tabel <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="pg_wb"></div>
+        <div class="isi-item"><label for="pg_normal">Papan menekan buku tegak lurus permukaannya sepanjang perjalanan C. Berapa usaha gaya tekan papan itu? <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="pg_normal"></div>
+      </div>
+      <div class="kisi">
+        <div class="isi-item" style="grid-column:1/-1">
+          <label for="pg_b_kalimat">Perjalanan B: angka neracamu tetap besar dan tanganmu tetap pegal, tetapi usahanya tidak begitu. Tulis satu kalimat yang menjelaskan mengapa — sebut sudut antara gaya dan perpindahannya.</label>
+          <textarea id="pg_b_kalimat"></textarea>
+        </div>
+      </div>
+
+      <strong>Pertanyaan ralat</strong>
+      <div class="kisi">
+        <div class="isi-item" style="grid-column:1/-1">
+          <label for="pg_ralat">Sebutkan satu hal yang membuat angka F-mu berbeda dari angka pasangan di sebelahmu, dan ke arah mana hal itu menggeser nilai W yang kamu hitung — membesar atau mengecil?</label>
+          <textarea id="pg_ralat"></textarea>
+        </div>
+      </div>
+
+      <strong>Simpulan</strong>
+      <div class="bantu">Kerangkanya tercetak, isinya kamu yang menulis — dan pakailah angka tabelmu sendiri, bukan angka kelompok lain.</div>
+      <div class="kisi">
+        <div class="isi-item" style="grid-column:1/-1">
+          <label for="pg_simpul">Tulis satu kalimat yang menjelaskan konsep usaha, energi kinetik dan energi potensial, serta hubungan usaha&ndash;energi, berdasarkan tiga perjalanan yang baru kamu ukur. Mulailah begini: &ldquo;Dari angka yang aku ambil sendiri, usaha sebuah gaya ditentukan oleh &hellip;, bukan oleh &hellip;; dan energi yang berpindah &hellip;&rdquo;</label>
+          <textarea id="pg_simpul" style="min-height:90px;"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="ganti">
+      <div class="tajuk">Bila neraca pegas atau papan miringnya tidak tersedia di kelasmu</div>
+      <p style="font-size:13.5px;margin:4px 0 8px;">Kerjakan pengganti di bawah ini. Datanya tetap kamu ambil sendiri, dan tabelnya tetap kamu isi sendiri.</p>
+      <p style="font-size:13.5px;margin:4px 0 8px;"><strong>Tautan simulasi:</strong> <a href="https://phet.colorado.edu/sims/html/energy-skate-park-basics/latest/energy-skate-park-basics_en.html">Energy Skate Park: Basics (PhET, Universitas Colorado Boulder)</a><br>
+      <em>Tugas bacamu di laman itu:</em> nyalakan grafik batang energi, lalu baca tinggi batang Ep dan Ek pada dua titik saja — titik lepas dan titik terendah. <em>Tanggal akses:</em> 17 November 2026. <em>Isi lamannya:</em> satu lintasan luncur yang dapat diubah ketinggiannya, dengan grafik batang yang menunjukkan energi potensial, energi kinetik, dan energi total secara serentak.</p>
+      <p style="font-size:13.5px;margin:4px 0 8px;"><strong>Keadaan awal — samakan dulu sebelum menyentuh apa pun:</strong> pilih layar pertama (Intro); nyalakan grafik batang energi; pilih lintasan tanpa gesekan; atur massa peluncur pada angka terkecil yang tersedia; letakkan peluncur pada ketinggian h = 4 m.</p>
+      <p style="font-size:13.5px;margin:4px 0 8px;"><strong>Besaran yang boleh kamu ubah, dan hanya ini:</strong> ketinggian lepas h dan massa peluncur m. Bentuk lintasan, gesekan, dan gravitasi dibiarkan apa adanya.</p>
+      <ol style="font-size:13.5px;">
+        <li><strong>Ubah</strong> ketinggian lepas dari h = 4 m menjadi h = 6 m. <strong>Amati</strong> tinggi batang Ep pada saat peluncur dilepas. <strong>Simpulkan</strong> bagaimana Ep bergantung pada ketinggian.</li>
+        <li><strong>Ubah</strong> massa peluncur dari yang terkecil ke yang terbesar, dengan h dibiarkan tetap. <strong>Amati</strong> tinggi batang Ek di titik terendah dan laju peluncurnya di sana. <strong>Simpulkan</strong> apakah massa mengubah lajunya di titik terendah.</li>
+        <li><strong>Amati</strong> batang energi total sepanjang satu perjalanan penuh pada lintasan tanpa gesekan; lintasan itu menekan peluncur tegak lurus arah geraknya di setiap titik. <strong>Simpulkan</strong> berapa usaha yang dilakukan gaya tekan lintasan tersebut, lalu <strong>ubah</strong> h sekali lagi untuk memastikan simpulanmu tidak berubah.</li>
+      </ol>
+      <p style="font-size:13px;color:#6A7F84;margin:4px 0 8px;"><strong>Di mana simulasi ini berbeda dari kenyataan:</strong> lintasannya benar-benar tanpa gesekan dan angkanya bulat, sedangkan di kelas talimu, rodamu, dan tanganmu selalu menambahkan gesekan kecil, sehingga angkamu tidak akan pernah sebulat angka di layar.</p>
+      <table class="klas">
+        <thead><tr>
+          <th>Ketinggian lepas, h (m)</th>
+          <th>Massa peluncur, m (kg)</th>
+          <th>Ep saat dilepas (J)</th>
+          <th>Ek di titik terendah (J)</th>
+          <th>Energi total di titik terendah (J)</th>
+        </tr></thead>
+        <tbody>
+        <tr>
+          <td data-label="h (m)"><input type="text" inputmode="decimal" id="sm_1_h"></td>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="sm_1_m"></td>
+          <td data-label="Ep (J)"><input type="text" inputmode="decimal" id="sm_1_ep"></td>
+          <td data-label="Ek (J)"><input type="text" inputmode="decimal" id="sm_1_ek"></td>
+          <td data-label="Etotal (J)"><input type="text" inputmode="decimal" id="sm_1_et"></td>
+        </tr>
+        <tr>
+          <td data-label="h (m)"><input type="text" inputmode="decimal" id="sm_2_h"></td>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="sm_2_m"></td>
+          <td data-label="Ep (J)"><input type="text" inputmode="decimal" id="sm_2_ep"></td>
+          <td data-label="Ek (J)"><input type="text" inputmode="decimal" id="sm_2_ek"></td>
+          <td data-label="Etotal (J)"><input type="text" inputmode="decimal" id="sm_2_et"></td>
+        </tr>
+        <tr>
+          <td data-label="h (m)"><input type="text" inputmode="decimal" id="sm_3_h"></td>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="sm_3_m"></td>
+          <td data-label="Ep (J)"><input type="text" inputmode="decimal" id="sm_3_ep"></td>
+          <td data-label="Ek (J)"><input type="text" inputmode="decimal" id="sm_3_ek"></td>
+          <td data-label="Etotal (J)"><input type="text" inputmode="decimal" id="sm_3_et"></td>
+        </tr>
+        <tr>
+          <td data-label="h (m)"><input type="text" inputmode="decimal" id="sm_4_h"></td>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="sm_4_m"></td>
+          <td data-label="Ep (J)"><input type="text" inputmode="decimal" id="sm_4_ep"></td>
+          <td data-label="Ek (J)"><input type="text" inputmode="decimal" id="sm_4_ek"></td>
+          <td data-label="Etotal (J)"><input type="text" inputmode="decimal" id="sm_4_et"></td>
+        </tr>
+        <tr>
+          <td data-label="h (m)"><input type="text" inputmode="decimal" id="sm_5_h"></td>
+          <td data-label="m (kg)"><input type="text" inputmode="decimal" id="sm_5_m"></td>
+          <td data-label="Ep (J)"><input type="text" inputmode="decimal" id="sm_5_ep"></td>
+          <td data-label="Ek (J)"><input type="text" inputmode="decimal" id="sm_5_ek"></td>
+          <td data-label="Etotal (J)"><input type="text" inputmode="decimal" id="sm_5_et"></td>
+        </tr>
+        </tbody>
+      </table>
+      <span class="tanda">dibaca guru</span>
+      <div class="kisi">
+        <div class="isi-item" style="grid-column:1/-1"><label for="sm_simpul">Simpulanmu dari ketiga pengamatan di atas, satu kalimat untuk tiap pengamatan.</label><textarea id="sm_simpul" style="min-height:84px;"></textarea></div>
+      </div>
+    </div>
+
+    <div class="cara-baca"><strong>Kalau alat peraga mati total — listrik padam, papan tayang tidak menyala.</strong> Praktikum ini tetap berjalan: ketiga perjalanan di atas tidak memerlukan listrik sama sekali. Yang berubah hanya cara gurumu menunjukkan contohnya, yaitu digambar ulang di papan tulis biasa.</div>
+  </div>
+</div>
+
+<!-- ================= CEK-MANDIRI-MULAI ================= -->
+<div class="bagian" id="cek-mandiri">
+  <div class="bagian-judul"><span class="lencana">Sendiri</span> Cek Mandiri</div>
+  <div class="bagian-isi">
+    <div class="cara-baca"><strong>Cara membaca angka di bagian ini.</strong> Hanya bagian ini yang dihitung otomatis. Angkanya memberi tahu gurumu harus berdiri di meja siapa sesudah jam ini &mdash; ia tidak menaikkan dan tidak menurunkan nilai rapormu. Kerjakan sendiri, tanpa membuka modul, paling lama tujuh menit.</div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal pertama</div>
+      <div class="soal-isi">
+        <div class="naskah">Seorang petugas memanggul karung beras bermassa 24 kg di atas bahunya, lalu berjalan mendatar sejauh 38 m dengan laju tetap. Ia tiba di gudang dengan napas habis.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="g-01a">Usaha gaya penahan bahu terhadap karung selama ia berjalan <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="g-01a">
+          </div>
+          <div class="isi-item">
+            <label for="g-01b">Satu kata: apakah rasa lelahnya menunjukkan bahwa ia melakukan usaha secara fisika?</label>
+            <select id="g-01b">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="YA">YA</option>
+              <option value="TIDAK">TIDAK</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal kedua</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah balok bermassa 11 kg mula-mula diam di lantai licin. Balok itu didorong oleh gaya mendatar yang tetap sampai lajunya menjadi 12 m/s. Sesudah itu dorongannya dilepas, dan balok direm oleh gesekan sampai berhenti.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="g-02a">Usaha total yang bekerja pada balok selama ia melaju di bagian licin <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="g-02a">
+          </div>
+          <div class="isi-item">
+            <label for="g-02b">Ke mana perginya energi gerak balok ketika ia direm?</label>
+            <select id="g-02b">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Menjadi kalor, dan sedikit bunyi</option>
+              <option value="B">B. Tidak ke mana-mana; energinya lenyap begitu balok berhenti</option>
+              <option value="C">C. Menjadi gaya gesek</option>
+              <option value="D">D. Kembali ke tangan yang tadi mendorongnya</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal ketiga</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah peti didorong naik sepanjang papan miring yang licin oleh gaya yang arahnya sejajar papan. Sampai di atas, peti itu meluncur melintasi lantai mendatar yang kasar sampai melambat.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="g-03a">Usaha gaya normal, yaitu gaya tekan papan pada peti, sepanjang papan miring itu</label>
+            <select id="g-03a">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Nol &mdash; arah gaya normal selalu tegak lurus arah gerak peti</option>
+              <option value="B">B. Tak-nol &mdash; besarnya bergantung pada sudut kemiringan papan</option>
+              <option value="C">C. Tak-nol &mdash; gaya normal ikut mendorong peti naik</option>
+              <option value="D">D. Nol &mdash; karena papannya licin</option>
+            </select>
+          </div>
+          <div class="isi-item">
+            <label for="g-03b">Di lantai kasar, energi gerak peti berubah menjadi</label>
+            <select id="g-03b">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Kalor, dan sedikit bunyi</option>
+              <option value="B">B. Tidak menjadi apa pun; energinya habis dan lenyap</option>
+              <option value="C">C. Gaya gesek lantai</option>
+              <option value="D">D. Energi potensial, sebab peti berhenti di tempat yang lebih tinggi</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================= CEK-MANDIRI-SELESAI ================= -->
+
+<!-- ================= KONSOLIDASI ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Penutup</span> Konsolidasi &mdash; tiga kalimat yang kamu bawa pulang</div>
+  <div class="bagian-isi">
+    <div class="bantu">Gurumu membuka bagian ini di akhir jam, sesudah seluruh papan kecil diangkat. Salin ketiganya ke buku catatanmu, persis seperti tertulis.</div>
+
+    <div class="jangkar"><span class="urut">Kalimat pertama</span>
+      &ldquo;Gaya otot &perp; perpindahan mendatar &rarr; W = 0 J, meski terasa lelah; usaha fisika ditentukan komponen gaya searah perpindahan, bukan sensasi kelelahan.&rdquo;</div>
+
+    <div class="jangkar"><span class="urut">Kalimat kedua</span>
+      &ldquo;W = &Delta;Ek = &frac12;(2)(4&sup2;) &minus; 0 = 16 J. Saat direm, Ek berubah jadi kalor (+ sedikit bunyi) akibat gesekan &mdash; bukan hilang, energi total tetap kekal.&rdquo;</div>
+
+    <div class="jangkar"><span class="urut">Kalimat ketiga</span>
+      &ldquo;Ek_P = 18 J (dari v); Ep_Q = 20 J (dari h, acuan di lantai). Ek bergantung kecepatan (tak bergantung acuan); Ep bergantung posisi relatif terhadap acuan yang dipilih.&rdquo;</div>
+
+    <div class="dibaca-guru">
+      <span class="tanda">dibaca guru</span>
+      <div class="kisi">
+        <div class="isi-item" style="grid-column:1/-1">
+          <label for="ks_sendiri">Tulis ulang kalimat pertama dengan bahasamu sendiri, tanpa melihat kotak hijau di atas.</label>
+          <textarea id="ks_sendiri"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= REFLEKSI PENUTUP ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Refleksi</span> Tiga baris terakhir sebelum lembarmu dikumpulkan</div>
+  <div class="bagian-isi dibaca-guru">
+    <span class="tanda">dibaca guru</span>
+    <div class="kisi">
+      <div class="isi-item" style="grid-column:1/-1">
+        <label for="rf_a">Buka lagi kotak <strong>Pemantik</strong> di awal lembar ini dan baca tebakanmu sendiri. Apa yang berubah dari jawabanmu di sana, dan angka atau pengamatan mana yang mengubahnya?</label>
+        <textarea id="rf_a"></textarea>
+      </div>
+      <div class="isi-item" style="grid-column:1/-1">
+        <label for="rf_b">Satu kalimat untuk temanmu yang hari ini tidak masuk: apa yang dia lewatkan tentang usaha dan energi?</label>
+        <textarea id="rf_b"></textarea>
+      </div>
+      <div class="isi-item" style="grid-column:1/-1">
+        <label for="rf_c">Bagian mana dari lembar ini yang masih kamu ragukan? Sebut bagiannya dan sebut apa yang membuatmu ragu &mdash; jangan menulis angka atau tanda centang saja.</label>
+        <textarea id="rf_c"></textarea>
+      </div>
+    </div>
+    <div class="bantu">Lembar ini dikumpulkan di akhir jam, selesai atau belum. Jangan dibawa pulang untuk dirapikan &mdash; yang dibaca gurumu adalah jejak kerjamu hari ini, bukan kerapian salinannya.</div>
+  </div>
+</div>
+
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+
+</div><!-- /wrap -->
+
+<div class="bilah-bawah">
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">Menghitung isian pada lembar ini<div class="hitungan" id="hitungan_teks">0 dari 6 isian dijawab</div>hellip;</div>
+      <button class="periksa" id="btn_periksa" type="button">Periksa kelengkapan</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+var KUNCI_NUM = {
+  "g-01a": [0, 0.05],
+  "g-02a": [792, 1]
+};
+
+var KUNCI_PIL = {
+  "g-01b": "TIDAK",
+  "g-02b": "A",
+  "g-03a": "A",
+  "g-03b": "A"
+};
+
+var TOTAL = Object.keys(KUNCI_NUM).length + Object.keys(KUNCI_PIL).length;
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+
+function hitungNilai(){
+  cerminSemua();
+  var benar = 0;
+  for (var id in KUNCI_NUM){
+    var kunci = KUNCI_NUM[id][0], tol = KUNCI_NUM[id][1];
+    var v = bacaBilangan(nilaiElemen(id));
+    if (v !== null && Math.abs(v - kunci) <= tol) benar++;
+  }
+  for (var id2 in KUNCI_PIL){
+    var jawab = nilaiElemen(id2);
+    if (jawab !== null && String(jawab).trim() === String(KUNCI_PIL[id2]).trim()) benar++;
+  }
+  return Math.round((benar / TOTAL) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function semuaIsian(){
+  return document.querySelectorAll("input[type=text], select, textarea");
+}
+
+function perbarui(){
+  var els = semuaIsian();
+  var terisi = 0;
+  for (var i = 0; i < els.length; i++){
+    if (String(els[i].value).trim() !== "") terisi++;
+  }
+  var pct = els.length ? Math.round((terisi / els.length) * 100) : 0;
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + els.length + " isian sudah terisi";
+}
+
+function periksaKelengkapan(){
+  cerminSemua();
+  var els = semuaIsian();
+  var kosongPertama = null;
+  for (var i = 0; i < els.length; i++){
+    var el = els[i];
+    var item = el.closest ? el.closest(".isi-item") : null;
+    var sel = el.closest ? el.closest("td") : null;
+    var tandai = item || sel;
+    if (String(el.value).trim() === ""){
+      if (tandai) tandai.classList.add("kosong");
+      el.style.borderColor = "#C05621";
+      el.style.background = "#FFF7F1";
+      if (!kosongPertama) kosongPertama = el;
+    } else {
+      if (tandai) tandai.classList.remove("kosong");
+      el.style.borderColor = "";
+      el.style.background = "";
+    }
+  }
+  var pesan = document.getElementById("pesan_teks");
+  if (kosongPertama){
+    if (kosongPertama.scrollIntoView) kosongPertama.scrollIntoView({behavior:"smooth", block:"center"});
+    if (pesan) pesan.textContent = "Masih ada kotak yang kosong — kotak itu ditandai oranye.";
+  } else {
+    if (pesan) pesan.textContent = "Seluruh kotak sudah terisi. Kumpulkan lembarmu sesuai arahan gurumu.";
+  }
+  perbarui();
+}
+
+document.addEventListener("input", function(ev){
+  cermin(ev.target);
+  perbarui();
+}, false);
+document.addEventListener("change", function(ev){
+  cermin(ev.target);
+  perbarui();
+}, false);
+document.addEventListener("blur", function(ev){
+  cermin(ev.target);
+}, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua();
+  perbarui();
+  var btn = document.getElementById("btn_periksa");
+  if (btn) btn.addEventListener("click", periksaKelengkapan);
+});
+
+cerminSemua();
+
+})();
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

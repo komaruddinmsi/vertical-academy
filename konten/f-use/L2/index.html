@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muara Topik Fisika F.USE — Urutan Kerja di Jalur Angkut Galon</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:130px;
+}
+.wrap{max-width:900px; margin:0 auto; padding:0 16px;}
+.kepala{
+  position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;
+}
+.kepala::before,.kepala::after{
+  content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);
+}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:640px; position:relative;}
+
+.kartu{background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;}
+.kartu h2{font-size:15.5px; margin:0 0 10px; color:var(--tosca0);}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+
+.aturan{
+  background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;
+}
+.aturan strong{color:#8A6604;}
+.aturan ol,.aturan ul{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+
+.ringkas-tugas{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:14px;}
+.ringkas-tugas .sel{background:var(--toscaB); border-radius:10px; padding:12px 14px; font-size:13px;}
+.ringkas-tugas .sel b{display:block; color:var(--tosca0); font-size:12px; letter-spacing:.6px;
+  text-transform:uppercase; margin-bottom:5px;}
+
+.bagian{margin:26px 0;}
+.bagian-judul{
+  background:linear-gradient(100deg, var(--tosca), var(--tosca2));
+  color:#fff; padding:10px 16px; border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px;
+  font-size:15.5px; font-weight:600;
+}
+.lencana{
+  background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5);
+  border-radius:999px; padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;
+}
+.bagian-isi{
+  border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;
+}
+
+.soal{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.soal-judul{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:8px 14px; font-size:13.5px;}
+.soal-isi{padding:14px 16px;}
+.naskah{
+  background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px;
+  padding:12px 14px; font-size:14px; margin-bottom:10px;
+}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:-4px 0 12px;}
+.arah-positif{font-size:12.5px; color:var(--oranye); font-weight:600; margin:6px 0 10px;}
+
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;
+}
+.isi-item input[type=text]:not(:placeholder-shown), .isi-item select:valid{border-color: var(--tosca2);}
+.isi-item.kosong input, .isi-item.kosong select, .isi-item.kosong textarea{border-color:var(--oranye); background:#FFF7F1;}
+.lebar{grid-column:1/-1;}
+
+.dibaca-guru{position:relative;}
+.dibaca-guru .tanda{
+  display:inline-block; background:var(--oranyeB); color:var(--oranye); font-size:11px; font-weight:700;
+  border-radius:999px; padding:2px 9px; margin-bottom:6px; letter-spacing:0.3px;
+}
+textarea{
+  width:100%; min-height:64px; padding:9px 11px; border:1.5px solid #C9DADC; border-radius:8px;
+  font-size:13.5px; font-family:inherit; resize:vertical;
+}
+
+table.klas{width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px;}
+table.klas th{background:var(--tosca); color:#fff; padding:8px 10px; text-align:left; font-size:12.5px; vertical-align:bottom;}
+table.klas td{padding:7px 10px; border-bottom:1px solid #E5EEEF; vertical-align:top;}
+table.klas tr:nth-child(even) td{background:#F7FBFB;}
+table.klas td input[type=text], table.klas td select{
+  width:100%; min-width:90px; padding:6px 8px; border:1.5px solid #C9DADC; border-radius:7px; font-size:13px; background:#fff;
+}
+table.klas td.kosong input, table.klas td.kosong select{border-color:var(--oranye); background:#FFF7F1;}
+
+table.tangga{width:100%; border-collapse:collapse; margin:10px 0; font-size:12.8px;}
+table.tangga th{background:var(--tosca0); color:#fff; padding:8px 10px; text-align:left; font-size:12.2px;}
+table.tangga td{padding:8px 10px; border-bottom:1px solid #E5EEEF; vertical-align:top;}
+table.tangga td.tahap{font-weight:700; color:var(--tosca0); background:var(--toscaB); white-space:nowrap;}
+table.tangga tr.sasaran td{background:var(--hijauB);}
+table.tangga tr.sasaran td.tahap{background:#CFE9DB; color:var(--hijau);}
+
+.kotak-slot{
+  background:#FFFDF5; border:2px dashed var(--kuning); border-radius:10px; padding:13px 16px; margin:14px 0; font-size:13px;
+}
+.kotak-slot b{color:#8A6604;}
+.kotak-luring{
+  background:var(--abuB); border-left:5px solid var(--abu); border-radius:8px; padding:12px 15px; margin:14px 0; font-size:13px;
+}
+.kotak-aman{
+  background:var(--merahB); border-left:5px solid var(--merah); border-radius:8px; padding:12px 15px; margin:14px 0; font-size:13px;
+}
+.kotak-aman b{color:var(--merah);}
+ol.langkah{padding-left:22px; font-size:13.5px;}
+ol.langkah li{margin:6px 0;}
+ul.serah{padding-left:20px; font-size:13.5px;}
+ul.serah li{margin:6px 0;}
+
+.bilah-bawah{
+  position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;
+}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{
+  height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;
+}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{
+  background:var(--tosca); color:#fff; border:none; border-radius:8px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; cursor:pointer;
+}
+button.periksa:hover{background:var(--tosca0);}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%;}
+.kaki{font-size:12px; color:var(--abu); text-align:center; margin:26px 0 10px;}
+
+@media (max-width:640px){
+  table.klas, table.klas thead, table.klas tbody, table.klas tr, table.klas th, table.klas td{display:block;}
+  table.klas thead{display:none;}
+  table.klas tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px;}
+  table.klas td{border:none; padding:4px 2px;}
+  table.klas td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca);}
+  table.tangga, table.tangga thead, table.tangga tbody, table.tangga tr, table.tangga th, table.tangga td{display:block;}
+  table.tangga thead{display:none;}
+  table.tangga tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px;}
+  table.tangga td{border:none; padding:4px 2px;}
+  table.tangga td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca);}
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+}
+@media print{
+  body{background:#fff; padding-bottom:0;}
+  .bilah-bawah{display:none;}
+  .kepala{background:var(--tosca0) !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .bagian, .kartu, .soal{break-inside:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="kepala"><div class="wrap">
+  <div class="baris-kecil">Fisika &middot; Kelas XI &middot; Topik F.USE &middot; Lintas TP</div>
+  <h1>Muara Topik — Urutan Kerja di Jalur Angkut Galon</h1>
+  <div class="penjelas">Satu jalur, seluruh gagasan topik ini sekaligus. Yang menentukan bukan rumus mana yang kamu tahu, melainkan urutan kamu memakainya — dan kamu harus mempertanggungjawabkan urutan itu.</div>
+</div></div>
+
+<div class="wrap">
+
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 20-11-2026"></div>
+</div>
+<div class="aturan"><strong>Cara mengisi</strong><ol><li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li><li>Tulis angkanya saja, tanpa satuan &mdash; satuannya sudah tercetak di kepala kolom tabel atau di sebelah kotaknya.</li><li>Kalau jawabannya negatif, jangan lupa tanda minus; pada besaran berarah, tanda adalah setengah dari jawaban.</li><li>Kotak bertanda <b>dibaca guru</b> tidak diperiksa otomatis, tetapi justru di situlah alasanmu dibaca. Jangan dikosongkan.</li><li>Jawabanmu tersimpan begitu kamu berpindah ke kotak berikutnya. Kamu boleh menutup halaman dan melanjutkannya nanti.</li><li>Tombol <b>Periksa kelengkapan</b> di bilah bawah menandai kotak yang masih kosong dengan warna oranye dan membawamu ke yang pertama. Ia memeriksa kelengkapan, bukan kebenaran &mdash; tugas ini dinilai dengan tangga mutu, bukan dengan skor.</li><li>Baca tangga mutu di bawah kartu ini sampai habis <b>sebelum</b> kamu mulai. Di situ sudah tertulis apa yang dicari gurumu.</li><li>Kerjakan Bagian 1 sampai selesai sebelum menghitung apa pun. Urutan itulah yang dinilai di sini.</li><li>Pakai g = 10 m/s&sup2;, cos 37&deg; = 0,8, dan sin 37&deg; = 0,6 di seluruh halaman ini.</li></ol></div>
+<div class="kartu">
+  <h2>Apa yang membuat tugas ini berbeda dari tugas sebelumnya</h2>
+  <p style="font-size:13.4px; margin:0 0 10px;">Pada dua tugas sebelumnya kamu memakai <b>satu</b> gagasan di
+  tempat baru. Di sini tidak. Di sini seluruh gagasan topik ini dipakai sekaligus, dan yang menentukan berhasil
+  atau tidaknya bukan rumus mana yang kamu tahu, melainkan <b>urutan</b> kamu memakainya. Satu angka yang kamu
+  butuhkan di langkah keempat hanya bisa lahir dari langkah kedua. Kalau urutannya kamu balik, kamu akan berhenti
+  di tengah jalan dengan kotak kosong yang tidak bisa diisi dari mana pun.</p>
+  <p style="font-size:13.4px; margin:0 0 10px;">Karena itu Bagian 1 di bawah bukan pemanasan. Ia adalah
+  <b>urutan kerja</b> yang kamu putuskan sendiri, kamu tulis lebih dulu, dan kamu pertanggungjawabkan di Bagian 5.</p>
+  <div class="ringkas-tugas">
+    <div class="sel"><b>Tempatnya</b>Jalur angkut galon air dari gudang ke dapur. Sebagian ukurannya kamu ambil sendiri dari koridor asramamu.</div>
+    <div class="sel"><b>Berapa lama</b>Sekitar 150 menit: 30 menit menyusun urutan kerja, 20 menit menggolongkan gaya, 30 menit merencanakan segmen, 35 menit menghitung dan memberi verdikt, 20 menit mengukur koridormu sendiri, 15 menit menulis.</div>
+    <div class="sel"><b>Yang kamu serahkan</b>Berkas ini dengan seluruh kotak terisi, ditambah satu sketsa jalur bertanda A, B, C, D, E dengan ukuranmu sendiri tertulis di atasnya.</div>
+    <div class="sel"><b>Yang dihitung sebagai bukti</b>Urutan kerja yang kamu tulis sebelum menghitung, alasan mengapa dua langkah tidak boleh ditukar, hitungan yang tuntas, dan verdikt yang menjawab pertanyaan petugas dapur.</div>
+  </div>
+  <p style="font-size:13.3px; margin:14px 0 0; padding-top:12px; border-top:1px dashed #D7E6E8;">
+  <b>Yang perlu kamu capai: Tahap 3 pada keempat kolom</b> tangga mutu di bawah. Tangga itu sudah ada di tanganmu
+  sekarang, bersama tugasnya &mdash; bukan muncul belakangan saat pekerjaanmu dinilai.</p>
+</div>
+
+<div class="kartu">
+  <h2>Tangga mutu — diberikan bersama tugasnya</h2>
+  <table class="tangga"><thead><tr><th>Tahap</th><th>Menggolongkan gaya</th><th>Menjelaskan ke mana energi pergi</th><th>Merencanakan urutan dan persamaan</th><th>Menjalankan hitungan dan memberi verdikt</th></tr></thead><tbody><tr><td class="tahap" data-label="Tahap">Tahap 4<br><span style="font-weight:400;font-size:11.5px">Jalan sendiri di medan baru</span></td><td data-label="Menggolongkan gaya">Kamu menggolongkan dengan tepat pada keadaan yang lebih ramai daripada contoh di kelas &mdash; gaya menyerong, atau beberapa gaya sekaligus yang sebagiannya tegak lurus &mdash; dan menghitung sendiri bagian gaya yang searah perpindahan bila perlu, tanpa dituntun.</td><td data-label="Menjelaskan ke mana energi pergi">Kamu menjelaskan dan meramalkan perubahan energi pada keadaan yang belum pernah dibahas, dan model usaha&rarr;perubahan energi gerak tetap kamu jalankan dengan benar tanpa dituntun.</td><td data-label="Merencanakan urutan dan persamaan">Kamu menyusun urutan dan persamaan untuk jalur yang lebih ramai daripada yang pernah dicontohkan &mdash; lebih dari dua segmen berganti-ganti licin dan kasar, atau titik sasaran di tengah segmen kasar &mdash; tanpa dituntun, dengan acuan dan persamaan tiap segmen yang tetap taat asas dan benar.</td><td data-label="Menjalankan hitungan dan memberi verdikt">Kamu menghasilkan penyelesaian utuh dan nyambung untuk rancangan dengan beberapa syarat sekaligus, termasuk menemukan sendiri di titik mana jalurnya gagal dan mengusulkan perbaikan berangka yang tepat, tanpa dituntun.</td></tr><tr class="sasaran"><td class="tahap" data-label="Tahap">Tahap 3<br><span style="font-weight:400;font-size:11.5px">Jalan sendiri</span></td><td data-label="Menggolongkan gaya">Pada keadaan baru dengan gaya yang jelas sejajar atau jelas tegak lurus arah perpindahan, kamu menggolongkan dengan benar dan alasanmu bertumpu pada <b>arah gaya</b>, kamu kerjakan sendiri.</td><td data-label="Menjelaskan ke mana energi pergi">Kamu menjelaskan bahwa usaha total sama dengan perubahan energi gerak, dan bahwa energi yang tampak hilang sebenarnya <b>berubah bentuk</b> menjadi kalor dan sedikit bunyi &mdash; bukan lenyap &mdash; pada keadaan baru, kamu kerjakan sendiri.</td><td data-label="Merencanakan urutan dan persamaan">Untuk jalur tiga segmen yang baru (licin&ndash;kasar&ndash;licin), kamu menetapkan satu titik acuan ketinggian dan memakainya terus, lalu menuliskan persamaan tiap segmen dengan tepat &mdash; kekal penuh pada segmen licin, dikurangi usaha gesekan pada segmen kasar &mdash; <b>sebelum</b> menghitung, kamu kerjakan sendiri. Di sini ditambah satu hal: kamu juga menetapkan <b>langkah mana dulu, langkah mana kemudian</b>, dan kamu bisa menyebut alasannya.</td><td data-label="Menjalankan hitungan dan memberi verdikt">Kamu menghitung tuntas seluruh rangkaiannya: energi awal, energi yang menjadi kalor di segmen kasar, lalu laju atau energi di titik sasaran. Kesimpulanmu nyambung dan menjawab pertanyaan yang sebenarnya diajukan, dan kamu sebut bahwa energinya <b>berubah bentuk</b>, bukan hilang. Kamu kerjakan sendiri.</td></tr><tr><td class="tahap" data-label="Tahap">Tahap 2<br><span style="font-weight:400;font-size:11.5px">Jalan bila dipandu</span></td><td data-label="Menggolongkan gaya">Kamu menggolongkan dengan benar bila dipandu lebih dulu, dan masih butuh pengingat arah tiap kali soalnya berganti.</td><td data-label="Menjelaskan ke mana energi pergi">Kamu bisa menyebut usaha total = perubahan energi gerak bila rumusnya diingatkan, tetapi belum menjelaskan ke mana energi itu pergi tanpa dipandu.</td><td data-label="Merencanakan urutan dan persamaan">Kamu bisa menyusun rencana yang benar bila di soalnya sudah ditandai segmen mana yang licin dan mana yang kasar, dan bila urutan langkahnya sudah dituliskan untukmu.</td><td data-label="Menjalankan hitungan dan memberi verdikt">Kamu bisa menghitung tiap langkah bila urutannya atau kerangka tabelnya dituntunkan, tetapi kesimpulan akhirnya belum kamu rangkai sendiri tanpa diminta.</td></tr><tr><td class="tahap" data-label="Tahap">Tahap 1<br><span style="font-weight:400;font-size:11.5px">Baru mulai</span></td><td data-label="Menggolongkan gaya">Kamu menggolongkan dari perasaan &ldquo;kerja keras berarti usaha besar&rdquo; meski dibantu, tanpa mengecek arah gayanya.</td><td data-label="Menjelaskan ke mana energi pergi">Kamu belum menghubungkan usaha dengan perubahan energi sama sekali, atau kamu yakin energinya benar-benar lenyap.</td><td data-label="Merencanakan urutan dan persamaan">Kamu belum membedakan segmen licin dari segmen kasar ketika menyusun rencana, meski sudah dibantu.</td><td data-label="Menjalankan hitungan dan memberi verdikt">Konsep dasarnya masih keliru &mdash; misalnya menyamakan energi ketinggian di awal dengan energi ketinggian di akhir begitu saja &mdash; meski dituntun langkah demi langkah.</td></tr></tbody></table>
+  <p style="font-size:13.2px; margin:10px 0 0;"><b>Yang perlu kamu capai: Tahap 3 pada keempat kolom</b> (baris hijau).
+  Keputusan tentang urutan dibaca di dalam kolom ketiga.</p>
+</div>
+<div class="bagian"><div class="bagian-judul"><span class="lencana">Bagian 1</span> Urutan kerja — diputuskan dan ditulis sebelum menghitung</div><div class="bagian-isi">
+<div class="naskah">
+<b>Yang terjadi tiap pagi di FIWA.</b> Dua galon air diangkut dari gudang ke dapur dengan troli.
+Total massa troli beserta galonnya <b>m = 25 kg</b>. Pakai g = 10 m/s&sup2;, cos 37&deg; = 0,8, sin 37&deg; = 0,6.
+<br><br>
+<b>Tahap A&rarr;B.</b> Di selasar berubin yang rata, troli ditarik <b>dari diam</b> sejauh <b>s = 5,0 m</b>
+dengan tali yang membentuk sudut <b>37&deg;</b> terhadap lantai. Gaya tarik terbaca <b>F = 50 N</b> pada neraca
+pegas koper yang dipasang di tali. Roda troli baru diminyaki, jadi pada tahap ini gesekannya diabaikan.
+<br><br>
+<b>Tahap B&rarr;C.</b> Di titik B troli dilepas dan meluncur menuruni jalur landai <b>licin</b> yang turun
+<b>0,80 m</b> sampai lantai koridor di titik C.
+<br><br>
+<b>Tahap C&rarr;D.</b> Koridor mendatar C&rarr;D sepanjang <b>d = 6,0 m</b> berlantai semen <b>kasar</b>,
+dengan <b>&mu;<sub>k</sub> = 0,20</b>.
+<br><br>
+<b>Tahap D&rarr;E.</b> Papan landai <b>licin</b> menanjak <b>0,30 m</b> dari lantai koridor ke lantai dapur di titik E.
+<br><br>
+<b>Syarat petugas dapur, dua sisi.</b> Troli harus <b>benar-benar sampai</b> di E, dan harus tiba dengan laju
+<b>tidak lebih dari 1,5 m/s</b>, supaya tidak menghantam rak piring di belakang titik E.
+<br><br>
+Tidak satu pun laju diberikan kepadamu. Laju pertama harus kamu lahirkan sendiri dari tahap A&rarr;B &mdash;
+dan itu baru mungkin sesudah kamu memutuskan gaya mana yang benar-benar melakukan usaha di sana.
+</div>
+
+<div class="naskah"><b>Isi tabel ini lebih dulu, sebelum satu angka pun kamu hitung.</b> Enam langkah di bawah
+sudah dinamai untukmu, tetapi yang menjadi pekerjaanmu adalah dua kolom kanannya: apa yang tiap langkah butuh
+dari langkah sebelumnya, dan apa yang akan rusak bila langkah itu dikerjakan terlalu awal. Jawab pendek,
+satu baris saja.</div>
+<table class="klas"><thead><tr><th>Langkah</th><th>Yang kamu kerjakan di langkah ini</th><th>Angka apa yang kamu butuhkan dari langkah sebelumnya</th><th>Apa yang rusak bila langkah ini dikerjakan lebih awal</th></tr></thead><tbody><tr><td data-label="Langkah">Langkah 1</td><td data-label="Yang kamu kerjakan di langkah ini">Menetapkan arah gerak dan titik acuan ketinggian untuk seluruh jalur</td><td data-label="Angka apa yang kamu butuhkan dari langkah sebelumnya"><input type="text" id="m_u1_butuh" placeholder=""></td><td data-label="Apa yang rusak bila langkah ini dikerjakan lebih awal"><input type="text" id="m_u1_rusak" placeholder=""></td></tr><tr><td data-label="Langkah">Langkah 2</td><td data-label="Yang kamu kerjakan di langkah ini">Menggolongkan gaya pada tahap A&rarr;B dan menghitung usaha totalnya</td><td data-label="Angka apa yang kamu butuhkan dari langkah sebelumnya"><input type="text" id="m_u2_butuh" placeholder=""></td><td data-label="Apa yang rusak bila langkah ini dikerjakan lebih awal"><input type="text" id="m_u2_rusak" placeholder=""></td></tr><tr><td data-label="Langkah">Langkah 3</td><td data-label="Yang kamu kerjakan di langkah ini">Memakai usaha total = perubahan energi gerak untuk mendapat energi gerak dan laju di titik B</td><td data-label="Angka apa yang kamu butuhkan dari langkah sebelumnya"><input type="text" id="m_u3_butuh" placeholder=""></td><td data-label="Apa yang rusak bila langkah ini dikerjakan lebih awal"><input type="text" id="m_u3_rusak" placeholder=""></td></tr><tr><td data-label="Langkah">Langkah 4</td><td data-label="Yang kamu kerjakan di langkah ini">Menuliskan persamaan tiap segmen B&rarr;C, C&rarr;D, D&rarr;E &mdash; sebelum angka dimasukkan</td><td data-label="Angka apa yang kamu butuhkan dari langkah sebelumnya"><input type="text" id="m_u4_butuh" placeholder=""></td><td data-label="Apa yang rusak bila langkah ini dikerjakan lebih awal"><input type="text" id="m_u4_rusak" placeholder=""></td></tr><tr><td data-label="Langkah">Langkah 5</td><td data-label="Yang kamu kerjakan di langkah ini">Menjalankan hitungan berurutan sampai laju di titik E</td><td data-label="Angka apa yang kamu butuhkan dari langkah sebelumnya"><input type="text" id="m_u5_butuh" placeholder=""></td><td data-label="Apa yang rusak bila langkah ini dikerjakan lebih awal"><input type="text" id="m_u5_rusak" placeholder=""></td></tr><tr><td data-label="Langkah">Langkah 6</td><td data-label="Yang kamu kerjakan di langkah ini">Memberi verdikt dan menyebut ke mana energi yang berkurang itu pergi</td><td data-label="Angka apa yang kamu butuhkan dari langkah sebelumnya"><input type="text" id="m_u6_butuh" placeholder=""></td><td data-label="Apa yang rusak bila langkah ini dikerjakan lebih awal"><input type="text" id="m_u6_rusak" placeholder=""></td></tr></tbody></table>
+<div class="kisi">
+<div class="isi-item"><label for="m_u_acuan">Titik acuan ketinggian yang kamu pakai untuk seluruh jalur</label><select id="m_u_acuan"><option value="">— pilih —</option><option value="A">di titik A, selasar gudang</option><option value="C">di lantai koridor, yaitu garis C&ndash;D</option><option value="E">di lantai dapur, titik E</option></select></div>
+<div class="isi-item"><label for="m_u_alasan">Satu baris: mengapa acuan itu yang paling enak dipakai untuk jalur ini</label><input type="text" id="m_u_alasan" placeholder=""></div>
+</div>
+</div></div><div class="bagian"><div class="bagian-judul"><span class="lencana">Bagian 2</span> Menggolongkan gaya pada tahap tarikan</div><div class="bagian-isi">
+<div class="naskah">Tiga gaya bekerja pada troli sepanjang tahap A&rarr;B. Golongkan ketiganya dan hitung usaha
+masing-masing. Hati-hati pada baris pertama: gaya talinya <b>tidak</b> sejajar arah troli berpindah.</div>
+<table class="klas"><thead><tr><th>Gaya pada tahap A&rarr;B</th><th>Golonganmu</th><th>Besar usahanya (J)</th><th>Alasanmu &mdash; sebut arah gaya terhadap arah perpindahan</th></tr></thead><tbody><tr><td data-label="Gaya pada tahap A&rarr;B">Gaya tali, seluruhnya 50 N pada sudut 37&deg;</td><td data-label="Golonganmu"><select id="m_g1_p"><option value="">—</option><option value="positif">melakukan usaha positif</option><option value="negatif">melakukan usaha negatif</option><option value="nol">tidak melakukan usaha sama sekali</option></select></td><td data-label="Besar usahanya (J)"><input type="text" inputmode="decimal" id="m_g1_w" placeholder=""></td><td data-label="Alasanmu &mdash; sebut arah gaya terhadap arah perpindahan"><input type="text" id="m_g1_a" placeholder=""></td></tr><tr><td data-label="Gaya pada tahap A&rarr;B">Gaya berat troli beserta galonnya</td><td data-label="Golonganmu"><select id="m_g2_p"><option value="">—</option><option value="positif">melakukan usaha positif</option><option value="negatif">melakukan usaha negatif</option><option value="nol">tidak melakukan usaha sama sekali</option></select></td><td data-label="Besar usahanya (J)"><input type="text" inputmode="decimal" id="m_g2_w" placeholder=""></td><td data-label="Alasanmu &mdash; sebut arah gaya terhadap arah perpindahan"><input type="text" id="m_g2_a" placeholder=""></td></tr><tr><td data-label="Gaya pada tahap A&rarr;B">Gaya normal lantai pada roda troli</td><td data-label="Golonganmu"><select id="m_g3_p"><option value="">—</option><option value="positif">melakukan usaha positif</option><option value="negatif">melakukan usaha negatif</option><option value="nol">tidak melakukan usaha sama sekali</option></select></td><td data-label="Besar usahanya (J)"><input type="text" inputmode="decimal" id="m_g3_w" placeholder=""></td><td data-label="Alasanmu &mdash; sebut arah gaya terhadap arah perpindahan"><input type="text" id="m_g3_a" placeholder=""></td></tr></tbody></table>
+<div class="kisi">
+<div class="isi-item"><label for="m_g_total">Usaha total pada troli sepanjang tahap A&rarr;B <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="m_g_total" placeholder=""></div>
+<div class="isi-item"><label for="m_g_vB">Laju troli di titik B <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="m_g_vB" placeholder=""></div>
+</div>
+<div class="soal"><div class="soal-judul">Keluhan petugas dapur</div><div class="soal-isi">
+<div class="naskah">Petugas dapur berkata: &ldquo;Yang paling berat hari ini bukan menarik troli. Yang paling
+berat adalah memanggul satu galon di bahu sepanjang koridor 20 m. Punggung saya sampai sekarang pegal.&rdquo;</div>
+<div class="kisi">
+<div class="isi-item"><label for="m_g_panggul">Usaha gaya penahan bahunya pada galon itu, sepanjang 20 m mendatar <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="m_g_panggul" placeholder=""></div>
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_g_panggul_a">Kalau angkanya memang sebesar itu, apa sebenarnya yang ia keluhkan? Jawab dengan menyebut apa yang dihitung fisika sebagai usaha dan apa yang tidak.</label><textarea id="m_g_panggul_a"></textarea></div>
+</div>
+</div></div>
+</div></div><div class="bagian"><div class="bagian-judul"><span class="lencana">Bagian 3</span> Persamaan tiap segmen</div><div class="bagian-isi">
+<div class="naskah">Tulis persamaannya dulu, angkanya belakangan. Pada baris yang kasar, tuliskan juga dari mana
+besar gaya geseknya kamu dapat.</div>
+<table class="klas"><thead><tr><th>Segmen</th><th>Licin atau kasar?</th><th>Persamaan yang kamu tulis</th><th>Ada suku pengurang &minus;f&middot;d?</th></tr></thead><tbody><tr><td data-label="Segmen">B &rarr; C (jalur landai turun 0,80 m)</td><td data-label="Licin atau kasar?"><select id="m_r1_j"><option value="">—</option><option value="licin">licin</option><option value="kasar">kasar</option></select></td><td data-label="Persamaan yang kamu tulis"><input type="text" id="m_r1_e" placeholder=""></td><td data-label="Ada suku pengurang &minus;f&middot;d?"><select id="m_r1_f"><option value="">—</option><option value="ada">ada</option><option value="tidak">tidak</option></select></td></tr><tr><td data-label="Segmen">C &rarr; D (koridor mendatar 6,0 m)</td><td data-label="Licin atau kasar?"><select id="m_r2_j"><option value="">—</option><option value="licin">licin</option><option value="kasar">kasar</option></select></td><td data-label="Persamaan yang kamu tulis"><input type="text" id="m_r2_e" placeholder=""></td><td data-label="Ada suku pengurang &minus;f&middot;d?"><select id="m_r2_f"><option value="">—</option><option value="ada">ada</option><option value="tidak">tidak</option></select></td></tr><tr><td data-label="Segmen">D &rarr; E (papan landai naik 0,30 m)</td><td data-label="Licin atau kasar?"><select id="m_r3_j"><option value="">—</option><option value="licin">licin</option><option value="kasar">kasar</option></select></td><td data-label="Persamaan yang kamu tulis"><input type="text" id="m_r3_e" placeholder=""></td><td data-label="Ada suku pengurang &minus;f&middot;d?"><select id="m_r3_f"><option value="">—</option><option value="ada">ada</option><option value="tidak">tidak</option></select></td></tr></tbody></table>
+<div class="kisi">
+<div class="isi-item"><label for="m_r_f">Besar gaya gesek pada koridor C&rarr;D <span class="satuan">(N)</span></label><input type="text" inputmode="decimal" id="m_r_f" placeholder=""></div>
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_r_kapan">Perhatikan angka gaya gesek yang baru saja kamu hitung. Apakah ia bergantung pada laju troli? Kalau tidak, pada langkah ke berapa saja ia boleh dihitung? Jawab dengan menyebut nomor langkah dari Bagian 1.</label><textarea id="m_r_kapan"></textarea></div>
+</div>
+</div></div><div class="bagian"><div class="bagian-judul"><span class="lencana">Bagian 4</span> Menjalankan hitungan dan memberi verdikt</div><div class="bagian-isi">
+<div class="naskah">Sekarang jalankan urutan yang sudah kamu putuskan di Bagian 1. Isi berurutan dari atas ke bawah.
+Kalau ada satu kotak yang tidak bisa kamu isi, berhenti &mdash; itu tanda urutanmu perlu ditinjau, bukan tanda
+datanya kurang.</div>
+<table class="klas"><thead><tr><th>Urut</th><th>Yang kamu hitung</th><th>Nilai</th><th>Satuan</th></tr></thead><tbody><tr><td data-label="Urut">1</td><td data-label="Yang kamu hitung">Energi gerak troli di titik B</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_ekB" placeholder=""></td><td data-label="Satuan">J</td></tr><tr><td data-label="Urut">2</td><td data-label="Yang kamu hitung">Tambahan energi dari turunnya jalur landai B&rarr;C</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_epBC" placeholder=""></td><td data-label="Satuan">J</td></tr><tr><td data-label="Urut">3</td><td data-label="Yang kamu hitung">Energi gerak troli di titik C</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_ekC" placeholder=""></td><td data-label="Satuan">J</td></tr><tr><td data-label="Urut">4</td><td data-label="Yang kamu hitung">Energi yang menjadi kalor di koridor C&rarr;D</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_wf" placeholder=""></td><td data-label="Satuan">J</td></tr><tr><td data-label="Urut">5</td><td data-label="Yang kamu hitung">Energi gerak troli di titik D</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_ekD" placeholder=""></td><td data-label="Satuan">J</td></tr><tr><td data-label="Urut">6</td><td data-label="Yang kamu hitung">Energi ketinggian troli di titik E</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_epE" placeholder=""></td><td data-label="Satuan">J</td></tr><tr><td data-label="Urut">7</td><td data-label="Yang kamu hitung">Energi gerak troli di titik E</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_ekE" placeholder=""></td><td data-label="Satuan">J</td></tr><tr><td data-label="Urut">8</td><td data-label="Yang kamu hitung">Laju troli di titik E</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_h_vE" placeholder=""></td><td data-label="Satuan">m/s</td></tr></tbody></table>
+<div class="kisi">
+<div class="isi-item"><label for="m_h_verdikt">Verdiktmu untuk petugas dapur</label><select id="m_h_verdikt"><option value="">— pilih —</option><option value="MEMENUHI">MEMENUHI &mdash; sampai di E dan tidak lebih cepat dari 1,5 m/s</option><option value="CEPAT">TIDAK MEMENUHI &mdash; sampai di E tetapi terlalu cepat</option><option value="TIDAK">TIDAK MEMENUHI &mdash; troli tidak sampai di E sama sekali</option></select></div>
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_h_jawab">Jawaban untuk petugas dapur, 3&ndash;5 kalimat. Sebut lajunya di titik E, sebut syaratnya, dan katakan dengan jelas apakah jalur ini aman dipakai setiap pagi.</label><textarea id="m_h_jawab"></textarea></div>
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_h_energi">Sebut berapa joule yang tidak lagi menjadi energi gerak ketika troli tiba di E, lalu pecah jumlah itu: berapa yang menjadi kalor di koridor, dan berapa yang tersimpan sebagai energi ketinggian di lantai dapur. Untuk tiap bagian, katakan apakah ia masih bisa kembali menjadi gerak.</label><textarea id="m_h_energi"></textarea></div>
+</div>
+</div></div><div class="bagian"><div class="bagian-judul"><span class="lencana">Bagian 5</span> Mempertanggungjawabkan urutannya</div><div class="bagian-isi">
+<div class="naskah">Inilah bagian yang membedakan tugas ini dari tugas sebelumnya. Kamu sudah selesai menghitung;
+sekarang pertanggungjawabkan <b>urutannya</b>.</div>
+<div class="kisi">
+<div class="isi-item"><label for="m_p_tidak_a">Sepasang langkah yang urutannya TIDAK boleh ditukar &mdash; langkah yang lebih dulu</label><select id="m_p_tidak_a"><option value="">— pilih —</option><option value="1">Langkah 1</option><option value="2">Langkah 2</option><option value="3">Langkah 3</option><option value="4">Langkah 4</option><option value="5">Langkah 5</option><option value="6">Langkah 6</option></select></div>
+<div class="isi-item"><label for="m_p_tidak_b">&hellip; dan langkah yang harus menyusul</label><select id="m_p_tidak_b"><option value="">— pilih —</option><option value="1">Langkah 1</option><option value="2">Langkah 2</option><option value="3">Langkah 3</option><option value="4">Langkah 4</option><option value="5">Langkah 5</option><option value="6">Langkah 6</option></select></div>
+</div>
+<div class="kisi">
+<div class="isi-item"><label for="m_p_boleh_a">Sepasang langkah yang urutannya BOLEH ditukar &mdash; langkah pertama</label><select id="m_p_boleh_a"><option value="">— pilih —</option><option value="1">Langkah 1</option><option value="2">Langkah 2</option><option value="3">Langkah 3</option><option value="4">Langkah 4</option><option value="5">Langkah 5</option><option value="6">Langkah 6</option></select></div>
+<div class="isi-item"><label for="m_p_boleh_b">&hellip; dan langkah kedua</label><select id="m_p_boleh_b"><option value="">— pilih —</option><option value="1">Langkah 1</option><option value="2">Langkah 2</option><option value="3">Langkah 3</option><option value="4">Langkah 4</option><option value="5">Langkah 5</option><option value="6">Langkah 6</option></select></div>
+</div>
+<div class="kisi">
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_p_alasan">Untuk pasangan yang TIDAK boleh ditukar: ceritakan apa yang benar-benar terjadi bila kamu nekat menukarnya &mdash; kotak mana yang kosong, dan mengapa tidak ada cara mengisinya. Untuk pasangan yang BOLEH ditukar: jelaskan mengapa pertukaran itu tidak merusak apa pun.</label><textarea id="m_p_alasan"></textarea></div>
+</div>
+<div class="soal"><div class="soal-judul">Dua cara yang salah, dan akibatnya berbeda</div><div class="soal-isi">
+<div class="naskah">Dua temanmu mengerjakan jalur yang sama dan sama-sama keliru, tetapi kekeliruannya berbeda.
+<br><br><b>Teman pertama</b> melompati langkah 2. Ia langsung memakai seluruh gaya tali, 50 N, dikalikan 5,0 m,
+lalu meneruskan urutan yang sama persis denganmu sampai titik E.
+<br><br><b>Teman kedua</b> mengerjakan langkah 2 dengan benar, tetapi menulis seluruh jalur B&rarr;E dalam satu
+baris tanpa koridor kasar.</div>
+<div class="kisi">
+<div class="isi-item"><label for="m_s_vE1">Laju di titik E yang didapat teman pertama <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="m_s_vE1" placeholder=""></div>
+<div class="isi-item"><label for="m_s_v1">Verdikt yang ia tulis</label><select id="m_s_v1"><option value="">— pilih —</option><option value="MEMENUHI">MEMENUHI</option><option value="CEPAT">TIDAK MEMENUHI &mdash; terlalu cepat</option><option value="TIDAK">TIDAK MEMENUHI &mdash; tidak sampai</option></select></div>
+</div>
+<div class="kisi">
+<div class="isi-item"><label for="m_s_vE2">Laju di titik E yang didapat teman kedua <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="m_s_vE2" placeholder=""></div>
+<div class="isi-item"><label for="m_s_v2">Verdikt yang ia tulis</label><select id="m_s_v2"><option value="">— pilih —</option><option value="MEMENUHI">MEMENUHI</option><option value="CEPAT">TIDAK MEMENUHI &mdash; terlalu cepat</option><option value="TIDAK">TIDAK MEMENUHI &mdash; tidak sampai</option></select></div>
+</div>
+<div class="kisi">
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_s_banding">Perhatikan: kedua temanmu keliru dengan cara yang berbeda, tetapi verdikt mereka sama &mdash; dan verdikt itu berbeda dari verdiktmu. Tulis tiga hal. (i) Apakah verdikt mereka sama dengan verdiktmu? (ii) Mengapa dua kekeliruan yang berbeda bisa mendorong angka ke arah yang sama, dan mengapa dua jawaban yang kebetulan sepakat tidak membuat salah satunya benar? (iii) Sebut satu baris pada tabel hitunganmu yang hilang dari pekerjaan teman pertama, dan satu baris yang hilang dari pekerjaan teman kedua.</label><textarea id="m_s_banding"></textarea></div>
+</div>
+</div></div></div></div><div class="bagian"><div class="bagian-judul"><span class="lencana">Bagian 6</span> Mengukur koridormu sendiri, lalu menghitung ulang</div><div class="bagian-isi">
+<div class="naskah">Angka 6,0 m dan 0,30 m di atas adalah angka jalur contoh. Sekarang ambil ukuran
+<b>koridormu sendiri</b> dan tangga asramamu sendiri, lalu jalankan ulang langkah 4 sampai 8 dengan dua angka itu.
+Semua angka lain tetap. Bawa meteran gulung; kalau tidak ada, ukur dengan ubin yang sudah kamu ukur sekali.</div>
+<table class="klas"><thead><tr><th>Yang kamu ukur</th><th>Alat yang kamu pakai</th><th>Nilai</th><th>Satuan</th></tr></thead><tbody><tr><td data-label="Yang kamu ukur">Panjang koridor asramamu sendiri, dari ujung ke ujung</td><td data-label="Alat yang kamu pakai"><input type="text" id="m_k_alat1" placeholder=""></td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_k_d" placeholder=""></td><td data-label="Satuan">m</td></tr><tr><td data-label="Yang kamu ukur">Tinggi satu anak tangga ke lantai atas di asramamu</td><td data-label="Alat yang kamu pakai"><input type="text" id="m_k_alat2" placeholder=""></td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_k_h1" placeholder=""></td><td data-label="Satuan">m</td></tr><tr><td data-label="Yang kamu ukur">Jumlah anak tangga itu</td><td data-label="Alat yang kamu pakai"><input type="text" id="m_k_alat3" placeholder=""></td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_k_N" placeholder=""></td><td data-label="Satuan">buah</td></tr><tr><td data-label="Yang kamu ukur">Tinggi total tangga itu</td><td data-label="Alat yang kamu pakai">hasil hitungan</td><td data-label="Nilai"><input type="text" inputmode="decimal" id="m_k_hE" placeholder=""></td><td data-label="Satuan">m</td></tr></tbody></table>
+<div class="kisi">
+<div class="isi-item"><label for="m_k_wf">Energi yang menjadi kalor di koridormu sendiri <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="m_k_wf" placeholder=""></div>
+<div class="isi-item"><label for="m_k_vE">Laju troli di titik E dengan ukuranmu sendiri <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="m_k_vE" placeholder=""></div>
+<div class="isi-item"><label for="m_k_verdikt">Verdikt dengan ukuranmu sendiri</label><select id="m_k_verdikt"><option value="">— pilih —</option><option value="MEMENUHI">MEMENUHI</option><option value="CEPAT">TIDAK MEMENUHI &mdash; terlalu cepat</option><option value="TIDAK">TIDAK MEMENUHI &mdash; tidak sampai</option></select></div>
+</div>
+<div class="kisi">
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_k_beda">Apakah verdiktmu berubah dibandingkan jalur contoh? Kalau berubah, sebut ukuran mana yang menyebabkannya dan berapa besar perubahannya. Kalau tidak berubah, hitung seberapa jauh koridormu masih boleh berubah sebelum verdiktnya berbalik.</label><textarea id="m_k_beda"></textarea></div>
+</div>
+<div class="kotak-luring"><b>Kalau meteran tidak ada.</b> Hitung jumlah ubin sepanjang koridor, lalu ukur satu ubin
+dengan penggaris 30 cm. Untuk tinggi anak tangga, pakai penggaris yang sama. Tidak ada bagian tugas ini yang
+menuntut alat yang tidak ada di asrama.</div>
+</div></div><div class="bagian"><div class="bagian-judul"><span class="lencana">Bagian 7</span> Yang kamu serahkan</div><div class="bagian-isi">
+<p style="font-size:13.3px"><b>Yang kamu serahkan</b></p>
+<ul class="serah">
+  <li>Berkas ini, seluruh kotak terisi. Tekan <b>Periksa kelengkapan</b> di bilah bawah sebelum mengumpulkan.</li>
+  <li>Satu sketsa jalur bertanda A, B, C, D, E dengan angka jalur contoh dan angka koridormu sendiri tertulis berdampingan di atas gambarnya.</li>
+  <li><b>Boleh, tidak wajib:</b> kamu boleh diminta menjelaskan urutan kerjamu secara lisan selama tiga menit. Pertanyaannya hanya satu dan sudah kamu tahu sekarang: <i>mengapa langkah 2 harus mendahului langkah 3?</i> Siapkan jawabannya, dan siapkan juga apa yang akan kamu tunjukkan di berkas ini sambil menjawab.</li>
+</ul>
+
+<div class="kotak-slot"><b>Tautan sumber data nyata &mdash; slot, berkasnya belum tersedia.</b>
+<ul style="margin:6px 0 0; padding-left:20px;">
+  <li><b>Judul yang dituju:</b> laman kurasi berisi massa dan ukuran baku galon air 19 liter beserta troli angkut yang biasa dipakai.</li>
+  <li><b>Tugas bacanya:</b> dalam 8 menit, cari dua hal &mdash; (1) massa satu galon 19 liter dalam keadaan penuh, dan (2) massa troli angkut dua galon dalam keadaan kosong. Tulis keduanya pada kotak catatan Bagian 7, lalu bandingkan jumlahnya dengan 25 kg yang dipakai pada tugas ini.</li>
+  <li><b>Satu kalimat isinya:</b> satu galon 19 liter penuh bermassa sekitar 19 kg karena air bermassa sekitar 1 kg tiap liter, sehingga dua galon beserta trolinya memang berada di sekitar angka puluhan kilogram.</li>
+  <li><b>Alamat dan tanggal akses:</b> belum diisi.</li>
+  <li><b>Pengganti bila kamu luring:</b> timbang sendiri satu galon penuh di dapur dengan timbangan badan, lalu tulis angkanya pada kotak catatan. Tugas ini dapat kamu selesaikan utuh tanpa membuka tautan apa pun.</li>
+</ul></div>
+
+<div class="kisi">
+<div class="isi-item"><label for="m_s_tanggal">Tanggal dan jam kamu mengukur koridormu</label><input type="text" id="m_s_tanggal" placeholder="mis. 24-11-2026, 16.20"></div>
+<div class="isi-item"><label for="m_s_saksi">Nama teman yang ikut mengukur</label><input type="text" id="m_s_saksi" placeholder=""></div>
+<div class="isi-item lebar dibaca-guru"><div class="tanda">dibaca guru</div><label for="m_s_catatan">Catatan bebas: kesulitan yang kamu temui, bagian urutan yang kamu ubah di tengah jalan, dan dua hal yang kamu temukan bila kamu sempat membuka tautan yang ditunjuk di atas.</label><textarea id="m_s_catatan"></textarea></div>
+</div>
+</div></div>
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+</div><!-- /wrap -->
+
+<div class="bilah-bawah">
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">0 isian dijawab</div>
+      <button class="periksa" id="btn_periksa" type="button">Periksa kelengkapan</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+(function(){
+"use strict";
+
+/* Mekanik disalin dari berkas rujukan cc41a2a1-Worksheet-Fisika-F.USE.1-Dua-Soal-Latihan.html.
+   KUNCI_NUM dan KUNCI_PIL sengaja kosong pada lembar tugas: tugas ini dinilai dengan
+   tangga mutu yang tercetak di halaman ini, bukan dengan kunci yang ditanam di berkas
+   murid. Alasannya tercatat pada Log Tinjauan dan catatan manifes. */
+var KUNCI_NUM = {};
+var KUNCI_PIL = {};
+
+var DAFTAR_ISIAN = ["m_u1_butuh", "m_u1_rusak", "m_u2_butuh", "m_u2_rusak", "m_u3_butuh", "m_u3_rusak", "m_u4_butuh", "m_u4_rusak", "m_u5_butuh", "m_u5_rusak", "m_u6_butuh", "m_u6_rusak", "m_u_acuan", "m_u_alasan", "m_g1_p", "m_g1_w", "m_g1_a", "m_g2_p", "m_g2_w", "m_g2_a", "m_g3_p", "m_g3_w", "m_g3_a", "m_g_total", "m_g_vB", "m_g_panggul", "m_g_panggul_a", "m_r1_j", "m_r1_e", "m_r1_f", "m_r2_j", "m_r2_e", "m_r2_f", "m_r3_j", "m_r3_e", "m_r3_f", "m_r_f", "m_r_kapan", "m_h_ekB", "m_h_epBC", "m_h_ekC", "m_h_wf", "m_h_ekD", "m_h_epE", "m_h_ekE", "m_h_vE", "m_h_verdikt", "m_h_jawab", "m_h_energi", "m_p_tidak_a", "m_p_tidak_b", "m_p_boleh_a", "m_p_boleh_b", "m_p_alasan", "m_s_vE1", "m_s_v1", "m_s_vE2", "m_s_v2", "m_s_banding", "m_k_alat1", "m_k_d", "m_k_alat2", "m_k_h1", "m_k_alat3", "m_k_N", "m_k_hE", "m_k_wf", "m_k_vE", "m_k_verdikt", "m_k_beda", "m_s_tanggal", "m_s_saksi", "m_s_catatan"];
+
+var TOTAL = Object.keys(KUNCI_NUM).length + Object.keys(KUNCI_PIL).length;
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+window.bacaBilangan = bacaBilangan;
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+
+function hitungNilai(){
+  cerminSemua();
+  if (TOTAL === 0) return 0;
+  var benar = 0;
+  for (var id in KUNCI_NUM){
+    var kunci = KUNCI_NUM[id][0], tol = KUNCI_NUM[id][1];
+    var v = bacaBilangan(nilaiElemen(id));
+    if (v !== null && Math.abs(v - kunci) <= tol) benar++;
+  }
+  for (var id2 in KUNCI_PIL){
+    var jawab = nilaiElemen(id2);
+    if (jawab !== null && String(jawab).trim() === String(KUNCI_PIL[id2]).trim()) benar++;
+  }
+  return Math.round((benar / TOTAL) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function daftarIdDinilai(){
+  var ids = Object.keys(KUNCI_NUM).concat(Object.keys(KUNCI_PIL));
+  for (var i = 0; i < DAFTAR_ISIAN.length; i++){
+    if (ids.indexOf(DAFTAR_ISIAN[i]) === -1) ids.push(DAFTAR_ISIAN[i]);
+  }
+  return ids;
+}
+
+function perbarui(){
+  var ids = daftarIdDinilai();
+  var terisi = 0;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    if (el && String(el.value).trim() !== "") terisi++;
+  }
+  var pct = ids.length ? Math.round((terisi / ids.length) * 100) : 0;
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + ids.length + " isian dijawab";
+}
+
+function wadah(el){
+  if (!el) return null;
+  return el.closest(".isi-item") || el.closest("td");
+}
+
+function periksaKelengkapan(){
+  cerminSemua();
+  var ids = daftarIdDinilai();
+  var kosongPertama = null;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    var item = wadah(el);
+    if (!el) continue;
+    if (String(el.value).trim() === ""){
+      if (item) item.classList.add("kosong");
+      if (!kosongPertama) kosongPertama = el;
+    } else {
+      if (item) item.classList.remove("kosong");
+    }
+  }
+  var pesan = document.getElementById("pesan_teks");
+  if (kosongPertama){
+    kosongPertama.scrollIntoView({behavior:"smooth", block:"center"});
+    if (pesan) pesan.textContent = "Masih ada kotak yang kosong — kotak itu ditandai oranye.";
+  } else {
+    if (pesan) pesan.textContent = "Seluruh kotak sudah terisi. Silakan kumpulkan sesuai arahan gurumu.";
+  }
+  perbarui();
+}
+
+document.addEventListener("input", function(ev){
+  cermin(ev.target);
+  perbarui();
+}, false);
+document.addEventListener("change", function(ev){
+  cermin(ev.target);
+  perbarui();
+}, false);
+document.addEventListener("blur", function(ev){
+  cermin(ev.target);
+}, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua();
+  perbarui();
+  var btn = document.getElementById("btn_periksa");
+  if (btn) btn.addEventListener("click", periksaKelengkapan);
+});
+
+cerminSemua();
+
+})();
+
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

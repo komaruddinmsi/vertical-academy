@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="id">
+<!--
+  Batas lingkup yang wajib dijaga pada lembar ini (turunan C2.1 Pra-KBM, RPP F.USE):
+  Lembar ini mengukur bekal B3.2 saja: model usaha->dEk dan energi berubah bentuk
+  (dibingkai pada tingkat TP1: satu benda, satu peristiwa), gaya gesek kinetik f = mu_k.N,
+  dan membaca diagram lintasan bertingkat. Tidak boleh memuat materi TP2 sendiri:
+  tanpa kekekalan energi mekanik pada lintasan berlapis, tanpa neraca per segmen,
+  tanpa verdikt rancangan. Kunci jawaban, aturan rute, dan tunjukan menit hanya ada
+  di berkas guru.
+-->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cek Mandiri Sebelum Belajar — Fisika F.USE.1</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:140px;
+}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{
+  position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;
+}
+.kepala::before,.kepala::after{
+  content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);
+}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:620px; position:relative;}
+
+.kartu{background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+
+.aturan{
+  background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;
+}
+.aturan strong{color:#8A6604;}
+.aturan ol{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+
+.bagian{margin:26px 0;}
+.bagian-judul{
+  background:linear-gradient(100deg, var(--tosca), var(--tosca2));
+  color:#fff; padding:10px 16px; border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px;
+  font-size:15.5px; font-weight:600;
+}
+.lencana{
+  background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5);
+  border-radius:999px; padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;
+}
+.bagian-isi{border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;}
+
+.soal{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.soal-judul{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:8px 14px; font-size:13.5px;}
+.soal-isi{padding:14px 16px;}
+.naskah{
+  background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px;
+  padding:12px 14px; font-size:14px; margin-bottom:10px;
+}
+.gambar{text-align:center; margin:10px 0 4px;}
+.gambar svg{max-width:100%; height:auto;}
+
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;
+}
+.isi-item input[type=text]:not(:placeholder-shown){border-color: var(--tosca2);}
+.isi-item.kosong input, .isi-item.kosong select{border-color:var(--oranye); background:#FFF7F1;}
+.isi-item input[readonly], .isi-item select[aria-disabled="true"]{background:var(--abuB); color:#44585D;}
+
+.kotak-rute{
+  display:none; background:var(--hijauB); border:1px solid #BFDFCC; border-left:6px solid var(--hijau);
+  border-radius:10px; padding:16px 18px; margin:20px 0; font-size:14.5px; line-height:1.55;
+}
+.kotak-rute.tampil{display:block;}
+.kotak-rute .angka{font-size:26px; font-weight:700; color:var(--tosca0); display:block; margin-bottom:6px;}
+.kotak-rute b{color:var(--tosca0);}
+
+.bilah-bawah{
+  position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;
+}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{
+  background:#fff; color:var(--tosca); border:1.5px solid var(--tosca); border-radius:8px; padding:9px 16px;
+  font-size:13.5px; font-weight:600; cursor:pointer;
+}
+button.periksa:hover{background:var(--toscaB);}
+button.selesai{
+  background:var(--tosca); color:#fff; border:1.5px solid var(--tosca); border-radius:8px; padding:9px 20px;
+  font-size:13.5px; font-weight:700; cursor:pointer;
+}
+button.selesai:hover{background:var(--tosca0);}
+button.selesai[disabled]{background:var(--abu); border-color:var(--abu); cursor:default;}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%;}
+.kaki{font-size:12px; color:var(--abu); text-align:center; margin:24px 0 10px;}
+
+@media (max-width:640px){
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+  .baris-bawah{flex-direction:column; align-items:stretch;}
+  button.periksa, button.selesai{width:100%;}
+}
+</style>
+</head>
+<body>
+<div class="kepala"><div class="wrap">
+  <div class="baris-kecil">Fisika &middot; Kelas XI &middot; Kode TP F.USE.1</div>
+  <h1>Cek Mandiri Sebelum Belajar</h1>
+  <div class="penjelas">Delapan soal pendek tentang bekal yang kamu bawa dari pertemuan sebelumnya dan dari pelajaran sebelumnya.</div>
+</div></div>
+
+<div class="wrap">
+
+<div class="aturan">
+  <strong>Sebelum kamu mulai</strong>
+  <ol>
+    <li>Lembar ini <strong>tidak dinilai</strong> dan tidak masuk nilai apa pun. Gunanya satu: memastikan bekalmu masih kuat sebelum pelajaran besok.</li>
+    <li>Kerjakan sendiri, tanpa membuka catatan. Kalau kamu membuka catatan, hasilnya tidak memberi tahu apa pun kepada kamu maupun gurumu.</li>
+    <li>Paling lama 15 menit. Sesudah kamu menekan <strong>Selesai</strong>, jawabanmu terkunci dan kamu akan membaca apa yang perlu kamu lakukan sebelum masuk kelas.</li>
+  </ol>
+</div>
+
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 17-11-2026"></div>
+</div>
+
+<div class="aturan">
+  <strong>Cara mengisi</strong>
+  <ol>
+    <li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li>
+    <li>Tulis angkanya saja, tanpa satuan &mdash; satuannya sudah tercetak di sebelah kotak.</li>
+    <li>Pada soal berpilihan, pilih tepat satu pilihan.</li>
+    <li>Pakai g = 10 m/s&sup2; pada soal yang memerlukannya.</li>
+    <li>Jawabanmu tersimpan begitu kamu berpindah ke kotak berikutnya.</li>
+  </ol>
+</div>
+
+<!-- ================= BAGIAN 1 ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Bagian 1</span> Soal 1&ndash;3</div>
+  <div class="bagian-isi">
+
+    <div class="soal">
+      <div class="soal-judul">Soal 1</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah troli bermassa 3 kg mula-mula diam di lantai mendatar, lalu didorong sampai lajunya 2 m/s. Tentukan besar usaha total yang dilakukan pada troli itu.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s01_w">Usaha total <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="s01_w">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal 2</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah sepeda meluncur di jalan mendatar, lalu direm sampai benar-benar berhenti di tempat yang sama tingginya.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s02_kemana">Energi gerak yang dimiliki sepeda sebelum direm</label>
+            <select id="s02_kemana">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Hilang dari alam semesta begitu sepeda berhenti</option>
+              <option value="B">B. Tetap tersimpan sebagai energi gerak di dalam roda, menunggu dipakai lagi</option>
+              <option value="C">C. Berubah bentuk menjadi kalor (dan sedikit bunyi); jumlah energi seluruhnya tetap</option>
+              <option value="D">D. Seluruhnya berubah menjadi energi potensial gravitasi, walaupun ketinggian sepeda tidak berubah</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal 3</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah balok bermassa 4 kg bergerak dengan laju 3 m/s, lalu melambat sampai lajunya tinggal 1 m/s. Tentukan besar energi gerak balok yang berubah bentuk selama perlambatan itu.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s03_dek">Energi gerak yang berubah bentuk <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="s03_dek">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= BAGIAN 2 ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Bagian 2</span> Soal 4&ndash;5</div>
+  <div class="bagian-isi">
+
+    <div class="soal">
+      <div class="soal-judul">Soal 4</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah peti bermassa 6 kg meluncur di lantai mendatar yang kasar dengan koefisien gesek kinetik &mu;<sub>k</sub> = 0,25. Tentukan besar gaya gesek kinetik yang bekerja pada peti itu.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s04_f">Besar gaya gesek kinetik <span class="satuan">(N)</span></label>
+            <input type="text" inputmode="decimal" id="s04_f">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal 5</div>
+      <div class="soal-isi">
+        <div class="naskah">Sebuah kotak bermassa 2 kg meluncur di lantai mendatar dengan &mu;<sub>k</sub> = 0,4. Seorang murid menuliskan bahwa gaya gesek kinetik pada kotak itu adalah 20 N.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s05_keliru">Kekeliruan yang ia lakukan</label>
+            <select id="s05_keliru">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Ia mengalikan koefisien gesek dengan massa, bukan dengan gaya normal</option>
+              <option value="B">B. Ia memakai gaya normal sebagai gaya gesek, tanpa mengalikannya dengan koefisien gesek</option>
+              <option value="C">C. Ia memakai g = 10 m/s&sup2;, padahal untuk gaya gesek nilai g tidak dipakai sama sekali</option>
+              <option value="D">D. Tidak ada yang keliru; 20 N sudah benar</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= BAGIAN 3 ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Bagian 3</span> Soal 6&ndash;8</div>
+  <div class="bagian-isi">
+
+    <div class="soal">
+      <div class="soal-judul">Soal 6</div>
+      <div class="soal-isi">
+        <div class="naskah">Gambar berikut menunjukkan sebuah lintasan bertingkat dengan empat titik: A, B, C, dan D. Ketinggian tiap titik terbaca pada skala di sebelah kiri, diukur dari lantai. Pada soal ini acuan ditetapkan di titik <strong>C</strong>, sehingga ketinggian titik C bernilai nol. Tentukan ketinggian titik A diukur dari acuan itu.</div>
+        <div class="gambar"><svg viewBox="0 0 470 235" role="img" aria-label="Lintasan bertingkat dengan titik A, B, C, dan D; skala ketinggian dari lantai tercetak di sebelah kiri." width="470" height="235">
+  <rect x="0" y="0" width="470" height="235" fill="#FFFFFF"/>
+  <line x1="44" y1="35" x2="44" y2="196" stroke="#6A7F84" stroke-width="1.4"/>
+  <line x1="44" y1="195" x2="455" y2="195" stroke="#6A7F84" stroke-width="1.4"/>
+  <line x1="44" y1="45" x2="80" y2="45" stroke="#C9DADC" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="44" y1="135" x2="285" y2="135" stroke="#C9DADC" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="44" y1="165" x2="190" y2="165" stroke="#C9DADC" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="38" y="49" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">5 m</text>
+  <text x="38" y="139" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">2 m</text>
+  <text x="38" y="169" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">1 m</text>
+  <text x="38" y="199" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">0</text>
+  <polyline points="80,45 190,165 285,135 420,195" fill="none" stroke="#0B4F58" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="80" cy="45" r="4.5" fill="#C05621"/>
+  <circle cx="190" cy="165" r="4.5" fill="#C05621"/>
+  <circle cx="285" cy="135" r="4.5" fill="#C05621"/>
+  <circle cx="420" cy="195" r="4.5" fill="#C05621"/>
+  <text x="80" y="33" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">A</text>
+  <text x="181" y="181" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">B</text>
+  <text x="285" y="124" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">C</text>
+  <text x="432" y="189" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">D</text>
+  <text x="455" y="212" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#6A7F84">lantai</text>
+  <text x="44" y="228" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#6A7F84">skala ketinggian diukur dari lantai</text>
+</svg></div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s06_ha">Ketinggian titik A dari acuan di C <span class="satuan">(m)</span></label>
+            <input type="text" inputmode="decimal" id="s06_ha">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal 7</div>
+      <div class="soal-isi">
+        <div class="naskah">Pada satu soal yang sama, kamu sudah menetapkan titik D sebagai acuan, sehingga ketinggian titik D bernilai nol. Kamu kini perlu menandai ketinggian titik B pada soal yang sama itu.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s07_acuan">Yang kamu lakukan</label>
+            <select id="s07_acuan">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Memilih acuan baru yang paling dekat dengan titik B supaya angkanya kecil</option>
+              <option value="B">B. Memakai ketinggian B diukur dari lantai, di mana pun titik D berada</option>
+              <option value="C">C. Memakai selisih ketinggian titik A dan titik D sebagai ketinggian titik B</option>
+              <option value="D">D. Mengukur ketinggian B dari titik D juga, sebab acuannya sudah ditetapkan</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Soal 8</div>
+      <div class="soal-isi">
+        <div class="naskah">Perhatikan lagi gambar lintasan yang sama. Tentukan beda ketinggian antara titik A dan titik B.</div>
+        <div class="gambar"><svg viewBox="0 0 470 235" role="img" aria-label="Lintasan bertingkat dengan titik A, B, C, dan D; skala ketinggian dari lantai tercetak di sebelah kiri." width="470" height="235">
+  <rect x="0" y="0" width="470" height="235" fill="#FFFFFF"/>
+  <line x1="44" y1="35" x2="44" y2="196" stroke="#6A7F84" stroke-width="1.4"/>
+  <line x1="44" y1="195" x2="455" y2="195" stroke="#6A7F84" stroke-width="1.4"/>
+  <line x1="44" y1="45" x2="80" y2="45" stroke="#C9DADC" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="44" y1="135" x2="285" y2="135" stroke="#C9DADC" stroke-width="1" stroke-dasharray="4 4"/>
+  <line x1="44" y1="165" x2="190" y2="165" stroke="#C9DADC" stroke-width="1" stroke-dasharray="4 4"/>
+  <text x="38" y="49" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">5 m</text>
+  <text x="38" y="139" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">2 m</text>
+  <text x="38" y="169" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">1 m</text>
+  <text x="38" y="199" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">0</text>
+  <polyline points="80,45 190,165 285,135 420,195" fill="none" stroke="#0B4F58" stroke-width="3.2" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="80" cy="45" r="4.5" fill="#C05621"/>
+  <circle cx="190" cy="165" r="4.5" fill="#C05621"/>
+  <circle cx="285" cy="135" r="4.5" fill="#C05621"/>
+  <circle cx="420" cy="195" r="4.5" fill="#C05621"/>
+  <text x="80" y="33" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">A</text>
+  <text x="181" y="181" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">B</text>
+  <text x="285" y="124" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">C</text>
+  <text x="432" y="189" text-anchor="middle" font-family="Segoe UI,Arial,sans-serif" font-size="14" font-weight="bold" fill="#12333A">D</text>
+  <text x="455" y="212" text-anchor="end" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#6A7F84">lantai</text>
+  <text x="44" y="228" text-anchor="start" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#6A7F84">skala ketinggian diukur dari lantai</text>
+</svg></div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="s08_beda">Beda ketinggian A dan B <span class="satuan">(m)</span></label>
+            <input type="text" inputmode="decimal" id="s08_beda">
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="kotak-rute" id="kotak_rute">
+  <span class="angka" id="rute_angka"></span>
+  <span id="rute_teks"></span>
+</div>
+
+<input type="hidden" id="status_kirim" value="">
+
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+
+</div><!-- /wrap -->
+
+<div class="bilah-bawah">
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">0 dari 8 isian dijawab</div>
+      <button class="periksa" id="btn_periksa" type="button">Periksa kelengkapan</button>
+      <button class="selesai" id="btn_selesai" type="button">Selesai</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* === kunci dan peta bekal — hanya blok ini yang memuat kunci === */
+var KUNCI_NUM = {
+  s01_w:    [6, 0.05],
+  s03_dek:  [16, 0.05],
+  s04_f:    [15, 0.05],
+  s06_ha:   [3, 0.05],
+  s08_beda: [4, 0.05]
+};
+
+var KUNCI_PIL = {
+  s02_kemana: "C",
+  s05_keliru: "B",
+  s07_acuan:  "D"
+};
+
+var URUTAN = ["s01_w","s02_kemana","s03_dek","s04_f","s05_keliru","s06_ha","s07_acuan","s08_beda"];
+
+var UMPAN = {
+  s01_w:      "Usaha total sama dengan perubahan energi kinetik",
+  s02_kemana: "Usaha total sama dengan perubahan energi kinetik",
+  s03_dek:    "Usaha total sama dengan perubahan energi kinetik",
+  s04_f:      "Gaya gesek kinetik",
+  s05_keliru: "Gaya gesek kinetik",
+  s06_ha:     "Membaca diagram lintasan bertingkat",
+  s07_acuan:  "Membaca diagram lintasan bertingkat",
+  s08_beda:   "Membaca diagram lintasan bertingkat"
+};
+
+var TANPA_KARTU = {};
+
+var TOTAL = Object.keys(KUNCI_NUM).length + Object.keys(KUNCI_PIL).length;
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+
+function butirBenar(id){
+  if (Object.prototype.hasOwnProperty.call(KUNCI_NUM, id)){
+    var v = bacaBilangan(nilaiElemen(id));
+    return (v !== null && Math.abs(v - KUNCI_NUM[id][0]) <= KUNCI_NUM[id][1]);
+  }
+  if (Object.prototype.hasOwnProperty.call(KUNCI_PIL, id)){
+    var jawab = nilaiElemen(id);
+    return (jawab !== null && String(jawab).trim() === String(KUNCI_PIL[id]).trim());
+  }
+  return false;
+}
+
+function hitungNilai(){
+  cerminSemua();
+  var benar = 0;
+  for (var id in KUNCI_NUM){ if (butirBenar(id)) benar++; }
+  for (var id2 in KUNCI_PIL){ if (butirBenar(id2)) benar++; }
+  return Math.round((benar / TOTAL) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function daftarIdDinilai(){
+  return Object.keys(KUNCI_NUM).concat(Object.keys(KUNCI_PIL));
+}
+
+function bekalYangGoyah(){
+  var urut = [], ada = {};
+  for (var i = 0; i < URUTAN.length; i++){
+    var id = URUTAN[i];
+    if (butirBenar(id)) continue;
+    var nama = UMPAN[id];
+    if (!nama || ada[nama]) continue;
+    ada[nama] = true;
+    urut.push(nama);
+  }
+  return urut;
+}
+
+function kalimatRute(nilai){
+  var nama = bekalYangGoyah();
+  var sisa = "";
+  if (nama.length > 3){ nama = nama.slice(0,3); sisa = ", dan beberapa lainnya — gurumu akan menunjukkannya"; }
+  var daftar = nama.join(", ") + sisa;
+  var tambahan = "";
+  for (var i = 0; i < nama.length; i++){
+    if (TANPA_KARTU[nama[i]]) tambahan = " " + TANPA_KARTU[nama[i]];
+  }
+  if (nilai >= 80){
+    return "Bekalmu sudah cukup. Kamu boleh langsung membaca lembar berikutnya dari gurumu. Sampai jumpa di kelas.";
+  }
+  if (nilai >= 60){
+    return "Hampir cukup. Sebelum masuk kelas, buka Lembar Bekal bagian ini saja: " + daftar +
+           ". Cukup bagian itu, tidak perlu seluruhnya." + tambahan;
+  }
+  return "Ada beberapa bekal yang masih goyah: " + daftar +
+         ". Buka Lembar Bekal bagian itu, lalu temui gurumu sebelum pelajaran dimulai. Ingat, lembar ini tidak dinilai." + tambahan;
+}
+
+function kunciLembar(){
+  var ids = daftarIdDinilai();
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    if (!el) continue;
+    if (el.tagName.toLowerCase() === "select"){
+      el.setAttribute("aria-disabled", "true");
+      el.setAttribute("data-terkunci", el.value);
+    } else {
+      el.setAttribute("readonly", "readonly");
+    }
+  }
+  var btn = document.getElementById("btn_selesai");
+  if (btn){ btn.setAttribute("disabled", "disabled"); btn.textContent = "Sudah dikumpulkan"; }
+  var btn2 = document.getElementById("btn_periksa");
+  if (btn2) btn2.setAttribute("disabled", "disabled");
+}
+
+function tampilkanRute(nilai){
+  var kotak = document.getElementById("kotak_rute");
+  if (!kotak) return;
+  var angka = document.getElementById("rute_angka");
+  var teks = document.getElementById("rute_teks");
+  if (angka) angka.textContent = nilai + "%";
+  if (teks) teks.textContent = kalimatRute(nilai);
+  kotak.classList.add("tampil");
+}
+
+function perbarui(){
+  var ids = daftarIdDinilai();
+  var terisi = 0;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    if (el && String(el.value).trim() !== "") terisi++;
+  }
+  var pct = Math.round((terisi / ids.length) * 100);
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + ids.length + " isian dijawab";
+}
+
+function tandaiKosong(){
+  cerminSemua();
+  var ids = daftarIdDinilai();
+  var kosongPertama = null;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    var item = el ? el.closest(".isi-item") : null;
+    if (!el) continue;
+    if (String(el.value).trim() === ""){
+      if (item) item.classList.add("kosong");
+      if (!kosongPertama) kosongPertama = el;
+    } else {
+      if (item) item.classList.remove("kosong");
+    }
+  }
+  perbarui();
+  return kosongPertama;
+}
+
+function periksaKelengkapan(){
+  var kosong = tandaiKosong();
+  var pesan = document.getElementById("pesan_teks");
+  if (kosong){
+    kosong.scrollIntoView({behavior:"smooth", block:"center"});
+    if (pesan) pesan.textContent = "Masih ada kotak yang kosong — kotak itu ditandai oranye.";
+  } else {
+    if (pesan) pesan.textContent = "Seluruh kotak sudah terisi. Kamu boleh menekan Selesai.";
+  }
+}
+
+function selesai(){
+  var kosong = tandaiKosong();
+  var pesan = document.getElementById("pesan_teks");
+  if (kosong){
+    kosong.scrollIntoView({behavior:"smooth", block:"center"});
+    if (pesan) pesan.textContent = "Masih ada kotak yang kosong — isi dahulu kotak oranye itu, baru tekan Selesai.";
+    return;
+  }
+  var nilai = hitungNilai();
+  var simpan = document.getElementById("status_kirim");
+  if (simpan){ simpan.value = "selesai|" + nilai; cermin(simpan); }
+  kunciLembar();
+  tampilkanRute(nilai);
+  cerminSemua();
+  if (pesan) pesan.textContent = "Jawabanmu sudah terkunci.";
+  var kotak = document.getElementById("kotak_rute");
+  if (kotak) kotak.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+document.addEventListener("input", function(ev){
+  cermin(ev.target);
+  perbarui();
+}, false);
+document.addEventListener("change", function(ev){
+  var el = ev.target;
+  if (el && el.getAttribute && el.getAttribute("aria-disabled") === "true"){
+    el.value = el.getAttribute("data-terkunci") || "";
+  }
+  cermin(el);
+  perbarui();
+}, false);
+document.addEventListener("blur", function(ev){ cermin(ev.target); }, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+function mulai(){
+  cerminSemua();
+  perbarui();
+  var btn = document.getElementById("btn_selesai");
+  if (btn) btn.addEventListener("click", selesai);
+  var btn2 = document.getElementById("btn_periksa");
+  if (btn2) btn2.addEventListener("click", periksaKelengkapan);
+  var simpan = document.getElementById("status_kirim");
+  if (simpan && String(simpan.value).indexOf("selesai") === 0){
+    var bagian = String(simpan.value).split("|");
+    var nilai = bagian.length > 1 ? parseInt(bagian[1], 10) : hitungNilai();
+    if (isNaN(nilai)) nilai = hitungNilai();
+    kunciLembar();
+    tampilkanRute(nilai);
+  }
+}
+
+if (document.readyState === "loading"){
+  document.addEventListener("DOMContentLoaded", mulai);
+} else {
+  mulai();
+}
+
+cerminSemua();
+
+})();
+</script>
+
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

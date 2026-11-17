@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tantangan Mata Pelajaran Fisika</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+  --bingkai:#D7E6E8; --aturanTebal:#8A6604;
+}
+*{box-sizing:border-box;}
+body{margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:140px; line-height:1.55;}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;}
+.kepala::before,.kepala::after{content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:640px; position:relative;}
+.kepala .takaran{margin-top:10px; font-size:12.5px; position:relative; display:flex; gap:8px; flex-wrap:wrap;}
+.kepala .takaran span{background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.35);
+  border-radius:999px; padding:3px 11px;}
+.kartu{background:#fff; border:1px solid var(--bingkai); border-radius:14px; padding:18px 20px; margin:18px 0;}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+.aturan{background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.aturan strong{color:var(--aturanTebal);}
+.aturan ol,.aturan ul{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+.sah{background:var(--toscaB); border-left:6px solid var(--tosca2); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.sah strong{color:var(--tosca0);}
+.sah ul{margin:6px 0 0; padding-left:20px;}
+.sah li{margin:4px 0;}
+.soal{border:1px solid #E1EBEC; border-radius:12px; margin:14px 0; overflow:hidden; background:#fff;}
+.soal-kep{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:9px 14px;
+  font-size:13.5px; display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.soal-kep .bentuk{font-weight:400; color:var(--abu);}
+.soal.terisi .soal-kep{background:var(--tosca2); color:#fff;}
+.soal.terisi .soal-kep .bentuk{color:rgba(255,255,255,0.85);}
+.soal.ragu .soal-kep{background:var(--kuning); color:var(--tinta);}
+.soal.ragu .soal-kep .bentuk{color:var(--tinta);}
+.soal.tandaKosong{outline:2px solid var(--oranye); outline-offset:-2px;}
+.soal-isi{padding:14px 16px;}
+.naskah{background:var(--abuB); border-left:4px solid var(--tosca2); border-radius:8px;
+  padding:12px 14px; font-size:14px; margin-bottom:10px;}
+.perintah{font-weight:600; font-size:14px; margin-bottom:10px;}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:-4px 0 12px;}
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;}
+.isi-item input[type=text]:not(:placeholder-shown){border-color:var(--tosca2);}
+.isi-item.kosong input, .isi-item.kosong select{border-color:var(--oranye); background:#FFF7F1;}
+.raguwrap{border-top:1px dashed var(--bingkai); margin-top:10px; padding-top:10px; font-size:13px; color:var(--oranye);}
+.raguwrap input{margin-right:6px;}
+.bilah-bawah{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid var(--bingkai);
+  box-shadow:0 -4px 18px rgba(7,59,68,0.08); padding:10px 0 14px; z-index:50;}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg, var(--tosca2), var(--kuning)); transition:width 0.25s;}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button{cursor:pointer; font-family:inherit;}
+.btn{background:var(--tosca); color:#fff; border:none; border-radius:9px; padding:9px 18px;
+  font-size:13.5px; font-weight:600;}
+.btn:hover{background:var(--tosca0);}
+.btn:disabled{opacity:.5; cursor:not-allowed;}
+.btn.sekunder{background:var(--toscaB); color:var(--tosca0);}
+.btn.selesai{background:var(--oranye);}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%; min-height:16px;}
+.pesan.awas{color:var(--merah); font-weight:700;}
+.kaki{text-align:center; font-size:12px; color:var(--abu); padding:18px 16px 8px;}
+@media (max-width:640px){
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+  body{padding-bottom:160px;}
+}
+@media (max-width:360px){
+  .wrap{padding:0 10px;}
+  .soal-isi{padding:12px 10px;}
+}
+
+</style>
+</head>
+<body>
+<div class="kepala"><div class="wrap"><div class="baris-kecil">Fisika &middot; Kelas XI &middot; Lintas bahan</div><h1>Tantangan Mata Pelajaran &mdash; Fisika</h1><div class="penjelas">Enam soal yang mencampur beberapa bahan sekaligus. Semua ceritanya datang dari energi terbarukan dan lingkungan.</div><div class="takaran"><span>6 soal</span><span>30 menit</span><span>tanpa kalkulator</span><span>tanpa catatan</span></div></div></div>
+<div class="wrap">
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 17-11-2026"></div>
+</div>
+
+<div class="aturan">
+  <strong>Cara mengisi</strong>
+  <ol>
+    <li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li>
+    <li>Tulis angkanya saja, tanpa satuan &mdash; satuannya sudah tercetak di sebelah kotak.</li>
+    <li>Kalau jawabannya nol, tulis <b>0</b>; jangan dikosongkan.</li>
+    <li>Pakai g = 10 m/s&sup2; pada seluruh soal. Nilai sinus dan kosinus yang kamu perlukan sudah tertulis di dalam soalnya.</li>
+    <li>Kotak <b>Tandai ragu-ragu</b> hanya penanda untuk dirimu sendiri dan tidak dinilai.</li>
+    <li>Tombol <b>Periksa kelengkapan</b> menandai kotak yang masih kosong &mdash; bukan benar atau salahnya.</li>
+    <li>Jawabanmu tersimpan begitu kamu berpindah ke kotak berikutnya. Kamu boleh menutup halaman dan melanjutkannya nanti.</li>
+  </ol>
+</div>
+<div class="sah">
+  <strong>Pekerjaan ini sah bila</strong>
+  <ul>
+    <li>kamu mengerjakannya sendiri, tanpa bantuan siapa pun;</li>
+    <li>kamu tidak membuka modul, catatan, berkas lain, atau internet selama mengerjakan;</li>
+    <li>kamu tidak memakai kalkulator &mdash; seluruh angka yang kamu perlukan sudah ada di dalam soal;</li>
+    <li>seluruh soal kamu jawab sebelum kamu kumpulkan.</li>
+  </ul>
+  <p style="margin:8px 0 0">Enam soal ini sengaja mencampur bahan yang baru kamu pelajari dengan bahan dari
+  bulan-bulan sebelumnya. Soal yang terasa jauh justru soal yang paling berguna dikerjakan.
+  Pekerjaan ini <b>tidak menentukan kelulusanmu</b> dan <b>tidak masuk nilai rapor</b>.</p>
+</div>
+<article class="soal" id="kartu-b01"><div class="soal-kep"><span>Soal 1</span><span class="bentuk">Isian angka</span></div><div class="soal-isi"><div class="naskah">Gondola perawatan turbin angin naik dari keadaan diam di kaki menara dengan percepatan tetap 0,5 m/s&sup2;, lurus ke atas, sampai lajunya mencapai 6 m/s. Menara turbin itu dicat putih supaya terlihat dari jauh.</div><div class="perintah">Berapa jarak yang sudah ditempuh gondola itu saat lajunya tepat 6 m/s?</div><div class="kisi"><div class="isi-item"><label for="b01m1">Jarak yang sudah ditempuh gondola <span class="satuan">(m)</span></label><input type="text" inputmode="decimal" id="b01m1"></div></div><div class="raguwrap"><label for="ragu-b01"><input type="checkbox" id="ragu-b01"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b02"><div class="soal-kep"><span>Soal 2</span><span class="bentuk">Isian angka</span></div><div class="soal-isi"><div class="naskah">Sebuah rakitan panel surya 60 kg ditarik mendatar di atas rel pemasangan dengan gaya 210 N. Sepanjang geraknya rel menahan rakitan itu dengan gaya gesek tetap 90 N. Panel itu menghadap ke utara.</div><div class="perintah">Berapa percepatan rakitan panel surya itu?</div><div class="kisi"><div class="isi-item"><label for="b02m1">Percepatan rakitan panel surya <span class="satuan">(m/s&sup2;)</span></label><input type="text" inputmode="decimal" id="b02m1"></div></div><div class="raguwrap"><label for="ragu-b02"><input type="checkbox" id="ragu-b02"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b03"><div class="soal-kep"><span>Soal 3</span><span class="bentuk">Dua isian angka</span></div><div class="soal-isi"><div class="naskah">Air dari bak penampung sebuah pembangkit mikrohidro desa jatuh 11,25 m ke turbin di bawahnya (dipakai sebagai acuan). g = 10 m/s&sup2;. Bak itu terisi penuh sepanjang musim hujan.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b03m1">Energi posisi tiap 1 kg air di bak itu <span class="satuan">(J)</span></label><input type="text" inputmode="decimal" id="b03m1"></div><div class="isi-item"><label for="b03m2">Laju air saat tiba di turbin, bila seluruh energi posisinya berubah menjadi energi gerak <span class="satuan">(m/s)</span></label><input type="text" inputmode="decimal" id="b03m2"></div></div><div class="raguwrap"><label for="ragu-b03"><input type="checkbox" id="ragu-b03"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b04"><div class="soal-kep"><span>Soal 4</span><span class="bentuk">Isian angka</span></div><div class="soal-isi"><div class="naskah">Sebuah drone pemantau kebakaran lahan melaju 18 m/s, lalu direm lurus sampai berhenti setelah menempuh 54 m. Drone itu membawa kamera panas.</div><div class="perintah">Berapa besar perlambatan drone itu?</div><div class="kisi"><div class="isi-item"><label for="b04m1">Besar perlambatan drone <span class="satuan">(m/s&sup2;)</span></label><input type="text" inputmode="decimal" id="b04m1"></div></div><div class="raguwrap"><label for="ragu-b04"><input type="checkbox" id="ragu-b04"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b05"><div class="soal-kep"><span>Soal 5</span><span class="bentuk">Dua isian angka</span></div><div class="soal-isi"><div class="naskah">Sebuah sampan pengangkut sampah sungai bermassa 100 kg meluncur dengan laju 4 m/s, lalu masuk hamparan eceng gondok yang menahannya dengan gaya tetap 200 N sampai sampan itu berhenti.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b05m1">Jarak yang ditempuh sampan sampai berhenti <span class="satuan">(m)</span></label><input type="text" inputmode="decimal" id="b05m1"></div><div class="isi-item"><label for="b05m2">Besar perlambatan sampan itu <span class="satuan">(m/s&sup2;)</span></label><input type="text" inputmode="decimal" id="b05m2"></div></div><div class="raguwrap"><label for="ragu-b05"><input type="checkbox" id="ragu-b05"> Tandai ragu-ragu</label></div></div></article><article class="soal" id="kartu-b06"><div class="soal-kep"><span>Soal 6</span><span class="bentuk">Isian angka dan pilihan</span></div><div class="soal-isi"><div class="naskah">Sebuah tong kompos 30 kg berdiri diam di lantai beton. Seorang petugas mendorongnya mendatar dengan gaya 90 N, tetapi tong itu tetap diam di tempatnya. Tong itu bertutup berlubang supaya udara masuk.</div><div class="perintah">Jawab dua hal berikut.</div><div class="kisi"><div class="isi-item"><label for="b06m1">Besar gaya gesek yang bekerja pada tong saat itu <span class="satuan">(N)</span></label><input type="text" inputmode="decimal" id="b06m1"></div><div class="isi-item"><label for="b06m2">Alasannya adalah</label><select id="b06m2"><option value="">&mdash; pilih &mdash;</option><option value="A">A. gaya gesek selalu sama besar dengan berat benda</option><option value="B">B. tong tetap diam, sehingga gaya-gaya mendatar padanya harus saling meniadakan</option><option value="C">C. gaya gesek selalu bernilai setengah dari gaya dorong</option><option value="D">D. gaya gesek baru muncul setelah benda mulai bergerak</option></select></div></div><div class="raguwrap"><label for="ragu-b06"><input type="checkbox" id="ragu-b06"> Tandai ragu-ragu</label></div></div></article>
+</div>
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+<div class="bilah-bawah">
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">0 dari 6 soal dijawab</div>
+      <button class="btn" id="btn_periksa" type="button">Periksa kelengkapan</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+"use strict";
+var KUNCI_NUM = {
+  b01m1: [36, 0.2],
+  b02m1: [2, 0.05],
+  b03m1: [112.5, 0.5],
+  b03m2: [15, 0.05],
+  b04m1: [3, 0.05],
+  b05m1: [4, 0.05],
+  b05m2: [2, 0.05],
+  b06m1: [90, 0.5]
+};
+
+var KUNCI_PIL = {
+  b06m2: "B"
+};
+
+var MEDAN = {
+  b01: ["b01m1"],
+  b02: ["b02m1"],
+  b03: ["b03m1", "b03m2"],
+  b04: ["b04m1"],
+  b05: ["b05m1", "b05m2"],
+  b06: ["b06m1", "b06m2"]
+};
+
+var URUT = ["b01", "b02", "b03", "b04", "b05", "b06"];
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+
+function idButir(){ return URUT.slice(); }
+
+function medanButir(bid){ return MEDAN[bid] || []; }
+
+function nilaiButir(bid){
+  var medan = medanButir(bid), benar = 0, n = medan.length, i;
+  if (n === 0) return 0;
+  for (i = 0; i < n; i++){
+    var mid = medan[i];
+    if (Object.prototype.hasOwnProperty.call(KUNCI_NUM, mid)){
+      var k = KUNCI_NUM[mid][0], tol = KUNCI_NUM[mid][1];
+      var v = bacaBilangan(nilaiElemen(mid));
+      if (v !== null && Math.abs(v - k) <= tol) benar++;
+    } else if (Object.prototype.hasOwnProperty.call(KUNCI_PIL, mid)){
+      var jawab = nilaiElemen(mid);
+      if (jawab !== null && String(jawab).trim() === String(KUNCI_PIL[mid]).trim()) benar++;
+    }
+  }
+  return benar / n;
+}
+
+function hitungNilai(){
+  cerminSemua();
+  var urut = idButir(), jml = 0, i;
+  for (i = 0; i < urut.length; i++) jml += nilaiButir(urut[i]);
+  if (urut.length === 0) return 0;
+  return Math.round((jml / urut.length) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function daftarMedan(){
+  var out = [], i, j;
+  for (i = 0; i < URUT.length; i++){
+    var m = medanButir(URUT[i]);
+    for (j = 0; j < m.length; j++) out.push(m[j]);
+  }
+  return out;
+}
+
+function statusButir(bid){
+  var m = medanButir(bid), terisi = 0, i;
+  for (i = 0; i < m.length; i++){
+    var el = document.getElementById(m[i]);
+    if (el && String(el.value).trim() !== "") terisi++;
+  }
+  if (terisi === 0) return "kosong";
+  if (terisi === m.length) return "penuh";
+  return "sebagian";
+}
+
+function perbarui(){
+  var urut = idButir(), penuh = 0, i;
+  for (i = 0; i < urut.length; i++){
+    var bid = urut[i], st = statusButir(bid);
+    var kartu = document.getElementById("kartu-" + bid);
+    var raguEl = document.getElementById("ragu-" + bid);
+    var ragu = raguEl && raguEl.checked;
+    if (st === "penuh") penuh++;
+    if (kartu){
+      kartu.classList.remove("terisi", "ragu");
+      if (ragu) kartu.classList.add("ragu");
+      else if (st === "penuh") kartu.classList.add("terisi");
+    }
+    var nav = document.getElementById("nav-" + bid);
+    if (nav){
+      nav.classList.remove("isi", "ragu");
+      if (ragu){ nav.classList.add("ragu"); nav.setAttribute("aria-label", "Soal " + (i+1) + ", ditandai ragu-ragu"); }
+      else if (st === "penuh"){ nav.classList.add("isi"); nav.setAttribute("aria-label", "Soal " + (i+1) + ", sudah dijawab"); }
+      else { nav.setAttribute("aria-label", "Soal " + (i+1) + ", belum dijawab"); }
+    }
+  }
+  var pct = urut.length ? Math.round((penuh / urut.length) * 100) : 0;
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = penuh + " dari " + urut.length + " soal dijawab";
+}
+
+function periksaKelengkapan(){
+  cerminSemua();
+  var urut = idButir(), kosong = [], sebagian = [], pertama = null, i, j;
+  for (i = 0; i < urut.length; i++){
+    var bid = urut[i], st = statusButir(bid), no = i + 1;
+    var kartu = document.getElementById("kartu-" + bid);
+    if (kartu) kartu.classList.remove("tandaKosong");
+    var m = medanButir(bid);
+    for (j = 0; j < m.length; j++){
+      var el = document.getElementById(m[j]);
+      var bungkus = el ? el.closest(".isi-item") : null;
+      if (!el) continue;
+      if (String(el.value).trim() === ""){
+        if (bungkus) bungkus.classList.add("kosong");
+        if (!pertama) pertama = el;
+      } else if (bungkus){
+        bungkus.classList.remove("kosong");
+      }
+    }
+    if (st === "kosong"){ kosong.push(no); if (kartu) kartu.classList.add("tandaKosong"); }
+    else if (st === "sebagian"){ sebagian.push(no); if (kartu) kartu.classList.add("tandaKosong"); }
+  }
+  var pesan = document.getElementById("pesan_teks");
+  if (!pertama){
+    if (pesan){ pesan.className = "pesan"; pesan.textContent = "Seluruh kotak sudah terisi. Periksa lagi soal yang kamu tandai ragu-ragu."; }
+  } else {
+    var bagian = [];
+    if (kosong.length) bagian.push("belum dijawab: nomor " + kosong.join(", "));
+    if (sebagian.length) bagian.push("baru terisi sebagian: nomor " + sebagian.join(", "));
+    if (pesan){ pesan.className = "pesan awas"; pesan.textContent = "Masih ada yang perlu kamu isi — " + bagian.join("; ") + ". Kotaknya ditandai oranye."; }
+    if (pertama.scrollIntoView) pertama.scrollIntoView({behavior:"smooth", block:"center"});
+  }
+  perbarui();
+}
+
+document.addEventListener("input", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("change", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("blur", function(ev){ cermin(ev.target); }, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua();
+  perbarui();
+  var btn = document.getElementById("btn_periksa");
+  if (btn) btn.addEventListener("click", periksaKelengkapan);
+});
+cerminSemua();
+
+})();
+</script>
+<div style="max-width:860px;margin:26px auto 0;padding:0 16px;
+font:16px/1.6 'Segoe UI',Arial,sans-serif;">
+<p style="background:#E3F5F6;border-left:5px solid #17A2AF;border-radius:10px;
+padding:14px 16px;margin:0;">Masih ada yang mengganjal dari bagian ini?
+<a href="../../../aset-f-use/L04_Tanya-Jawab-Topik-F.USE.html"
+style="color:#0B4F58;font-weight:700;">Buka Tanya-Jawab Topik</a> &mdash;
+pertanyaan di sana datang dari ramalan teman-temanmu sendiri.</p>
+</div>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

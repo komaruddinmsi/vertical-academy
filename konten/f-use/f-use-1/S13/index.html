@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Ingatan Tunda — Usaha, Energi & Hukum Kekekalan Energi Mekanik</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:130px;
+}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{
+  position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;
+}
+.kepala::before,.kepala::after{
+  content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);
+}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:620px; position:relative;}
+
+.kartu{
+  background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;
+}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+
+.aturan{
+  background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;
+}
+.aturan strong{color:#8A6604;}
+.aturan ol{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+
+.syarat{
+  background:var(--merahB); border-left:6px solid var(--merah); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;
+}
+.syarat strong{color:var(--merah);}
+.syarat ul{margin:6px 0 0; padding-left:20px;}
+.syarat li{margin:4px 0;}
+.tutup-list{list-style:none; padding-left:0; margin:8px 0 0;}
+.tutup-list li{margin:3px 0;}
+.tanda-x{color:var(--merah); font-weight:700; font-family:"Consolas",monospace;}
+.tanda-w{color:var(--hijau); font-weight:700; font-family:"Consolas",monospace;}
+
+.bagian{margin:26px 0;}
+.bagian-judul{
+  background:linear-gradient(100deg, var(--tosca), var(--tosca2));
+  color:#fff; padding:10px 16px; border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px;
+  font-size:15.5px; font-weight:600;
+}
+.lencana{
+  background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5);
+  border-radius:999px; padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;
+}
+.bagian-isi{
+  border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;
+}
+
+.soal{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.soal-judul{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:8px 14px; font-size:13.5px;}
+.soal-isi{padding:14px 16px;}
+.naskah{
+  background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px;
+  padding:12px 14px; font-size:14px; margin-bottom:10px;
+}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:-4px 0 12px;}
+.arah-positif{font-size:12.5px; color:var(--oranye); font-weight:600; margin:6px 0 10px;}
+
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;
+}
+.isi-item input[type=text]:not(:placeholder-shown), .isi-item select:valid{
+  border-color: var(--tosca2);
+}
+.isi-item.kosong input, .isi-item.kosong select{border-color:var(--oranye); background:#FFF7F1;}
+.isi-item.lebar{grid-column:1 / -1;}
+
+.dibaca-guru{position:relative;}
+.dibaca-guru .tanda{
+  display:inline-block; background:var(--oranyeB); color:var(--oranye); font-size:11px; font-weight:700;
+  border-radius:999px; padding:2px 9px; margin-bottom:6px; letter-spacing:0.3px;
+}
+textarea{
+  width:100%; min-height:64px; padding:9px 11px; border:1.5px solid #C9DADC; border-radius:8px;
+  font-size:13.5px; font-family:inherit; resize:vertical;
+}
+
+table.klas{width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px;}
+table.klas th{background:var(--tosca); color:#fff; padding:8px 10px; text-align:left; font-size:12.5px;}
+table.klas td{padding:7px 10px; border-bottom:1px solid #E5EEEF;}
+table.klas tr:nth-child(even) td{background:#F7FBFB;}
+@media (max-width:640px){
+  table.klas, table.klas thead, table.klas tbody, table.klas tr, table.klas th, table.klas td{display:block;}
+  table.klas thead{display:none;}
+  table.klas tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px;}
+  table.klas td{border:none; padding:4px 2px;}
+  table.klas td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca);}
+}
+
+.bilah-bawah{
+  position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;
+}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{
+  height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;
+}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{
+  background:var(--tosca); color:#fff; border:none; border-radius:8px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; cursor:pointer;
+}
+button.periksa:hover{background:var(--tosca0);}
+button.kunci{
+  background:var(--oranye); color:#fff; border:none; border-radius:8px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; cursor:pointer;
+}
+button.kunci:hover{background:#9C4518;}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%;}
+
+.kaki{font-size:12px; color:var(--abu); text-align:center; margin:26px 0 10px;}
+
+@media (max-width:640px){
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="kepala"><div class="wrap">
+  <div class="baris-kecil">Fisika &middot; Kelas XI &middot; Kode TP F.USE.1</div>
+  <h1>Kuis Ingatan Tunda</h1>
+  <div class="penjelas">Usaha, Energi &amp; Hukum Kekekalan Energi Mekanik &mdash; enam soal, dikerjakan dari ingatan, beberapa hari sesudah latihanmu yang terakhir.</div>
+</div></div>
+
+<div class="wrap">
+
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 24-11-2026"></div>
+</div>
+
+<div class="syarat">
+  <strong>Syarat sahnya pekerjaanmu &mdash; baca sebelum mulai</strong>
+  <ul>
+    <li><b>Satu kali duduk.</b> Sekali kamu mulai, kerjakan sampai selesai tanpa jeda. Kuis ini tidak dilanjutkan di lain waktu.</li>
+    <li><b>Waktunya.</b> Kerjakan pada hari ke-2 sampai hari ke-7 sesudah latihan terakhirmu pada tujuan pembelajaran ini. Di luar rentang itu, pekerjaanmu tidak dipakai.</li>
+    <li><b>Tidak ada apa pun yang dibuka.</b> Yang boleh ada di hadapanmu hanya halaman ini, kertas coretan kosong, dan alat tulis.</li>
+  </ul>
+  <ul class="tutup-list">
+    <li><span class="tanda-w">&#9632;</span> halaman kuis ini</li>
+    <li><span class="tanda-x">&#10005;</span> modul konsep &mdash; tidak dibuka, baik berkasnya maupun cetakannya</li>
+    <li><span class="tanda-x">&#10005;</span> catatan, lembar latihan lama, kartu rumus</li>
+    <li><span class="tanda-x">&#10005;</span> video, simulasi, animasi</li>
+    <li><span class="tanda-x">&#10005;</span> halaman lain, mesin pencari, obrolan dengan siapa pun</li>
+  </ul>
+  <p style="margin:10px 0 0;"><b>Kamu dinyatakan lulus kuis ini bila menjawab benar sekurang-kurangnya 15 dari 21 kotak yang dinilai.</b>
+  Angka ini ditulis di sini supaya kamu tahu sejak awal apa yang diminta. Kotak bertanda &ldquo;dibaca guru&rdquo; tidak ikut dihitung.</p>
+  <p style="margin:8px 0 0;">Jawabanmu tidak diperiksa di layar ini. Kunci dan pembahasannya dibuka gurumu sesudah hari ke-7 berlalu bagi seluruh kelas.</p>
+</div>
+
+<div class="aturan">
+  <strong>Cara mengisi</strong>
+  <ol>
+    <li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li>
+    <li>Tulis angkanya saja, tanpa satuan &mdash; satuannya sudah tercetak di sebelah kotak.</li>
+    <li>Kalau jawabannya negatif, jangan lupa tanda minus; pada besaran berarah, tanda adalah setengah dari jawaban.</li>
+    <li>Kotak bertanda &ldquo;dibaca guru&rdquo; tidak dinilai otomatis, tetapi tetap diisi.</li>
+    <li>Arah positif sudah ditetapkan pada soal yang membutuhkannya supaya jawaban seluruh kelas dapat dibandingkan.</li>
+    <li>Jawabanmu tersimpan begitu kamu berpindah ke kotak berikutnya. Jangan menutup halaman sebelum selesai &mdash; kuis ini satu kali duduk.</li>
+    <li>Ambil g = 10 m/s&sup2; di seluruh soal.</li>
+  </ol>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.1</span> Kekekalan energi mekanik pada lintasan licin</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 1</div>
+  <div class="soal-isi">
+    <div class="naskah">Sebuah kereta gantung wisata dilepas meluncur bebas dari diam di stasiun atas, menuruni kabel yang dianggap licin sepenuhnya. Stasiun atas berada 7,2 m di atas stasiun bawah, dan stasiun bawah dipakai sebagai acuan ketinggian. Ambil g = 10 m/s&sup2;.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="q1_v">Laju kereta gantung di stasiun bawah <span class="satuan">(m/s)</span></label>
+        <input type="text" inputmode="decimal" id="q1_v">
+      </div>
+      <div class="isi-item">
+        <label for="q1_v2">Laju di stasiun bawah bila massanya menjadi dua kali lipat <span class="satuan">(m/s)</span></label>
+        <input type="text" inputmode="decimal" id="q1_v2">
+      </div>
+      <div class="isi-item lebar">
+        <label for="q1_alasan">Alasan untuk jawaban di atas</label>
+        <select id="q1_alasan">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Lebih cepat, sebab kereta yang lebih berat menyimpan energi yang lebih besar.</option>
+            <option value="B">B. Sama, sebab massa muncul di kedua ruas persamaan energi dan tercoret; laju di bawah hanya ditentukan beda ketinggian.</option>
+            <option value="C">C. Lebih lambat, sebab kereta yang lebih berat lebih sulit dipercepat.</option>
+            <option value="D">D. Tidak dapat ditentukan tanpa mengetahui panjang kabelnya.</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.2</span> Energi yang berubah bentuk pada segmen kasar</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 2</div>
+  <div class="soal-isi">
+    <div class="naskah">Sebuah skuter listrik bermassa 90 kg termasuk pengendaranya memasuki petak jalan berkerikil yang datar dengan laju 8 m/s. Petak berkerikil itu sepanjang 8 m dengan koefisien gesek kinetik 0,3. Ambil g = 10 m/s&sup2;.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="q2_f">Gaya gesek kinetik pada petak berkerikil <span class="satuan">(N)</span></label>
+        <input type="text" inputmode="decimal" id="q2_f">
+      </div>
+      <div class="isi-item">
+        <label for="q2_v">Laju skuter saat keluar dari petak <span class="satuan">(m/s)</span></label>
+        <input type="text" inputmode="decimal" id="q2_v">
+      </div>
+      <div class="isi-item lebar">
+        <label for="q2_kemana">Energi yang berkurang itu pergi ke mana?</label>
+        <select id="q2_kemana">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Menjadi kalor pada kerikil dan ban, serta sedikit bunyi; jumlah seluruh energinya tetap.</option>
+            <option value="B">B. Lenyap, sebab skuternya melambat.</option>
+            <option value="C">C. Menjadi energi potensial, sebab permukaan kerikil lebih tinggi daripada aspal.</option>
+            <option value="D">D. Tersimpan kembali di dalam baterai skuter sebagai energi listrik.</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K2.1</span> Menyusun rencana per segmen sebelum menghitung</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 3</div>
+  <div class="soal-isi">
+    <div class="naskah">Sebuah wahana kereta mini dirancang dengan empat segmen berurutan: P&ndash;Q licin menurun, Q&ndash;R datar berkerikil (kasar), R&ndash;S licin menurun lagi, dan S&ndash;U licin menanjak menuju peron. Rancangan ini belum dihitung &mdash; yang diminta hanya rencananya.</div>
+    <div class="bantu">Label bantu: P = puncak, Q = ujung penurunan pertama, R = ujung petak berkerikil, S = titik terendah sebelum tanjakan, U = peron.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="q3_suku">Banyak suku pengurang f&middot;d pada rencana itu</label>
+        <input type="text" inputmode="decimal" id="q3_suku">
+      </div>
+      <div class="isi-item">
+        <label for="q3_acuan">Titik yang paling wajar dipakai sebagai acuan ketinggian</label>
+        <select id="q3_acuan">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="P">P</option>
+            <option value="Q">Q</option>
+            <option value="R">R</option>
+            <option value="S">S</option>
+            <option value="U">U</option>
+        </select>
+      </div>
+      <div class="isi-item lebar">
+        <label for="q3_rencana">Rencana yang benar</label>
+        <select id="q3_rencana">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Satu persamaan dari ujung ke ujung: mgh<sub>P</sub> = mgh<sub>U</sub> + &frac12;mv<sub>U</sub>&sup2;. Lintasan licin dan lintasan kasar memberi laju yang sama, jadi segmen berkerikil tidak perlu baris sendiri.</option>
+            <option value="B">B. Empat baris, satu per segmen. Baris Q&ndash;R memakai &frac12;mv<sub>Q</sub>&sup2; &minus; f&middot;d = &frac12;mv<sub>R</sub>&sup2;; tiga baris lain kekal penuh; acuan ketinggian dipasang sekali dan tidak dipindah.</option>
+            <option value="C">C. Empat baris, dengan suku &minus;f&middot;d dituliskan pada setiap segmen datar maupun menurun, sebab gesekan selalu ada di mana-mana.</option>
+            <option value="D">D. Empat baris, dengan acuan ketinggian dipindah ke titik awal tiap segmen supaya tiap baris dimulai dari nol.</option>
+        </select>
+      </div>
+      <div class="isi-item lebar dibaca-guru">
+        <span class="tanda">dibaca guru</span>
+        <label for="q3_tulis">Tuliskan baris persamaan untuk segmen Q&ndash;R dengan lambangmu sendiri.</label>
+        <textarea id="q3_tulis"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K2.2</span> Menjalankan hitungan berurutan dan memberi verdikt</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 4</div>
+  <div class="soal-isi">
+    <div class="naskah">Sebuah kereta luncur wisata bermassa 80 kg termasuk penumpangnya dilepas diam di puncak landasan licin A, 3,15 m di atas titik B yang dipakai sebagai acuan ketinggian. Dari B, jalur datar berlapis karet kasar B&ndash;C sepanjang 5 m dengan koefisien gesek kinetik 0,4. Dari C, rel licin menanjak menuju peron D pada ketinggian 0,7 m di atas B. Syarat wahana: kereta harus tiba di D dengan laju sekurang-kurangnya 4 m/s. Ambil g = 10 m/s&sup2;.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="q4_wf">Energi yang berubah menjadi kalor di jalur B&ndash;C <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="q4_wf">
+      </div>
+      <div class="isi-item">
+        <label for="q4_ekC">Energi gerak kereta di titik C <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="q4_ekC">
+      </div>
+      <div class="isi-item">
+        <label for="q4_vD">Laju kereta di peron D <span class="satuan">(m/s)</span></label>
+        <input type="text" inputmode="decimal" id="q4_vD">
+      </div>
+      <div class="isi-item">
+        <label for="q4_verdikt">Apakah syarat wahana terpenuhi?</label>
+        <select id="q4_verdikt">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="LOLOS">LOLOS &mdash; syarat terpenuhi</option>
+            <option value="GAGAL">GAGAL &mdash; syarat tidak terpenuhi</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="soal">
+  <div class="soal-judul">Soal 5</div>
+  <div class="soal-isi">
+    <div class="naskah">Sebuah mobil golf bermassa 300 kg termasuk pengemudinya dilepas tanpa gas dari puncak landai licin A, 3,05 m di atas titik B yang dipakai sebagai acuan. Dari B, jalur datar berpasir B&ndash;C sepanjang 9 m dengan koefisien gesek kinetik 0,25. Dari C, landai licin menanjak menuju pos jaga D pada ketinggian 0,6 m di atas B. Syarat: mobil golf harus tiba di D dengan laju sekurang-kurangnya 1,8 m/s. Dua orang menghitungnya: yang pertama menuliskan baris untuk tiap segmen, yang kedua melompat langsung dari A ke D. Ambil g = 10 m/s&sup2;.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="q5_vD">Laju di D menurut cara yang menuliskan tiap segmen <span class="satuan">(m/s)</span></label>
+        <input type="text" inputmode="decimal" id="q5_vD">
+      </div>
+      <div class="isi-item">
+        <label for="q5_vsalah">Laju di D menurut cara yang melompat dari A ke D <span class="satuan">(m/s)</span></label>
+        <input type="text" inputmode="decimal" id="q5_vsalah">
+      </div>
+      <div class="isi-item lebar">
+        <label for="q5_baris">Baris mana yang hilang dari cara kedua?</label>
+        <select id="q5_baris">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Baris energi potensial di D.</option>
+            <option value="B">B. Baris usaha gesekan &minus;f&middot;d pada segmen B&ndash;C.</option>
+            <option value="C">C. Baris energi gerak di B.</option>
+            <option value="D">D. Tidak ada baris yang hilang; kedua cara sama-sama sah.</option>
+        </select>
+      </div>
+      <div class="isi-item lebar">
+        <label for="q5_nilai">Kedua cara memberi verdikt LOLOS terhadap syarat 1,8 m/s. Apa yang benar dikatakan?</label>
+        <select id="q5_nilai">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Cara kedua benar, sebab angkanya wajar dan verdiknya sama.</option>
+            <option value="B">B. Kedua cara memberi verdikt yang sama, tetapi cara kedua tetap keliru sebab satu baris neraca energinya tidak ada.</option>
+            <option value="C">C. Cara kedua benar, sebab gesekan pasir terlalu kecil untuk ikut dihitung.</option>
+            <option value="D">D. Kedua cara salah, sebab lintasannya tidak seluruhnya licin.</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K2.1 + K2.2</span> Mengajukan perbaikan atas rancangan yang gagal</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 6</div>
+  <div class="soal-isi">
+    <div class="naskah">Kembali ke rancangan pada Soal 4 (kereta luncur 80 kg; A pada 3,15 m; jalur kasar B&ndash;C 5 m dengan &mu;<sub>k</sub> = 0,4; peron D pada 0,7 m; syarat laju di D sekurang-kurangnya 4 m/s). Panitia wahana mengajukan beberapa perbaikan.</div>
+    <div class="kisi">
+      <div class="isi-item lebar">
+        <label for="q6_tidak">Perbaikan mana yang TIDAK akan berhasil?</label>
+        <select id="q6_tidak">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Menaikkan titik pelepasan A.</option>
+            <option value="B">B. Menurunkan ketinggian peron D.</option>
+            <option value="C">C. Memperpendek jalur kasar B&ndash;C atau memperhalus permukaannya.</option>
+            <option value="D">D. Menambah jumlah penumpang sehingga massa keretanya bertambah.</option>
+        </select>
+      </div>
+      <div class="isi-item lebar">
+        <label for="q6_alasan">Alasan untuk jawaban di atas</label>
+        <select id="q6_alasan">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Massa muncul pada tiap suku neraca energi dan tercoret, sehingga laju di D tidak berubah.</option>
+            <option value="B">B. Massa menambah energi di A tetapi tidak menambah gesekan, sehingga lajunya justru bertambah.</option>
+            <option value="C">C. Massa memperbesar gesekan jauh lebih cepat daripada energinya, sehingga lajunya justru berkurang banyak.</option>
+            <option value="D">D. Massa memang tidak pernah muncul sama sekali dalam persamaan energi mana pun.</option>
+        </select>
+      </div>
+      <div class="isi-item">
+        <label for="q6_hA">Ketinggian A terkecil yang membuat syarat tepat terpenuhi (bagian lain tetap) <span class="satuan">(m)</span></label>
+        <input type="text" inputmode="decimal" id="q6_hA">
+      </div>
+      <div class="isi-item">
+        <label for="q6_mu">Koefisien gesek terbesar yang masih memenuhi syarat (A tetap 3,15 m)</label>
+        <input type="text" inputmode="decimal" id="q6_mu">
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+
+</div><!-- /wrap -->
+
+<div class="bilah-bawah">
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">0 dari 21 isian dijawab</div>
+      <button class="periksa" id="btn_periksa" type="button">Periksa kelengkapan</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+
+function sha256(ascii){
+  function rr(n,x){return (n>>>x)|(n<<(32-x));}
+  var mx=Math.pow,h=[],k=[],p=2,i=0,j,res="";
+  while(i<64){
+    var isP=true;
+    for(j=2;j*j<=p;j++){ if(p%j===0){isP=false;break;} }
+    if(isP){ if(i<8) h[i]=(mx(p,.5)%1*4294967296)|0; k[i]=(mx(p,1/3)%1*4294967296)|0; i++; }
+    p++;
+  }
+  var bytes=[];
+  for(i=0;i<ascii.length;i++){
+    var c=ascii.charCodeAt(i);
+    if(c<128) bytes.push(c);
+    else if(c<2048){ bytes.push(192|(c>>6),128|(c&63)); }
+    else { bytes.push(224|(c>>12),128|((c>>6)&63),128|(c&63)); }
+  }
+  var bitLen=bytes.length*8;
+  bytes.push(128);
+  while(bytes.length%64!==56) bytes.push(0);
+  for(i=7;i>=0;i--) bytes.push((bitLen/mx(2,i*8))&255);
+  var w=[],a,b,cc,d,e,f,g,hh,ta,tb;
+  for(var blk=0;blk<bytes.length;blk+=64){
+    for(i=0;i<16;i++){
+      w[i]=(bytes[blk+i*4]<<24)|(bytes[blk+i*4+1]<<16)|(bytes[blk+i*4+2]<<8)|(bytes[blk+i*4+3]);
+    }
+    for(i=16;i<64;i++){
+      var s0=rr(w[i-15],7)^rr(w[i-15],18)^(w[i-15]>>>3);
+      var s1=rr(w[i-2],17)^rr(w[i-2],19)^(w[i-2]>>>10);
+      w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+    }
+    a=h[0];b=h[1];cc=h[2];d=h[3];e=h[4];f=h[5];g=h[6];hh=h[7];
+    for(i=0;i<64;i++){
+      var S1=rr(e,6)^rr(e,11)^rr(e,25);
+      var ch=(e&f)^((~e)&g);
+      ta=(hh+S1+ch+k[i]+w[i])|0;
+      var S0=rr(a,2)^rr(a,13)^rr(a,22);
+      var maj=(a&b)^(a&cc)^(b&cc);
+      tb=(S0+maj)|0;
+      hh=g;g=f;f=e;e=(d+ta)|0;d=cc;cc=b;b=a;a=(ta+tb)|0;
+    }
+    h[0]=(h[0]+a)|0;h[1]=(h[1]+b)|0;h[2]=(h[2]+cc)|0;h[3]=(h[3]+d)|0;
+    h[4]=(h[4]+e)|0;h[5]=(h[5]+f)|0;h[6]=(h[6]+g)|0;h[7]=(h[7]+hh)|0;
+  }
+  for(i=0;i<8;i++){
+    var v=h[i]>>>0, s=v.toString(16);
+    while(s.length<8) s="0"+s;
+    res+=s;
+  }
+  return res;
+}
+var GARAM = "F.USE-piloting-2026-kunci-tidak-tercetak-pada-berkas-murid";
+var FAKTOR = 20;
+function cocokNum(id, nilai, daftar){
+  var N = Math.round(nilai * FAKTOR);
+  var c = sha256(GARAM + "|" + id + "|" + N);
+  for (var i = 0; i < daftar.length; i++){ if (daftar[i] === c) return true; }
+  return false;
+}
+function cocokSel(id, jawab, kunci){
+  return sha256(GARAM + "|" + id + "|" + String(jawab).trim()) === kunci;
+}
+var KUNCI_NUM = {
+  q1_v:              [["c6dc225873152d70f96e85e843cdc372c145f3be7167d44675dec6bc52843e7a","4faf4da4d0cac90e9f5997b1edaf33ee862f15cfde2b6a8a0bc6b113b61d9bf3","ca115406fb3361021f7101ca7c58f7f91eb206302bc871d1ea5980ea63bd306f"], 0.05],
+  q1_v2:             [["7defff7c63ec2298af5e64c2565c659940145851488e316de31af5734f271cce","4293efe05cab463ec528aea6c314563ed867bd2e645c3d59a545a2d26943dd78","32d8b61fe43e49ff07dead078ea490bcbd99b03edd86ac9406a78ff91ac0e062"], 0.05],
+  q2_f:              [["4aaf14ca5d2b14cb6ab3af9cbb2fa9165d850ac70286b04a3e8eaa19b5926f5b","e4b494eec644e0e1c29b3bd5433b638d57a4b119f9592b53fc95b5e6d9fd26b5","9ef2dc203835aa769828b2d5909816dd008d8cdaa265f8b8bd4ef8b49f8239e3"], 0.05],
+  q2_v:              [["38d4dfc994b843c18d4a5021962d1f1595f75e3772a65bd95ab29403ada90039","dccb05efb96c58a1dd20702f0f272dc65d99030aa3f0a6aa61aeac80bce1b3c2","768b546c994d05b01bd9404b5c54fe85c80c53b2f26e64c4ba7e90c49750c676"], 0.05],
+  q3_suku:           [["7bfdc1a65bbc935c5121aa3cb4a152b83768b1a6b89ec4c66c89147425ba9189","a2f9600d49d6330fb662b65e6b8276265a8180da19ef8e00db9c981d7a7033d9","8aa367908084b14223a26a10cd96b9211b0d853397917a5c02e9d4b607421b0b"], 0.05],
+  q4_wf:             [["583e9a94c8f86d2d47a52d235a9e9a145bd89619319de2159c4ef0d53948f255","3c1b36cd813c3683745e3343e6b2f57fc7c4dd0005f520dcb09a37165e44967c","250b37abfb27c1635278d0dbeb1460efef774813549765366b5c771c93bb6f70"], 0.05],
+  q4_ekC:            [["6b2e446a27c30636792504be09f444b0f027c9dbe52608757f25f3e7b9e8df9e","44221b939751213140d07908da4d96301400482095bb6177934be7aa33416216","75ecc656291a5a65c7f33fb619db69becf7663def7304113f62d6bc7106b590b"], 0.05],
+  q4_vD:             [["3aa865a49959b7dfd98b1b22389f2ad18da1caa59f055f318529dda8e8b04c4a","79ea3fbc57f30746a6e35e0fbdcc8526f592e56b7c2fd14024061a844f33c95e","29f8a363a68440b964ba899e75b00cfaec1b53f8e2a3cbea1d296c8f82f66161"], 0.05],
+  q5_vD:             [["ca453ad6c5e025a33c06c44d55a4dfc0179c920bdffcbd99491b3027227f72a0","791b33f6c7f526efe19a0d8aff7d439b348b7b89d24d8d3038c5d9089e25060d","69b1231e4b8f719e585893c07293c72a37f87f68dc76639340760096bc252b4c"], 0.05],
+  q5_vsalah:         [["6fafe61d5fab8ef41c2efb0ea7b41670483bcbdf6924b781645231b3a093a0f0","28dbadb54294444ce0f8f4892a33e30baf43c7ded370e1be0ecad53b7633a9bc","cf27674051ebe65261afeae24c9e0b02b87ca8b49b9c95d4e583f298f5b405d2"], 0.05],
+  q6_hA:             [["8afce8f14a5ee11e28ed826c808077804377fcb30774bc4ae3382fccd23f5243","7030e6e969e125377cb56b41a460cbe6871c8306017cf552f32ab7d4401d42c1","3860206c28550f150b2500e024bdea7f2ab08f0c51b4085a4b49bcb1dbfafa2f"], 0.05],
+  q6_mu:             [["3f75bebd1e17bc688fa88f31949c31c19ae94a3652030a2ca03c19aa72469cab","b2d740566c5500e22c1900ea1f3762338090566ff999e701ef024fddb3f606c0","2623c58af79cfbde338018ae3526484d15dc894e3b55b5118877829ceb476cd1"], 0.05]
+};
+
+var KUNCI_PIL = {
+  q1_alasan:         "87c7f6b5d457a86c4494156b0fd8cc7459217926a966cdce9421bba842055580",
+  q2_kemana:         "c3fe4d79a0057f3dfc96b2c4be5015649ac682db5cbc7e0a07b0c415ac8279ed",
+  q3_acuan:          "fdabe7183b9b5d54eaf317f56108ed13a8789596f093fd4d8cf7376b49a6dc77",
+  q3_rencana:        "565353535b728f2125bef90b51abe3bf190ed6d39f6a1604f22f9b5dfa10e054",
+  q4_verdikt:        "1d585ae6a0fee9035a785179db4278f95e841bfa3941e1f7e17693250c108b3c",
+  q5_baris:          "595df1f6103e4c58a3c375edbbfe8f3d65dcd4ae456b6df3760edd42d32bd3a6",
+  q5_nilai:          "c0457107bd7e4e3dc9729cf90c0662fd75c2885c8266e9801b7f4262878bbd68",
+  q6_tidak:          "f40c26095d6ccf5fe4918f8206b202c20f25064898fb6c2126aba2f0dc896e92",
+  q6_alasan:         "5cdf16ed0e9cc0a28276dd023f629a8b86771e7935355e21ecb9533dcfc285f3"
+};
+
+var TOTAL = Object.keys(KUNCI_NUM).length + Object.keys(KUNCI_PIL).length;
+
+function hitungNilai(){
+  cerminSemua();
+  var benar = 0;
+  for (var id in KUNCI_NUM){
+    var v = bacaBilangan(nilaiElemen(id));
+    if (v !== null && cocokNum(id, v, KUNCI_NUM[id][0])) benar++;
+  }
+  for (var id2 in KUNCI_PIL){
+    var jawab = nilaiElemen(id2);
+    if (jawab !== null && String(jawab).trim() !== "" && cocokSel(id2, jawab, KUNCI_PIL[id2])) benar++;
+  }
+  return Math.round((benar / TOTAL) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function jumlahBenar(){
+  cerminSemua();
+  var benar = 0;
+  for (var id in KUNCI_NUM){
+    var v = bacaBilangan(nilaiElemen(id));
+    if (v !== null && cocokNum(id, v, KUNCI_NUM[id][0])) benar++;
+  }
+  for (var id2 in KUNCI_PIL){
+    var jawab = nilaiElemen(id2);
+    if (jawab !== null && String(jawab).trim() !== "" && cocokSel(id2, jawab, KUNCI_PIL[id2])) benar++;
+  }
+  return benar;
+}
+window.jumlahBenar = jumlahBenar;
+
+function daftarIdDinilai(){
+  return Object.keys(KUNCI_NUM).concat(Object.keys(KUNCI_PIL));
+}
+
+function perbarui(){
+  var ids = daftarIdDinilai();
+  var terisi = 0;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    if (el && String(el.value).trim() !== "") terisi++;
+  }
+  var pct = Math.round((terisi / ids.length) * 100);
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + ids.length + " isian dijawab";
+  if (typeof perbaruiTautan === "function") perbaruiTautan();
+}
+
+function periksaKelengkapan(){
+  cerminSemua();
+  var ids = daftarIdDinilai();
+  var kosongPertama = null;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    var item = el ? el.closest(".isi-item") : null;
+    if (!el) continue;
+    if (el.closest(".sesi-isi") && el.closest(".sesi-isi").style.display === "none") continue;
+    if (String(el.value).trim() === ""){
+      if (item) item.classList.add("kosong");
+      if (!kosongPertama) kosongPertama = el;
+    } else {
+      if (item) item.classList.remove("kosong");
+    }
+  }
+  var pesan = document.getElementById("pesan_teks");
+  if (kosongPertama){
+    kosongPertama.scrollIntoView({behavior:"smooth", block:"center"});
+    if (pesan) pesan.textContent = "Masih ada kotak yang kosong — kotak itu ditandai oranye.";
+  } else {
+    if (pesan) pesan.textContent = "Seluruh kotak sudah terisi. Kumpulkan berkas ini sesuai arahan gurumu.";
+  }
+  perbarui();
+}
+
+document.addEventListener("input", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("change", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("blur", function(ev){ cermin(ev.target); }, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua();
+  if (typeof siapkanSesi === "function") siapkanSesi();
+  perbarui();
+  var btn = document.getElementById("btn_periksa");
+  if (btn) btn.addEventListener("click", periksaKelengkapan);
+});
+
+cerminSemua();
+
+})();
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

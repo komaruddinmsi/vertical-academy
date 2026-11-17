@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lembar Kerja Fisika F.USE.1 — Praktik Terstruktur di Kelas</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:130px;
+}
+.wrap{max-width:900px; margin:0 auto; padding:0 16px;}
+.kepala{
+  position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;
+}
+.kepala::before,.kepala::after{
+  content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);
+}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:640px; position:relative;}
+
+.kartu{background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+
+.tujuan{
+  background:var(--hijauB); border-left:6px solid var(--hijau); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:14px;
+}
+.tujuan .label{font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--hijau); font-weight:700;}
+.tujuan p{margin:8px 0 0; font-style:italic;}
+
+.aturan{
+  background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;
+}
+.aturan strong{color:#8A6604;}
+.aturan ol{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+
+.pemantik{
+  background:var(--toscaB); border-left:6px solid var(--tosca2); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:14px;
+}
+.pemantik .label{font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--tosca0); font-weight:700;}
+
+.bagian{margin:26px 0;}
+.bagian-judul{
+  background:linear-gradient(100deg, var(--tosca), var(--tosca2));
+  color:#fff; padding:10px 16px; border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px;
+  font-size:15.5px; font-weight:600; flex-wrap:wrap;
+}
+.lencana{
+  background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5);
+  border-radius:999px; padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;
+}
+.menit{margin-left:auto; font-size:12px; font-weight:600; opacity:0.95; background:rgba(0,0,0,0.18);
+  border-radius:999px; padding:2px 10px;}
+.bagian-isi{
+  border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;
+}
+
+.soal{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.soal-judul{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:8px 14px; font-size:13.5px;}
+.soal-isi{padding:14px 16px;}
+.naskah{
+  background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px;
+  padding:12px 14px; font-size:14px; margin-bottom:10px;
+}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:-4px 0 12px;}
+
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;
+}
+.isi-item input[type=text]:not(:placeholder-shown){border-color: var(--tosca2);}
+.isi-item.kosong input, .isi-item.kosong select, .isi-item.kosong textarea{border-color:var(--oranye); background:#FFF7F1;}
+
+.dibaca-guru .tanda{
+  display:inline-block; background:var(--oranyeB); color:var(--oranye); font-size:11px; font-weight:700;
+  border-radius:999px; padding:2px 9px; margin-bottom:6px; letter-spacing:0.3px;
+}
+textarea{
+  width:100%; min-height:62px; padding:9px 11px; border:1.5px solid #C9DADC; border-radius:8px;
+  font-size:13.5px; font-family:inherit; resize:vertical;
+}
+
+table.klas{width:100%; border-collapse:collapse; margin:10px 0; font-size:13px;}
+table.klas th{background:var(--tosca); color:#fff; padding:8px 9px; text-align:left; font-size:12px; vertical-align:bottom;}
+table.klas td{padding:6px 8px; border-bottom:1px solid #E5EEEF;}
+table.klas tr:nth-child(even) td{background:#F7FBFB;}
+table.klas td input[type=text]{width:100%; padding:6px 8px; border:1.5px solid #C9DADC; border-radius:6px; font-size:13px;}
+table.klas td.jalur{font-weight:600; color:var(--tosca0);}
+
+.langkah{counter-reset:none;}
+.langkah ol{margin:6px 0 0; padding-left:22px; font-size:13.5px;}
+.langkah ol li{margin:6px 0;}
+
+.ramp{
+  background:var(--merahB); border-left:6px solid var(--merah); border-radius:8px;
+  padding:12px 16px; margin:14px 0; font-size:13px;
+}
+.ramp strong{color:var(--merah);}
+
+.tujuh{border:1px dashed var(--tosca2); border-radius:10px; padding:12px 14px; margin:12px 0; background:#FAFDFD; font-size:13.5px;}
+.tujuh .nomor{display:inline-block; background:var(--tosca); color:#fff; border-radius:6px; padding:1px 8px; font-size:12px; font-weight:700; margin-right:6px;}
+.tujuh .langkah-baris{margin:7px 0;}
+
+.rumus{font-family:"Cambria Math",Georgia,serif; font-size:14.5px; background:#fff; border:1px solid #DCE9EA;
+  border-radius:6px; padding:8px 11px; margin:7px 0; display:block; overflow-x:auto;}
+
+.gambar{margin:12px 0 14px; text-align:center;}
+.gambar svg{max-width:100%; height:auto;}
+.gambar .keterangan{font-size:12px; color:var(--abu); margin-top:4px; font-style:italic;}
+
+.slot{
+  background:var(--oranyeB); border:1px dashed var(--oranye2); border-radius:10px;
+  padding:13px 16px; margin:14px 0; font-size:13px;
+}
+.slot .judul-slot{font-weight:700; color:var(--oranye); font-size:13.5px; margin-bottom:6px;}
+
+.jangkar{
+  background:var(--hijauB); border:1px solid #BEE0CD; border-left:6px solid var(--hijau);
+  border-radius:8px; padding:12px 16px; margin:10px 0; font-size:13.5px;
+}
+.jangkar .nama{font-weight:700; color:var(--hijau); display:block; margin-bottom:4px; font-size:12.5px;}
+
+.bilah-bawah{
+  position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;
+}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{background:var(--tosca); color:#fff; border:none; border-radius:8px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; cursor:pointer;}
+button.periksa:hover{background:var(--tosca0);}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%;}
+
+.kaki{font-size:12px; color:var(--abu); text-align:center; margin:26px 0 10px;}
+
+@media (max-width:640px){
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+  .menit{margin-left:0;}
+  table.klas, table.klas thead, table.klas tbody, table.klas tr, table.klas th, table.klas td{display:block;}
+  table.klas thead{display:none;}
+  table.klas tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px; background:#fff;}
+  table.klas td{border:none; padding:4px 2px;}
+  table.klas td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca); display:block; font-size:12px;}
+}
+
+@media print{
+  body{background:#fff; padding-bottom:0; font-size:11.5pt;}
+  .bilah-bawah{display:none !important;}
+  .kepala{background:#0B4F58 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .kepala::before,.kepala::after{display:none;}
+  .bagian-judul{background:#0B4F58 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .tujuan,.aturan,.pemantik,.ramp,.slot,.jangkar,.naskah,.tujuh,table.klas th{
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;}
+  .bagian,.soal,.gambar,table.klas,.tujuh,.jangkar,.slot,.ramp{break-inside:avoid; page-break-inside:avoid;}
+  .bagian{margin:14px 0;}
+  input[type=text], select, textarea{border:1px solid #777 !important; background:#fff !important;}
+  textarea{min-height:52px;}
+  a{text-decoration:none; color:inherit;}
+  .wrap{max-width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="kepala"><div class="wrap">
+  <div class="baris-kecil">Fisika &middot; Fase F &middot; Kode TP F.USE.1</div>
+  <h1>Lembar Kerja — Praktik Terstruktur di Kelas</h1>
+  <div class="penjelas">Usaha, Energi &amp; Hukum Kekekalan Energi Mekanik. Hari ini kamu merencanakan dulu, baru menghitung, lalu memberi verdikt — dan kamu mengambil sendiri angkanya lewat percobaan.</div>
+</div></div>
+
+<div class="wrap">
+
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_pasangan">Nama pasanganmu</label><input type="text" id="id_pasangan"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 17-11-2026"></div>
+</div>
+
+<div class="tujuan">
+  <span class="label">Tujuan Pembelajaran hari ini</span>
+  <p>&ldquo;Murid dapat menerapkan konsep usaha, energi, dan Hukum Kekekalan Energi Mekanik untuk menyelesaikan masalah gerak dalam kehidupan sehari-hari.&rdquo;</p>
+</div>
+
+<div class="pemantik">
+  <span class="label">Pemantik</span>
+  <p style="margin:8px 0 0;">Kapan energi mekanik benar-benar kekal, dan kapan sebagian berubah jadi kalor yang harus diperhitungkan? Pertanyaan itu belum dijawab sekarang. Kamu yang akan menjawabnya — dengan tanganmu sendiri di bagian percobaan, lalu dengan angkamu sendiri di bagian hitungan.</p>
+</div>
+
+<div class="aturan">
+  <strong>Cara mengisi</strong>
+  <ol>
+    <li>Lembar ini diisi di kelas, bersama gurumu — bukan dibawa pulang.</li>
+    <li>Gunakan percepatan gravitasi <strong>g = 10 m/s&sup2;</strong> untuk seluruh hitungan di lembar ini.</li>
+    <li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li>
+    <li>Tulis angkanya saja, tanpa satuan — satuannya sudah tercetak di sebelah kotak atau di kepala kolom.</li>
+    <li>Kotak bertanda &ldquo;dibaca guru&rdquo; tidak dihitung otomatis, tetapi tetap kamu isi.</li>
+    <li>Angka percobaan adalah angka yang <em>kamu</em> ukur. Jangan menyalin angka meja sebelah.</li>
+    <li>Jawabanmu tersimpan begitu kamu berpindah ke kotak berikutnya.</li>
+  </ol>
+</div>
+
+<!-- ================= CONTOH TERKERJAKAN 1 ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K2.1</span> Contoh terkerjakan 1 &mdash; menyusun rencana per segmen<span class="menit">menit 19&ndash;23</span></div>
+  <div class="bagian-isi">
+
+    <div class="naskah">
+      Sebuah perosotan air dirancang bertingkat. Pelampung bermassa 0,6 kg dilepas diam di A, meluncur licin menurun menuju B.
+      Dari B, pelampung melintasi matras datar yang kasar sepanjang d = 1,2 m dengan &mu;<sub>k</sub> = 0,35 menuju C.
+      Dari C, lintasan licin menanjak menuju D. Titik A berada 2,4 m di atas B; titik D berada 0,9 m di atas B.
+      Perancang meminta pelampung tiba di D dengan laju sekurang-kurangnya 1,5 m/s.
+      <strong>Susunlah rencana per segmen untuk rancangan ini &mdash; belum satu angka pun dihitung.</strong>
+    </div>
+
+    <div class="gambar">
+<svg viewBox="0 0 700 338" role="img" aria-label="Diagram lintasan tiga segmen: A ke B licin menurun, B ke C datar kasar, C ke D licin menanjak, dengan garis acuan energi potensial setinggi B." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="g1arah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#0B4F58"/>
+    </marker>
+    <marker id="g1uj" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6A7F84"/>
+    </marker>
+    <marker id="g1pa" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6A7F84"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="700" height="338" fill="#FFFFFF"/>
+
+  <line x1="46" y1="250" x2="640" y2="250" stroke="#E9B308" stroke-width="2.5" stroke-dasharray="11 6"/>
+  <text x="640" y="270" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#8A6604" text-anchor="end">acuan E<tspan font-size="11" dy="3">p</tspan><tspan dy="-3"> = nol, setinggi B</tspan></text>
+
+  <line x1="80" y1="110" x2="132" y2="110" stroke="#6A7F84" stroke-width="1.6" stroke-dasharray="2 3"/>
+  <line x1="492" y1="198" x2="600" y2="198" stroke="#6A7F84" stroke-width="1.6" stroke-dasharray="2 3"/>
+
+  <line x1="80" y1="250" x2="80" y2="110" stroke="#6A7F84" stroke-width="1.6" marker-start="url(#g1pa)" marker-end="url(#g1uj)"/>
+  <text x="88" y="178" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#12333A">h<tspan font-size="11" dy="3">A</tspan><tspan dy="-3"> = 2,4 m</tspan></text>
+
+  <line x1="600" y1="250" x2="600" y2="198" stroke="#6A7F84" stroke-width="1.6" marker-start="url(#g1pa)" marker-end="url(#g1uj)"/>
+  <text x="610" y="228" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#12333A">h<tspan font-size="11" dy="3">D</tspan><tspan dy="-3"> = 0,9 m</tspan></text>
+
+  <line x1="132" y1="110" x2="252" y2="250" stroke="#0B4F58" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="252" y1="250" x2="372" y2="250" stroke="#C05621" stroke-width="7"/>
+  <g stroke="#C05621" stroke-width="2">
+    <line x1="256" y1="255" x2="248" y2="267"/><line x1="268" y1="255" x2="260" y2="267"/>
+    <line x1="280" y1="255" x2="272" y2="267"/><line x1="292" y1="255" x2="284" y2="267"/>
+    <line x1="304" y1="255" x2="296" y2="267"/><line x1="316" y1="255" x2="308" y2="267"/>
+    <line x1="328" y1="255" x2="320" y2="267"/><line x1="340" y1="255" x2="332" y2="267"/>
+    <line x1="352" y1="255" x2="344" y2="267"/><line x1="364" y1="255" x2="356" y2="267"/>
+  </g>
+  <line x1="372" y1="250" x2="492" y2="198" stroke="#0B4F58" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="492" y1="198" x2="560" y2="198" stroke="#0B4F58" stroke-width="4.5" stroke-linecap="round"/>
+
+  <circle cx="132" cy="100" r="9" fill="#FFFFFF" stroke="#12333A" stroke-width="2.5"/>
+  <circle cx="132" cy="100" r="3" fill="#12333A"/>
+  <text x="150" y="96" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#12333A">pelampung 0,6 kg &middot; dilepas diam</text>
+  <path d="M172 148 L208 190" stroke="#0B4F58" stroke-width="2" fill="none" marker-end="url(#g1arah)"/>
+
+  <circle cx="132" cy="110" r="4" fill="#073B44"/><text x="118" y="128" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">A</text>
+  <circle cx="252" cy="250" r="4" fill="#073B44"/><text x="246" y="241" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">B</text>
+  <circle cx="372" cy="250" r="4" fill="#073B44"/><text x="366" y="241" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">C</text>
+  <circle cx="492" cy="198" r="4" fill="#073B44"/><text x="486" y="190" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">D</text>
+
+  <text x="146" y="214" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#0B4F58">A&ndash;B &middot; licin</text>
+  <text x="312" y="288" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#C05621" text-anchor="middle">B&ndash;C &middot; kasar &middot; d = 1,2 m &middot; &#956;<tspan font-size="11" dy="3">k</tspan><tspan dy="-3"> = 0,35</tspan></text>
+  <text x="390" y="236" transform="rotate(-23.4 390 236)" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#0B4F58">C&ndash;D &middot; licin</text>
+  <text x="552" y="184" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#6A7F84">syarat v<tspan font-size="11" dy="3">D</tspan><tspan dy="-3"> &#8805; 1,5 m/s</tspan></text>
+
+  <line x1="52" y1="314" x2="92" y2="314" stroke="#0B4F58" stroke-width="4.5"/>
+  <text x="98" y="318" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">licin &mdash; kekal penuh</text>
+  <line x1="248" y1="314" x2="288" y2="314" stroke="#C05621" stroke-width="7"/>
+  <g stroke="#C05621" stroke-width="2">
+    <line x1="252" y1="319" x2="246" y2="329"/><line x1="264" y1="319" x2="258" y2="329"/>
+    <line x1="276" y1="319" x2="270" y2="329"/><line x1="286" y1="319" x2="280" y2="329"/>
+  </g>
+  <text x="296" y="318" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">kasar &mdash; energi jadi kalor</text>
+  <line x1="492" y1="314" x2="532" y2="314" stroke="#E9B308" stroke-width="2.5" stroke-dasharray="11 6"/>
+  <text x="540" y="318" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">acuan E<tspan font-size="11" dy="3">p</tspan><tspan dy="-3"> = nol</tspan></text>
+</svg>
+      <div class="keterangan">Gambar 1 &middot; Rancangan perosotan tiga segmen. Tinggi diukur dari garis acuan, bukan dari lantai ruangan.</div>
+    </div>
+
+    <div class="tujuh">
+      <div class="langkah-baris"><span class="nomor">1</span><strong>Apa yang ditanyakan.</strong> Sebuah <em>rencana</em>, bukan sebuah angka: satu titik acuan E<sub>p</sub>, satu baris persamaan untuk tiap segmen, dan urutan hitungnya. Nilai v<sub>D</sub> belum diminta di sini.</div>
+      <div class="langkah-baris"><span class="nomor">2</span><strong>Formulasi yang digunakan.</strong> E<sub>p</sub> = m&middot;g&middot;h &nbsp;&middot;&nbsp; E<sub>k</sub> = &frac12;&middot;m&middot;v&sup2; &nbsp;&middot;&nbsp; segmen licin: E<sub>k</sub> + E<sub>p</sub> kekal penuh &nbsp;&middot;&nbsp; segmen kasar: E<sub>k</sub> masuk &minus; f&middot;d = E<sub>k</sub> keluar, dengan f = &mu;<sub>k</sub>&middot;m&middot;g.</div>
+      <div class="langkah-baris"><span class="nomor">3</span><strong>Identifikasi data.</strong> m = 0,6 kg &middot; h<sub>A</sub> = 2,4 m &middot; d = 1,2 m &middot; &mu;<sub>k</sub> = 0,35 &middot; h<sub>D</sub> = 0,9 m &middot; syarat v<sub>D</sub> &#8805; 1,5 m/s &middot; g = 10 m/s&sup2;. Urutan segmen: A&ndash;B licin, B&ndash;C kasar, C&ndash;D licin.</div>
+      <div class="langkah-baris"><span class="nomor">4</span><strong>Informasi distraktor.</strong> Massa pelampung. Ia dipakai kalau kamu ingin menuliskan energinya dalam joule, tetapi ia tercoret pada setiap baris &mdash; rencananya sudah lengkap tanpa tahu berapa massanya.</div>
+      <div class="langkah-baris"><span class="nomor">5</span><strong>Substitusi ke kerangka.</strong> Acuan E<sub>p</sub> = nol ditetapkan di B, dan acuan itu dipakai untuk seluruh baris.
+        <span class="rumus">A&ndash;B (licin): &nbsp; m&middot;g&middot;h<sub>A</sub> = &frac12;&middot;m&middot;v<sub>B</sub>&sup2;</span>
+        <span class="rumus">B&ndash;C (kasar): &nbsp; &frac12;&middot;m&middot;v<sub>B</sub>&sup2; &minus; &mu;<sub>k</sub>&middot;m&middot;g&middot;d = &frac12;&middot;m&middot;v<sub>C</sub>&sup2;</span>
+        <span class="rumus">C&ndash;D (licin): &nbsp; &frac12;&middot;m&middot;v<sub>C</sub>&sup2; = &frac12;&middot;m&middot;v<sub>D</sub>&sup2; + m&middot;g&middot;h<sub>D</sub></span>
+      </div>
+      <div class="langkah-baris"><span class="nomor">6</span><strong>Penyelesaian.</strong> m dicoret di kedua ruas pada tiap baris, sehingga rencananya menjadi tiga hubungan yang siap diisi angka:
+        <span class="rumus">v<sub>B</sub>&sup2; = 2&middot;g&middot;h<sub>A</sub> &nbsp;&nbsp;&rarr;&nbsp;&nbsp; v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&middot;&mu;<sub>k</sub>&middot;g&middot;d &nbsp;&nbsp;&rarr;&nbsp;&nbsp; v<sub>D</sub>&sup2; = v<sub>C</sub>&sup2; &minus; 2&middot;g&middot;h<sub>D</sub></span>
+        Urutan hitungnya terkunci: v<sub>B</sub> dulu, lalu energi yang berubah jadi kalor, lalu v<sub>C</sub>, baru v<sub>D</sub>. Baris berikutnya selalu memakai angka baris sebelumnya.</div>
+      <div class="langkah-baris"><span class="nomor">7</span><strong>Kesimpulan.</strong> Rencana rancangan ini terdiri atas tiga baris dengan <strong>satu suku pengurang</strong>, dan suku itu berada pada baris B&ndash;C karena hanya segmen itu yang kasar. Berapa pun angka yang dipasang nanti, kerangka ini tidak berubah. Verdikt &ldquo;memenuhi&rdquo; atau &ldquo;tidak&rdquo; baru boleh ditulis setelah v<sub>D</sub> selesai dihitung dan dibandingkan dengan 1,5 m/s.</div>
+    </div>
+
+    <div class="bantu">Cek kewajaran rencana: banyaknya suku pengurang (satu) harus sama dengan banyaknya segmen kasar pada gambar (juga satu). Kalau kedua angka itu tidak sama, ada baris yang salah bentuk.</div>
+
+  </div>
+</div>
+
+<!-- ================= CONTOH TERKERJAKAN 2 ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K2.2</span> Contoh terkerjakan 2 &mdash; separuh jadi, kamu yang melanjutkan<span class="menit">menit 34&ndash;45</span></div>
+  <div class="bagian-isi">
+
+    <div class="naskah">
+      Sebuah peluncur barang di gudang dirancang begini. Paket bermassa 1,2 kg dilepas diam di A, meluncur licin menurun menuju B.
+      Dari B, paket melintasi lantai beton datar yang kasar sepanjang d = 2,5 m dengan &mu;<sub>k</sub> = 0,24 menuju C.
+      Dari C, lintasan licin menanjak menuju meja penerima di D. Titik A berada 2,75 m di atas B; meja D berada 0,45 m di atas B.
+      Syaratnya, paket harus tiba di D dengan laju sekurang-kurangnya 1,5 m/s agar terus meluncur ke petugas.
+      <strong>Apakah rancangan ini memenuhi syarat?</strong>
+    </div>
+
+    <div class="gambar">
+<svg viewBox="0 0 700 344" role="img" aria-label="Diagram peluncur barang tiga segmen: A ke B licin menurun setinggi 2,75 meter, B ke C datar kasar sepanjang 2,5 meter, C ke D licin menanjak ke meja setinggi 0,45 meter." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="g2arah" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0,0 L9,4.5 L0,9 z" fill="#0B4F58"/>
+    </marker>
+    <marker id="g2uj" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6A7F84"/>
+    </marker>
+    <marker id="g2pa" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6A7F84"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="700" height="344" fill="#FFFFFF"/>
+
+  <line x1="46" y1="255" x2="648" y2="255" stroke="#E9B308" stroke-width="2.5" stroke-dasharray="11 6"/>
+  <text x="648" y="275" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#8A6604" text-anchor="end">acuan E<tspan font-size="11" dy="3">p</tspan><tspan dy="-3"> = nol, setinggi B</tspan></text>
+
+  <line x1="74" y1="108" x2="124" y2="108" stroke="#6A7F84" stroke-width="1.6" stroke-dasharray="2 3"/>
+  <line x1="520" y1="231" x2="608" y2="231" stroke="#6A7F84" stroke-width="1.6" stroke-dasharray="2 3"/>
+
+  <line x1="74" y1="255" x2="74" y2="108" stroke="#6A7F84" stroke-width="1.6" marker-start="url(#g2pa)" marker-end="url(#g2uj)"/>
+  <text x="82" y="182" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#12333A">h<tspan font-size="11" dy="3">A</tspan><tspan dy="-3"> = 2,75 m</tspan></text>
+
+  <line x1="608" y1="255" x2="608" y2="231" stroke="#6A7F84" stroke-width="1.6" marker-start="url(#g2pa)" marker-end="url(#g2uj)"/>
+  <text x="616" y="251" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#12333A">h<tspan font-size="11" dy="3">D</tspan><tspan dy="-3"> = 0,45 m</tspan></text>
+
+  <line x1="124" y1="108" x2="258" y2="255" stroke="#0B4F58" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="258" y1="255" x2="392" y2="255" stroke="#C05621" stroke-width="7"/>
+  <g stroke="#C05621" stroke-width="2">
+    <line x1="262" y1="260" x2="254" y2="272"/><line x1="275" y1="260" x2="267" y2="272"/>
+    <line x1="288" y1="260" x2="280" y2="272"/><line x1="301" y1="260" x2="293" y2="272"/>
+    <line x1="314" y1="260" x2="306" y2="272"/><line x1="327" y1="260" x2="319" y2="272"/>
+    <line x1="340" y1="260" x2="332" y2="272"/><line x1="353" y1="260" x2="345" y2="272"/>
+    <line x1="366" y1="260" x2="358" y2="272"/><line x1="379" y1="260" x2="371" y2="272"/>
+    <line x1="390" y1="260" x2="382" y2="272"/>
+  </g>
+  <line x1="392" y1="255" x2="520" y2="231" stroke="#0B4F58" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="520" y1="231" x2="580" y2="231" stroke="#0B4F58" stroke-width="4.5" stroke-linecap="round"/>
+
+  <rect x="114" y="88" width="18" height="16" fill="#FFFFFF" stroke="#12333A" stroke-width="2.5"/>
+  <line x1="114" y1="96" x2="132" y2="96" stroke="#12333A" stroke-width="1.6"/>
+  <text x="140" y="92" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#12333A">paket 1,2 kg &middot; dilepas diam</text>
+  <path d="M164 146 L200 192" stroke="#0B4F58" stroke-width="2" fill="none" marker-end="url(#g2arah)"/>
+
+  <circle cx="124" cy="108" r="4" fill="#073B44"/><text x="110" y="126" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">A</text>
+  <circle cx="258" cy="255" r="4" fill="#073B44"/><text x="252" y="246" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">B</text>
+  <circle cx="392" cy="255" r="4" fill="#073B44"/><text x="386" y="246" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">C</text>
+  <circle cx="520" cy="231" r="4" fill="#073B44"/><text x="514" y="223" font-family="Segoe UI,Arial,sans-serif" font-size="13.5" font-weight="700" fill="#073B44">D</text>
+
+  <text x="140" y="218" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#0B4F58">A&ndash;B &middot; licin</text>
+  <text x="325" y="293" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#C05621" text-anchor="middle">B&ndash;C &middot; kasar &middot; d = 2,5 m &middot; &#956;<tspan font-size="11" dy="3">k</tspan><tspan dy="-3"> = 0,24</tspan></text>
+  <text x="428" y="229" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#0B4F58">C&ndash;D &middot; licin</text>
+  <text x="586" y="223" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#6A7F84">syarat v<tspan font-size="11" dy="3">D</tspan><tspan dy="-3"> &#8805; 1,5 m/s</tspan></text>
+
+  <line x1="52" y1="320" x2="92" y2="320" stroke="#0B4F58" stroke-width="4.5"/>
+  <text x="98" y="324" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">licin &mdash; kekal penuh</text>
+  <line x1="248" y1="320" x2="288" y2="320" stroke="#C05621" stroke-width="7"/>
+  <g stroke="#C05621" stroke-width="2">
+    <line x1="252" y1="325" x2="246" y2="335"/><line x1="264" y1="325" x2="258" y2="335"/>
+    <line x1="276" y1="325" x2="270" y2="335"/><line x1="286" y1="325" x2="280" y2="335"/>
+  </g>
+  <text x="296" y="324" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">kasar &mdash; energi jadi kalor</text>
+  <line x1="492" y1="320" x2="532" y2="320" stroke="#E9B308" stroke-width="2.5" stroke-dasharray="11 6"/>
+  <text x="540" y="324" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">acuan E<tspan font-size="11" dy="3">p</tspan><tspan dy="-3"> = nol</tspan></text>
+</svg>
+      <div class="keterangan">Gambar 2 &middot; Peluncur barang gudang. Hanya satu segmen yang diarsir &mdash; hanya di sanalah suku pengurang muncul.</div>
+    </div>
+
+    <div class="tujuh">
+      <div class="langkah-baris"><span class="nomor">1</span><strong>Apa yang ditanyakan.</strong> Laju paket di D, lalu satu verdikt: memenuhi syarat atau tidak. Dua-duanya, bukan salah satu.</div>
+      <div class="langkah-baris"><span class="nomor">2</span><strong>Formulasi yang digunakan.</strong> E<sub>k,B</sub> = m&middot;g&middot;h<sub>A</sub> &nbsp;&middot;&nbsp; f = &mu;<sub>k</sub>&middot;m&middot;g &nbsp;&middot;&nbsp; W<sub>f</sub> = f&middot;d &nbsp;&middot;&nbsp; E<sub>k,C</sub> = E<sub>k,B</sub> &minus; W<sub>f</sub> &nbsp;&middot;&nbsp; E<sub>k,D</sub> = E<sub>k,C</sub> &minus; E<sub>p,D</sub> &nbsp;&middot;&nbsp; v<sub>D</sub> = &radic;(2&middot;E<sub>k,D</sub> &divide; m).</div>
+      <div class="langkah-baris"><span class="nomor">3</span><strong>Identifikasi data.</strong> m = 1,2 kg &middot; h<sub>A</sub> = 2,75 m &middot; d = 2,5 m &middot; &mu;<sub>k</sub> = 0,24 &middot; h<sub>D</sub> = 0,45 m &middot; syarat v<sub>D</sub> &#8805; 1,5 m/s &middot; g = 10 m/s&sup2;.</div>
+      <div class="langkah-baris"><span class="nomor">4</span><strong>Informasi distraktor.</strong> Panjang seluruh lintasan dari A sampai D. Yang masuk ke W<sub>f</sub> hanyalah panjang segmen kasar B&ndash;C, bukan jarak yang ditempuh paket sejak dilepas.</div>
+      <div class="langkah-baris"><span class="nomor">5</span><strong>Substitusi nilai.</strong> Dua baris pertama sudah dikerjakan untukmu; sisanya kamu yang mengisi.
+        <span class="rumus">E<sub>k,B</sub> = 1,2 &times; 10 &times; 2,75 = <strong>33 J</strong></span>
+        <span class="rumus">f = 0,24 &times; 1,2 &times; 10 = <strong>2,88 N</strong></span>
+      </div>
+      <div class="langkah-baris"><span class="nomor">6</span><strong>Penyelesaian &mdash; lanjutkan sendiri.</strong> Isi berurutan dari kiri ke kanan. Baris berikutnya memakai angka baris sebelumnya; kalau ada kotak yang angkanya tidak dipakai kotak berikutnya, kotak itu bukan bagian dari jawabanmu.
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="c2_wf">W<sub>f</sub> = f &times; d <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="c2_wf" placeholder="&hellip;">
+          </div>
+          <div class="isi-item">
+            <label for="c2_ekc">E<sub>k,C</sub> = E<sub>k,B</sub> &minus; W<sub>f</sub> <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="c2_ekc" placeholder="&hellip;">
+          </div>
+          <div class="isi-item">
+            <label for="c2_epd">E<sub>p,D</sub> = m &times; g &times; h<sub>D</sub> <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="c2_epd" placeholder="&hellip;">
+          </div>
+          <div class="isi-item">
+            <label for="c2_ekd">E<sub>k,D</sub> = E<sub>k,C</sub> &minus; E<sub>p,D</sub> <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="c2_ekd" placeholder="&hellip;">
+          </div>
+          <div class="isi-item">
+            <label for="c2_vd">v<sub>D</sub> = &radic;(2 &times; E<sub>k,D</sub> &divide; m) <span class="satuan">(m/s)</span></label>
+            <input type="text" inputmode="decimal" id="c2_vd" placeholder="&hellip;">
+          </div>
+        </div>
+      </div>
+      <div class="langkah-baris"><span class="nomor">7</span><strong>Kesimpulan jawaban.</strong> Bandingkan lajumu di D dengan syarat 1,5 m/s, lalu pilih verdiktnya &mdash; dan tulis satu kalimat kesimpulan yang <em>menyebut angkanya</em>, bukan hanya kata &ldquo;memenuhi&rdquo;.
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="c2_verdikt">Verdikt rancangan peluncur ini</label>
+            <select id="c2_verdikt">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="LOLOS">LOLOS &mdash; syarat terpenuhi</option>
+              <option value="GAGAL">GAGAL &mdash; syarat tidak terpenuhi</option>
+            </select>
+          </div>
+          <div class="isi-item dibaca-guru">
+            <div class="tanda">dibaca guru</div>
+            <label for="c2_kalimat">Kalimat kesimpulanmu, menyebut angka</label>
+            <textarea id="c2_kalimat" placeholder="Paket tiba di D dengan laju &hellip; m/s, sedangkan syaratnya &hellip;"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bantu">Kalau kamu tergoda menghitung langsung dari A ke D dalam satu persamaan, periksa dulu: adakah segmen kasar di antaranya? Kalau ada, satu persamaan tunggal diam-diam menganggap seluruh lintasan licin.</div>
+
+  </div>
+</div>
+
+<!-- ================= LATIHAN BERPASANGAN ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.2</span> Latihan berpasangan<span class="menit">menit 23&ndash;27 &amp; 45&ndash;49</span></div>
+  <div class="bagian-isi">
+
+    <div class="soal">
+      <div class="soal-judul">Giliran pertama &mdash; 60 detik bicara, lalu tulis</div>
+      <div class="soal-isi">
+        <div class="naskah">Jelaskan kepada pasanganmu, dalam 60 detik, <strong>mengapa segmen kasar membutuhkan persamaan yang berbeda dari segmen licin</strong>. Sesudah itu baru kalian berdua menulis.</div>
+        <div class="bantu">Tiga kata yang harus terdengar dalam penjelasanmu: gesekan &middot; kalor &middot; berkurang.</div>
+        <div class="kisi">
+          <div class="isi-item dibaca-guru">
+            <div class="tanda">dibaca guru</div>
+            <label for="lp_jelas1">Tulis ulang penjelasanmu dalam satu kalimat</label>
+            <textarea id="lp_jelas1" placeholder="Segmen kasar membutuhkan persamaan berbeda karena &hellip;"></textarea>
+          </div>
+          <div class="isi-item dibaca-guru">
+            <div class="tanda">dibaca guru</div>
+            <label>Daftar centang pendengar &mdash; dicentang oleh pasanganmu saat kamu menjelaskan</label>
+            <div class="centang">
+              <label><input type="checkbox" id="lp_k1a"> terdengar kata <strong>gesekan</strong></label>
+              <label><input type="checkbox" id="lp_k1b"> terdengar kata <strong>kalor</strong></label>
+              <label><input type="checkbox" id="lp_k1c"> terdengar kata <strong>berkurang</strong></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Giliran kedua &mdash; satu rancangan, dua kepala</div>
+      <div class="soal-isi">
+        <div class="naskah">
+          Rancangan lempar-bola pasar malam: bola bermassa 0,9 kg dilepas diam di A, licin menurun menuju B.
+          Dari B, bola melintasi keset kasar datar sepanjang d = 1,8 m dengan &mu;<sub>k</sub> = 0,15 menuju C.
+          Dari C, lintasan licin menanjak menuju D. Titik A berada 1,45 m di atas B; titik D berada 0,4 m di atas B.
+          Panitia mensyaratkan bola tiba di D dengan laju sekurang-kurangnya 4,5 m/s.
+          Kerjakan berdua: <strong>satu orang menyusun rencana tiga barisnya, satu orang menjalankan hitungannya</strong>, lalu tukar dan saling memeriksa sebelum mengisi kotak di bawah.
+        </div>
+        <div class="bantu">Pakai kerangka yang sama seperti Contoh 1: v<sub>B</sub>&sup2; = 2&middot;g&middot;h<sub>A</sub> &nbsp;&rarr;&nbsp; v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&middot;&mu;<sub>k</sub>&middot;g&middot;d &nbsp;&rarr;&nbsp; v<sub>D</sub>&sup2; = v<sub>C</sub>&sup2; &minus; 2&middot;g&middot;h<sub>D</sub>.</div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="lp_vd">Laju bola di D <span class="satuan">(m/s)</span></label>
+            <input type="text" inputmode="decimal" id="lp_vd" placeholder="&hellip;">
+          </div>
+          <div class="isi-item">
+            <label for="lp_verdikt">Verdikt rancangan pasar malam ini</label>
+            <select id="lp_verdikt">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="LOLOS">LOLOS &mdash; syarat terpenuhi</option>
+              <option value="GAGAL">GAGAL &mdash; syarat tidak terpenuhi</option>
+            </select>
+          </div>
+          <div class="isi-item dibaca-guru">
+            <div class="tanda">dibaca guru</div>
+            <label for="lp_perbaikan">Kalau verdiktnya tidak memenuhi: satu perubahan yang benar-benar mengubah neraca energinya</label>
+            <textarea id="lp_perbaikan" placeholder="Tulis variabel mana yang kalian ubah, ke arah mana, dan mengapa perubahan itu bekerja."></textarea>
+          </div>
+          <div class="isi-item dibaca-guru">
+            <div class="tanda">dibaca guru</div>
+            <label>60 detik berikutnya: apa yang membuat sebuah verdikt disebut koheren? Pasanganmu yang mencentang.</label>
+            <div class="centang">
+              <label><input type="checkbox" id="lp_k2a"> terdengar <strong>alur hitung</strong></label>
+              <label><input type="checkbox" id="lp_k2b"> terdengar <strong>angka</strong></label>
+              <label><input type="checkbox" id="lp_k2c"> terdengar <strong>simpulan</strong></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= PERCOBAAN ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.1 &amp; K1.2</span> Percobaan &mdash; ke mana perginya energi di jalur yang kasar?<span class="menit">ambil data menit 13&ndash;23 &middot; olah menit 76&ndash;85</span></div>
+  <div class="bagian-isi">
+
+    <div class="naskah">
+      Dua papan luncur kembar dipasang berdampingan dengan kemiringan yang sama. Papan pertama polos; papan kedua seluruh permukaannya dilapisi amplas kasar.
+      Kelereng yang sama dilepas <strong>diam</strong> dari ketinggian yang sama pada kedua papan. Di puncak, m&middot;g&middot;h keduanya sama persis.
+      Yang kalian ukur adalah <strong>seberapa jauh kelereng itu masih berlari di atas lajur keset yang datar</strong> setelah meninggalkan papan.
+      Selisih jarak itulah yang harus kalian pertanggungjawabkan sebagai energi yang berubah bentuk.
+    </div>
+
+    <div class="kisi">
+      <div class="isi-item dibaca-guru">
+        <div class="tanda">dibaca guru</div>
+        <label for="pr_ramalan">Sebelum melepas kelereng: jarak luncur dari papan mana yang lebih jauh?</label>
+        <select id="pr_ramalan">
+          <option value="">&mdash; pilih ramalanmu &mdash;</option>
+          <option value="polos">Papan polos</option>
+          <option value="amplas">Papan beramplas</option>
+          <option value="sama">Sama jauh</option>
+        </select>
+      </div>
+      <div class="isi-item dibaca-guru">
+        <div class="tanda">dibaca guru</div>
+        <label for="pr_alasanramalan">Alasan ramalanmu, satu kalimat</label>
+        <textarea id="pr_alasanramalan" placeholder="Tulis sekarang, sebelum kelereng dilepas. Jangan diubah setelah melihat hasilnya."></textarea>
+      </div>
+    </div>
+
+    <div class="gambar">
+<svg viewBox="0 0 700 360" role="img" aria-label="Susunan percobaan: papan luncur miring setinggi h dengan jarak mendatar x, lalu meja datar tempat jarak luncur s diukur. Jarak luncur jalur polos digambar lebih panjang daripada jalur beramplas." xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="g3uj" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6A7F84"/>
+    </marker>
+    <marker id="g3pa" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M0,0 L8,4 L0,8 z" fill="#6A7F84"/>
+    </marker>
+    <marker id="g3t" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#0B4F58"/>
+    </marker>
+    <marker id="g3o" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 z" fill="#C05621"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="700" height="360" fill="#FFFFFF"/>
+
+  <!-- meja -->
+  <line x1="96" y1="250" x2="648" y2="250" stroke="#12333A" stroke-width="3"/>
+  <text x="478" y="243" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#6A7F84">lajur keset</text>
+
+  <!-- papan miring: dua garis bertumpuk, polos (tosca penuh) dan amplas (oranye + arsir) -->
+  <line x1="148" y1="120" x2="286" y2="250" stroke="#0B4F58" stroke-width="4.5" stroke-linecap="round"/>
+  <line x1="156" y1="112" x2="294" y2="242" stroke="#C05621" stroke-width="6" stroke-linecap="round"/>
+  <g stroke="#C05621" stroke-width="1.8">
+    <line x1="166" y1="116" x2="174" y2="108"/><line x1="182" y1="131" x2="190" y2="123"/>
+    <line x1="198" y1="146" x2="206" y2="138"/><line x1="214" y1="161" x2="222" y2="153"/>
+    <line x1="230" y1="176" x2="238" y2="168"/><line x1="246" y1="191" x2="254" y2="183"/>
+    <line x1="262" y1="206" x2="270" y2="198"/><line x1="278" y1="221" x2="286" y2="213"/>
+  </g>
+
+  <!-- penyangga -->
+  <rect x="120" y="120" width="30" height="130" fill="#F1F5F6" stroke="#6A7F84" stroke-width="1.6"/>
+  <text x="135" y="200" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#6A7F84" text-anchor="middle" transform="rotate(-90 135 200)">penyangga</text>
+
+  <!-- kelereng di titik lepas -->
+  <circle cx="152" cy="108" r="8" fill="#FFFFFF" stroke="#12333A" stroke-width="2.5"/>
+  <text x="166" y="100" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#12333A">titik lepas &mdash; dilepas diam, tidak didorong</text>
+
+  <!-- tinggi h -->
+  <line x1="100" y1="118" x2="150" y2="118" stroke="#6A7F84" stroke-width="1.6" stroke-dasharray="2 3"/>
+  <line x1="100" y1="250" x2="100" y2="118" stroke="#6A7F84" stroke-width="1.6" marker-start="url(#g3pa)" marker-end="url(#g3uj)"/>
+  <text x="92" y="188" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#12333A" text-anchor="end">h (cm)</text>
+
+  <!-- jarak mendatar x -->
+  <line x1="150" y1="282" x2="300" y2="282" stroke="#6A7F84" stroke-width="1.6" marker-start="url(#g3pa)" marker-end="url(#g3uj)"/>
+  <text x="225" y="299" font-family="Segoe UI,Arial,sans-serif" font-size="13" fill="#12333A" text-anchor="middle">x (cm)</text>
+  <line x1="150" y1="250" x2="150" y2="286" stroke="#6A7F84" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <line x1="300" y1="250" x2="300" y2="286" stroke="#6A7F84" stroke-width="1.2" stroke-dasharray="2 3"/>
+
+  <!-- garis nol -->
+  <line x1="300" y1="220" x2="300" y2="256" stroke="#E9B308" stroke-width="3.5" stroke-dasharray="6 4"/>
+  <text x="306" y="216" font-family="Segoe UI,Arial,sans-serif" font-size="12" fill="#8A6604">garis nol</text>
+
+  <!-- berhenti amplas -->
+  <circle cx="434" cy="242" r="8" fill="#FFFFFF" stroke="#C05621" stroke-width="2.5" stroke-dasharray="4 2"/>
+  <line x1="300" y1="312" x2="434" y2="312" stroke="#C05621" stroke-width="2.5" stroke-dasharray="7 4" marker-end="url(#g3o)"/>
+  <text x="350" y="332" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#C05621" text-anchor="middle">s jalur beramplas (cm)</text>
+  <line x1="434" y1="250" x2="434" y2="316" stroke="#C05621" stroke-width="1.2" stroke-dasharray="2 3"/>
+
+  <!-- berhenti polos -->
+  <circle cx="586" cy="242" r="8" fill="#FFFFFF" stroke="#0B4F58" stroke-width="2.5"/>
+  <line x1="300" y1="348" x2="586" y2="348" stroke="#0B4F58" stroke-width="2.5" marker-end="url(#g3t)"/>
+  <text x="443" y="344" font-family="Segoe UI,Arial,sans-serif" font-size="12.5" fill="#0B4F58" text-anchor="middle">s jalur polos (cm)</text>
+  <line x1="586" y1="250" x2="586" y2="352" stroke="#0B4F58" stroke-width="1.2" stroke-dasharray="2 3"/>
+
+  <!-- penahan busa -->
+  <rect x="616" y="226" width="16" height="24" fill="#FDEBDD" stroke="#C05621" stroke-width="2"/>
+  <text x="640" y="222" font-family="Segoe UI,Arial,sans-serif" font-size="11.5" fill="#C05621" text-anchor="end">penahan busa</text>
+</svg>
+      <div class="keterangan">Gambar 3 &middot; Susunan percobaan. Garis penuh = jalur polos; garis putus-putus berarsir = jalur beramplas. Keduanya dilepas dari h yang sama.</div>
+    </div>
+
+    <div class="ramp">
+      <strong>Sebelum kelereng pertama dilepas, baca ini.</strong>
+      Arahkan ujung papan <strong>sejajar tepi meja</strong>, bukan menghadap wajah siapa pun. Pasang penahan busa dan nampan penampung di ujung lintasan.
+      Papan dijepit klem, bukan sekadar disandarkan. Kelereng dihitung sebelum dan sesudah percobaan dan diucapkan keras &mdash; &ldquo;dua berangkat, dua pulang&rdquo;.
+      Kalau ada kelereng yang belum ketemu, lantai disapu sebelum siapa pun berdiri. Kotak P3K ada di rak pintu.
+    </div>
+
+    <div class="langkah">
+      <strong style="font-size:13.5px; color:var(--tosca0);">Alat dan bahan &mdash; untuk 8 pasangan</strong>
+      <ol>
+        <li>Lajur keset atau karpet tipis 120 cm &times; 15 cm sebagai landasan datar &mdash; <strong>8 lembar</strong> (satu lajur yang sama dipakai kedua jalur)</li>
+        <li>Papan luncur lurus 60 cm, permukaan polos &mdash; <strong>8 buah</strong> (1 per pasangan)</li>
+        <li>Papan luncur kembar 60 cm yang seluruh permukaannya dilapisi amplas kasar &mdash; <strong>8 buah</strong></li>
+        <li>Lembar amplas kasar seukuran papan, cadangan bila lapisannya terlepas &mdash; <strong>8 lembar</strong></li>
+        <li>Kain lap dan lakban, pengganti amplas bila lapisannya lepas di tengah percobaan &mdash; <strong>8 set</strong></li>
+        <li>Balok penyangga atau tumpukan buku, satu setinggi 15 cm dan satu setinggi 25 cm &mdash; <strong>8 set</strong></li>
+        <li>Klem meja atau penjepit papan &mdash; <strong>16 buah</strong> (2 per pasangan)</li>
+        <li>Kelereng identik &mdash; <strong>16 butir</strong> (2 per pasangan) <strong>+ 8 butir cadangan</strong></li>
+        <li>Mistar 30 cm untuk mengukur h dan x &mdash; <strong>8 buah</strong></li>
+        <li>Meteran kain atau mistar panjang 150 cm untuk mengukur s &mdash; <strong>8 buah</strong></li>
+        <li>Lakban warna untuk menandai garis nol dan titik berhenti &mdash; <strong>8 gulung kecil</strong></li>
+        <li>Penahan busa tebal 5 cm di ujung lintasan &mdash; <strong>8 buah</strong></li>
+        <li>Nampan penampung kelereng &mdash; <strong>8 buah</strong></li>
+        <li>Wadah tertutup untuk menyimpan kelereng sesudah percobaan &mdash; <strong>8 buah</strong></li>
+      </ol>
+    </div>
+
+    <div class="langkah">
+      <strong style="font-size:13.5px; color:var(--tosca0);">Prosedur</strong>
+      <ol>
+        <li>Bentangkan lajur keset di atas meja. Jepit kedua papan berdampingan sehingga ujung bawah keduanya tepat menyentuh pangkal lajur keset yang sama. Pastikan kemiringan keduanya <strong>sama</strong> &mdash; penyangganya setinggi 15 cm untuk kedua papan.</li>
+        <li>Tandai <strong>titik lepas</strong> dengan lakban pada kedua papan, pada ketinggian yang sama di atas meja. Ukur ketinggian itu tegak lurus ke permukaan lajur keset; itulah h. Catat dalam cm.</li>
+        <li>Ukur <strong>x</strong>, yaitu jarak mendatar dari titik lepas sampai ujung bawah papan. Catat dalam cm.</li>
+        <li>Tandai <strong>garis nol</strong> dengan lakban tepat di pangkal lajur keset, di ujung bawah papan. Semua jarak luncur diukur dari garis ini.</li>
+        <li>Letakkan kelereng di titik lepas papan polos, lalu <strong>lepaskan tanpa didorong</strong>. Tunggu sampai benar-benar berhenti, lalu ukur jarak s dari garis nol ke titik berhenti. Catat dalam cm.</li>
+        <li>Ulangi langkah 5 <strong>sampai tiga kali</strong> dengan kelereng dan titik lepas yang sama. Tiga angka itu ditulis apa adanya &mdash; jangan dirata-ratakan di kepala, jangan dibuang yang terlihat aneh.</li>
+        <li>Kerjakan langkah 5 dan 6 pada papan beramplas, dari ketinggian h yang sama persis.</li>
+        <li>Ganti penyangga menjadi setinggi 25 cm sehingga titik lepas naik, lalu ulangi langkah 2 sampai 7 untuk ketinggian kedua.</li>
+        <li>Hitung ulang kelereng, masukkan ke wadah tertutup, dan rapikan meja sebelum mengolah data.</li>
+      </ol>
+    </div>
+
+    <div class="bantu">Kalau kelereng melewati ujung lajur keset, turunkan titik lepasnya sampai titik berhentinya masuk ke dalam lajur, lalu ulangi dari langkah 2. Mode B &mdash; kalau papan hanya tersedia satu set: gurumu menjalankan kedua jalur di meja depan, dan tiap pasangan tetap mengisi tabel yang sama dari pengamatannya sendiri. Jumlah ulangan tetap tiga.</div>
+
+    <strong style="font-size:13.5px; color:var(--tosca0);">Tabel data &mdash; isi dengan angka yang kamu ukur sendiri</strong>
+    <table class="klas">
+      <thead>
+        <tr>
+          <th>Jalur dan ketinggian</th>
+          <th>Tinggi titik lepas h (cm)</th>
+          <th>Jarak mendatar papan x (cm)</th>
+          <th>Jarak luncur ulangan ke-1, s (cm)</th>
+          <th>Jarak luncur ulangan ke-2, s (cm)</th>
+          <th>Jarak luncur ulangan ke-3, s (cm)</th>
+          <th>Rata-rata s (cm)</th>
+          <th>Sebaran s: terbesar &minus; terkecil (cm)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="jalur" data-label="Jalur dan ketinggian">Papan polos &middot; penyangga rendah</td>
+          <td data-label="h (cm)"><input type="text" inputmode="decimal" id="pr_p1_h"></td>
+          <td data-label="x (cm)"><input type="text" inputmode="decimal" id="pr_p1_x"></td>
+          <td data-label="s ke-1 (cm)"><input type="text" inputmode="decimal" id="pr_p1_s1"></td>
+          <td data-label="s ke-2 (cm)"><input type="text" inputmode="decimal" id="pr_p1_s2"></td>
+          <td data-label="s ke-3 (cm)"><input type="text" inputmode="decimal" id="pr_p1_s3"></td>
+          <td data-label="Rata-rata s (cm)"><input type="text" inputmode="decimal" id="pr_p1_rata"></td>
+          <td data-label="Sebaran s (cm)"><input type="text" inputmode="decimal" id="pr_p1_seb"></td>
+        </tr>
+        <tr>
+          <td class="jalur" data-label="Jalur dan ketinggian">Papan beramplas &middot; penyangga rendah</td>
+          <td data-label="h (cm)"><input type="text" inputmode="decimal" id="pr_a1_h"></td>
+          <td data-label="x (cm)"><input type="text" inputmode="decimal" id="pr_a1_x"></td>
+          <td data-label="s ke-1 (cm)"><input type="text" inputmode="decimal" id="pr_a1_s1"></td>
+          <td data-label="s ke-2 (cm)"><input type="text" inputmode="decimal" id="pr_a1_s2"></td>
+          <td data-label="s ke-3 (cm)"><input type="text" inputmode="decimal" id="pr_a1_s3"></td>
+          <td data-label="Rata-rata s (cm)"><input type="text" inputmode="decimal" id="pr_a1_rata"></td>
+          <td data-label="Sebaran s (cm)"><input type="text" inputmode="decimal" id="pr_a1_seb"></td>
+        </tr>
+        <tr>
+          <td class="jalur" data-label="Jalur dan ketinggian">Papan polos &middot; penyangga tinggi</td>
+          <td data-label="h (cm)"><input type="text" inputmode="decimal" id="pr_p2_h"></td>
+          <td data-label="x (cm)"><input type="text" inputmode="decimal" id="pr_p2_x"></td>
+          <td data-label="s ke-1 (cm)"><input type="text" inputmode="decimal" id="pr_p2_s1"></td>
+          <td data-label="s ke-2 (cm)"><input type="text" inputmode="decimal" id="pr_p2_s2"></td>
+          <td data-label="s ke-3 (cm)"><input type="text" inputmode="decimal" id="pr_p2_s3"></td>
+          <td data-label="Rata-rata s (cm)"><input type="text" inputmode="decimal" id="pr_p2_rata"></td>
+          <td data-label="Sebaran s (cm)"><input type="text" inputmode="decimal" id="pr_p2_seb"></td>
+        </tr>
+        <tr>
+          <td class="jalur" data-label="Jalur dan ketinggian">Papan beramplas &middot; penyangga tinggi</td>
+          <td data-label="h (cm)"><input type="text" inputmode="decimal" id="pr_a2_h"></td>
+          <td data-label="x (cm)"><input type="text" inputmode="decimal" id="pr_a2_x"></td>
+          <td data-label="s ke-1 (cm)"><input type="text" inputmode="decimal" id="pr_a2_s1"></td>
+          <td data-label="s ke-2 (cm)"><input type="text" inputmode="decimal" id="pr_a2_s2"></td>
+          <td data-label="s ke-3 (cm)"><input type="text" inputmode="decimal" id="pr_a2_s3"></td>
+          <td data-label="Rata-rata s (cm)"><input type="text" inputmode="decimal" id="pr_a2_rata"></td>
+          <td data-label="Sebaran s (cm)"><input type="text" inputmode="decimal" id="pr_a2_seb"></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="tujuh">
+      <div class="langkah-baris"><strong>Pengolahan &mdash; pakai baris penyangga rendah dulu.</strong> Semua panjang dalam cm, jadi satuannya saling meniadakan dan hasil &mu;<sub>k</sub> tidak bersatuan.</div>
+      <div class="langkah-baris"><span class="nomor">1</span><strong>Dari mana rumusnya.</strong> Di puncak papan, energi kelereng per satuan berat adalah h. Di lajur keset yang datar, seluruhnya habis melawan gesekan keset sepanjang s: &nbsp;h = &mu;<sub>keset</sub> &times; s. Pada jalur polos papan dianggap hampir licin, sehingga:
+        <span class="rumus">&mu;<sub>keset</sub> = h &divide; s&#773;<sub>polos</sub></span>
+      </div>
+      <div class="langkah-baris"><span class="nomor">2</span><strong>Selisih jarak luncur.</strong> Inilah jejak energi yang berubah bentuk di papan beramplas:
+        <span class="rumus">&Delta;s = s&#773;<sub>polos</sub> &minus; s&#773;<sub>amplas</sub></span>
+      </div>
+      <div class="langkah-baris"><span class="nomor">3</span><strong>Berapa bagian energi awal yang jadi kalor di papan beramplas.</strong>
+        <span class="rumus">bagian = &Delta;s &divide; s&#773;<sub>polos</sub></span>
+      </div>
+      <div class="langkah-baris"><span class="nomor">4</span><strong>Koefisien gesek papan beramplas yang kamu ukur sendiri.</strong> Usaha gesekan di papan miring sama dengan &mu;<sub>amplas</sub> &times; x (per satuan berat), sehingga:
+        <span class="rumus">&mu;<sub>amplas</sub> = h &times; &Delta;s &divide; ( s&#773;<sub>polos</sub> &times; x )</span>
+      </div>
+      <div class="kisi">
+        <div class="isi-item">
+          <label for="pr_mumeja">&mu;<sub>keset</sub> hasil ukuranmu <span class="satuan">(tanpa satuan)</span></label>
+          <input type="text" inputmode="decimal" id="pr_mumeja">
+        </div>
+        <div class="isi-item">
+          <label for="pr_deltas">&Delta;s <span class="satuan">(cm)</span></label>
+          <input type="text" inputmode="decimal" id="pr_deltas">
+        </div>
+        <div class="isi-item">
+          <label for="pr_bagian">Bagian energi awal yang jadi kalor di papan beramplas <span class="satuan">(tanpa satuan)</span></label>
+          <input type="text" inputmode="decimal" id="pr_bagian">
+        </div>
+        <div class="isi-item">
+          <label for="pr_muamplas">&mu;<sub>amplas</sub> hasil ukuranmu <span class="satuan">(tanpa satuan)</span></label>
+          <input type="text" inputmode="decimal" id="pr_muamplas">
+        </div>
+      </div>
+      <div class="bantu">Cek kewajaran: &mu; yang kamu dapat harus berada di antara nol dan satu, dan &mu;<sub>amplas</sub> harus lebih besar daripada &mu;<sub>keset</sub>. Kalau tidak, periksa dulu apakah h dan x diukur dari titik yang sama.</div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Pertanyaan ralat &mdash; seberapa jauh angkamu boleh dipercaya</div>
+      <div class="soal-isi">
+        <div class="naskah">
+          Tiga ulangan pada jalur yang sama tidak pernah menghasilkan angka yang persis sama. Selisih antara ulangan terbesar dan terkecil itulah <strong>sebaran</strong> pengukuranmu, dan kamu sudah menuliskannya di kolom terakhir tabel.
+          Sekarang bandingkan dua hal: <strong>selisih rata-rata antara jalur polos dan jalur beramplas</strong> (&Delta;s) dengan <strong>sebaran di dalam tiap jalur</strong>.
+        </div>
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="pr_sebbesar">Sebaran terbesar di antara keempat baris tabel <span class="satuan">(cm)</span></label>
+            <input type="text" inputmode="decimal" id="pr_sebbesar">
+          </div>
+          <div class="isi-item dibaca-guru">
+            <div class="tanda">dibaca guru</div>
+            <label for="pr_ralat">Apakah &Delta;s lebih besar daripada sebaran itu? Tulis apa yang boleh dan apa yang belum boleh kamu simpulkan.</label>
+            <textarea id="pr_ralat" placeholder="Kalau Δs jauh lebih besar daripada sebaran, maka … Kalau Δs sebesar sebaran atau lebih kecil, maka …"></textarea>
+          </div>
+          <div class="isi-item dibaca-guru">
+            <div class="tanda">dibaca guru</div>
+            <label for="pr_sumbersebaran">Sebutkan satu sumber sebaran yang kamu lihat sendiri saat mengukur</label>
+            <textarea id="pr_sumbersebaran" placeholder="mis. kelereng tidak lepas persis di titik yang sama, atau titik berhenti sulit dibaca karena kelereng bergulir pelan."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Simpulan percobaan</div>
+      <div class="soal-isi">
+        <div class="naskah">Tulis satu paragraf pendek yang: (i) menyebut angka &Delta;s dan &mu;<sub>amplas</sub> hasil ukuranmu, (ii) menjelaskan ke mana perginya energi yang hilang itu, dan (iii) menyebutkan tujuan pembelajaran hari ini dengan kalimatmu sendiri.</div>
+        <div class="isi-item dibaca-guru">
+          <div class="tanda">dibaca guru</div>
+          <label for="pr_simpulan">Simpulanmu</label>
+          <textarea id="pr_simpulan" style="min-height:92px;" placeholder="Dari ketinggian yang sama, jarak luncur kedua jalur berbeda sebesar … cm. Selisih itu … Percobaan ini menunjukkan bahwa menerapkan Hukum Kekekalan Energi Mekanik pada gerak nyata menuntut …"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot">
+      <div class="judul-slot">Pengganti bila papan dan kelereng tidak tersedia &mdash; simulasi lintasan berlapis</div>
+      <p style="margin:0 0 8px;"><strong>Judul:</strong> Simulasi lintasan berlapis &mdash; licin lawan kasar. <strong>Durasi:</strong> 8 menit. <strong>Yang disetel murid:</strong> ketinggian titik lepas dan koefisien gesek lantai; yang dibaca murid: jarak luncur sampai berhenti.</p>
+      <p style="margin:0 0 8px;"><strong>Tiga pertanyaan terarah:</strong> (1) Dari ketinggian yang sama, apa yang berubah pada jarak luncur ketika koefisien geseknya dinaikkan? (2) Pada koefisien gesek yang tetap, bagaimana jarak luncur berubah ketika ketinggiannya dinaikkan? (3) Dengan angka yang kamu peroleh, berapa &mu; yang kamu hitung dari h &divide; s &mdash; dan apakah ia sama dengan angka yang kamu setel?</p>
+      <p style="margin:0 0 8px;"><strong>Kerangka naskah:</strong> buka pada ketinggian terendah dengan gesekan terkecil &rarr; jalankan tiga kali, catat &rarr; naikkan gesekan tanpa mengubah ketinggian &rarr; jalankan tiga kali, catat &rarr; kembalikan gesekan, naikkan ketinggian &rarr; jalankan tiga kali, catat &rarr; jawab tiga pertanyaan di atas.</p>
+      <p style="margin:0 0 8px;"><strong>Jalur luring, bila tidak ada layar maupun alat:</strong> gurumu menuliskan dua angka jarak luncur hasil pengukuran terdahulu di papan tulis; kamu mengisi tabel yang sama dari angka itu, lalu menuliskan sendiri ramalan dan alasannya seperti pada kotak ramalan di atas. Jalur ini diakui lebih lemah &mdash; angkanya bukan angkamu sendiri, dan itu ditulis apa adanya pada simpulanmu.</p>
+      <table class="klas">
+        <thead>
+          <tr>
+            <th>Keadaan yang disetel</th>
+            <th>Ketinggian titik lepas h (cm)</th>
+            <th>Koefisien gesek yang disetel &mu; (tanpa satuan)</th>
+            <th>Jarak luncur ulangan ke-1, s (cm)</th>
+            <th>Jarak luncur ulangan ke-2, s (cm)</th>
+            <th>Jarak luncur ulangan ke-3, s (cm)</th>
+            <th>Rata-rata s (cm)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="jalur" data-label="Keadaan">Gesekan kecil &middot; ketinggian rendah</td>
+            <td data-label="h (cm)"><input type="text" inputmode="decimal" id="sim_r1_h"></td>
+            <td data-label="&mu; disetel"><input type="text" inputmode="decimal" id="sim_r1_mu"></td>
+            <td data-label="s ke-1 (cm)"><input type="text" inputmode="decimal" id="sim_r1_s1"></td>
+            <td data-label="s ke-2 (cm)"><input type="text" inputmode="decimal" id="sim_r1_s2"></td>
+            <td data-label="s ke-3 (cm)"><input type="text" inputmode="decimal" id="sim_r1_s3"></td>
+            <td data-label="Rata-rata s (cm)"><input type="text" inputmode="decimal" id="sim_r1_rata"></td>
+          </tr>
+          <tr>
+            <td class="jalur" data-label="Keadaan">Gesekan besar &middot; ketinggian rendah</td>
+            <td data-label="h (cm)"><input type="text" inputmode="decimal" id="sim_r2_h"></td>
+            <td data-label="&mu; disetel"><input type="text" inputmode="decimal" id="sim_r2_mu"></td>
+            <td data-label="s ke-1 (cm)"><input type="text" inputmode="decimal" id="sim_r2_s1"></td>
+            <td data-label="s ke-2 (cm)"><input type="text" inputmode="decimal" id="sim_r2_s2"></td>
+            <td data-label="s ke-3 (cm)"><input type="text" inputmode="decimal" id="sim_r2_s3"></td>
+            <td data-label="Rata-rata s (cm)"><input type="text" inputmode="decimal" id="sim_r2_rata"></td>
+          </tr>
+          <tr>
+            <td class="jalur" data-label="Keadaan">Gesekan kecil &middot; ketinggian lebih tinggi</td>
+            <td data-label="h (cm)"><input type="text" inputmode="decimal" id="sim_r3_h"></td>
+            <td data-label="&mu; disetel"><input type="text" inputmode="decimal" id="sim_r3_mu"></td>
+            <td data-label="s ke-1 (cm)"><input type="text" inputmode="decimal" id="sim_r3_s1"></td>
+            <td data-label="s ke-2 (cm)"><input type="text" inputmode="decimal" id="sim_r3_s2"></td>
+            <td data-label="s ke-3 (cm)"><input type="text" inputmode="decimal" id="sim_r3_s3"></td>
+            <td data-label="Rata-rata s (cm)"><input type="text" inputmode="decimal" id="sim_r3_rata"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="bantu">Kotak pada bagian pengganti ini hanya diisi bila alatnya benar-benar tidak ada, dan tidak ikut dihitung pada tombol &ldquo;Periksa kelengkapan&rdquo;.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ================= CEK MANDIRI ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K2.1 &amp; K2.2</span> Cek Mandiri<span class="menit">menit 61&ndash;65</span></div>
+  <div class="bagian-isi">
+<!-- CEKMANDIRI-MULAI -->
+    <div class="naskah">
+      <strong>Rancangan baru, kamu kerjakan sendiri tanpa dituntun.</strong>
+      Sebuah kereta kecil bermassa 0,45 kg dilepas diam di A, meluncur pada lintasan licin menurun menuju B.
+      Dari B, kereta melintasi lantai datar yang kasar sepanjang d = 1,2 m dengan &mu;<sub>k</sub> = 0,4 menuju C.
+      Dari C, lintasan licin menanjak menuju D. Titik A berada 1,9 m di atas B; titik D berada 0,6 m di atas B.
+      Pemesan mensyaratkan kereta tiba di D dengan laju sekurang-kurangnya 4,5 m/s.
+    </div>
+    <div class="bantu">Rencanakan dulu, baru hitung, baru beri verdikt &mdash; urutan itu yang sedang kamu periksa pada dirimu sendiri.</div>
+
+    <div class="soal">
+      <div class="soal-judul">Bagian rencana</div>
+      <div class="soal-isi">
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="g-acuan">Di titik mana acuan E<sub>p</sub> = nol paling wajar ditetapkan, lalu dipakai untuk seluruh baris rencana?</label>
+            <select id="g-acuan">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">Titik A</option>
+              <option value="B">Titik B</option>
+              <option value="C">Titik C</option>
+              <option value="D">Titik D</option>
+            </select>
+          </div>
+          <div class="isi-item">
+            <label for="g-segmen">Segmen mana yang persamaannya <em>bukan</em> kekal penuh?</label>
+            <select id="g-segmen">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="AB">Segmen A&ndash;B</option>
+              <option value="BC">Segmen B&ndash;C</option>
+              <option value="CD">Segmen C&ndash;D</option>
+              <option value="tidak">Tidak ada &mdash; ketiganya kekal penuh</option>
+            </select>
+          </div>
+          <div class="isi-item">
+            <label for="g-alasan">Mengapa segmen itu berbeda?</label>
+            <select id="g-alasan">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Karena segmen itu mendatar, sedangkan segmen lainnya miring &mdash; bentuk lintasannya yang berbeda</option>
+              <option value="B">B. Tidak ada yang berbeda; ketiga segmen memakai persamaan kekekalan yang sama persis</option>
+              <option value="C">C. Karena sebagian energi mekanik di sana berubah menjadi kalor lewat gaya gesek, sehingga neracanya memakai suku pengurang &minus;f&middot;d</option>
+              <option value="D">D. Karena lajunya berkurang di sana, dan laju yang berkurang membuat energinya hilang dari perhitungan</option>
+            </select>
+          </div>
+          <div class="isi-item">
+            <label for="g-suku">Berapa banyak suku pengurang pada rencana ini?</label>
+            <select id="g-suku">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="tidak ada">tidak ada</option>
+              <option value="satu">satu</option>
+              <option value="dua">dua</option>
+              <option value="tiga">tiga</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="soal">
+      <div class="soal-judul">Bagian hitungan dan verdikt</div>
+      <div class="soal-isi">
+        <div class="kisi">
+          <div class="isi-item">
+            <label for="g-kalor">Energi yang berubah menjadi kalor sepanjang B&ndash;C <span class="satuan">(J)</span></label>
+            <input type="text" inputmode="decimal" id="g-kalor" placeholder="&hellip;">
+          </div>
+          <div class="isi-item">
+            <label for="g-vd">Laju kereta di D <span class="satuan">(m/s)</span></label>
+            <input type="text" inputmode="decimal" id="g-vd" placeholder="&hellip;">
+          </div>
+          <div class="isi-item">
+            <label for="g-verdikt">Verdikt rancangan kereta ini</label>
+            <select id="g-verdikt">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="LOLOS">LOLOS &mdash; syarat terpenuhi</option>
+              <option value="GAGAL">GAGAL &mdash; syarat tidak terpenuhi</option>
+            </select>
+          </div>
+          <div class="isi-item">
+            <label for="g-perbaikan">Satu perubahan yang benar-benar dapat mengubah verdikt menjadi terpenuhi</label>
+            <select id="g-perbaikan">
+              <option value="">&mdash; pilih &mdash;</option>
+              <option value="A">A. Memakai kereta yang lebih berat supaya energinya lebih besar</option>
+              <option value="B">B. Menaikkan titik lepas A</option>
+              <option value="C">C. Memperbesar koefisien gesek pada B&ndash;C</option>
+              <option value="D">D. Memperpanjang lantai kasar B&ndash;C</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- CEKMANDIRI-SELESAI -->
+  </div>
+</div>
+
+<!-- ================= TANTANGAN ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Tantangan</span> Untuk kamu yang sudah selesai lebih dulu<span class="menit">menit 76&ndash;85</span></div>
+  <div class="bagian-isi">
+    <div class="naskah">Rancang sendiri satu lintasan yang memiliki <strong>dua segmen kasar yang terpisah</strong> &mdash; bukan bersebelahan. Lintasan ini belum pernah dicontohkan hari ini, jadi kamu yang menentukan bentuknya.</div>
+    <div class="kisi">
+      <div class="isi-item dibaca-guru">
+        <div class="tanda">dibaca guru</div>
+        <label for="tg_bebas">Tulis urutan segmennya, berapa baris rencana yang kamu butuhkan, dan berapa suku pengurang di dalamnya &mdash; tanpa menghitung satu angka pun.</label>
+        <textarea id="tg_bebas" style="min-height:84px;" placeholder="Urutan segmennya: … Baris rencananya: … Suku pengurangnya: …"></textarea>
+      </div>
+      <div class="isi-item dibaca-guru">
+        <div class="tanda">dibaca guru</div>
+        <label for="tg_sebaya">Kalau kamu sudah membaca lembar meja sebelah: tulis satu pertanyaan untuk pemiliknya &mdash; pertanyaan, bukan koreksi.</label>
+        <textarea id="tg_sebaya" placeholder="Pertanyaan saya: …"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= KONSOLIDASI ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Konsolidasi</span> Tiga kalimat yang kamu bawa pulang<span class="menit">menit 85&ndash;90</span></div>
+  <div class="bagian-isi">
+    <div class="bantu">Ketiga kalimat berikut disalin apa adanya. Bacalah pelan-pelan, lalu cocokkan dengan lembar yang baru saja kamu isi.</div>
+
+    <div class="jangkar">
+      <span class="nama">Jangkar 1-B &mdash; menyusun rencana</span>
+      &ldquo;Acuan di B. AB: mgh_A=&frac12;mv_B&sup2;. BC: &frac12;mv_B&sup2;&minus;f&middot;d=&frac12;mv_C&sup2; (f=&mu;_k mg, energi jadi kalor). CD: &frac12;mv_C&sup2;=&frac12;mv_D&sup2;+mgh_D. Hitung berurutan v_B&rarr;v_C&rarr;v_D/h_D.&rdquo;
+    </div>
+
+    <div class="jangkar">
+      <span class="nama">Jangkar 1-C &mdash; menjalankan hitungan dan memberi verdikt</span>
+      &ldquo;v_B=10 m/s; W_f=2 J (kalor); Ek_C=8 J; di h_D=4 m, Ek_D=0 J&rarr;v_D=0 (GAGAL); h_D maks=3,8 m agar v_D=2 m/s.&rdquo;
+    </div>
+
+    <div class="jangkar">
+      <span class="nama">Jangkar 1-A &mdash; memperbaiki rancangan yang gagal</span>
+      &ldquo;Opsi sahih: naikkan h_A, turunkan h_D, atau kurangi &mu;_k/d pada BC &mdash; ketiganya benar-benar mengubah neraca energi; menambah massa kelereng TIDAK membantu karena m tereliminasi dari persamaan.&rdquo;
+    </div>
+
+    <div class="bantu">Rangkaian yang kamu pegang hari ini &mdash; merencanakan dulu, baru menghitung, lalu memberi verdikt &mdash; itulah yang akan diminta darimu pada soal berbentuk apa pun.</div>
+  </div>
+</div>
+
+<!-- ================= REFLEKSI PENUTUP ================= -->
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">Refleksi</span> Penutup<span class="menit">menit 85&ndash;90</span></div>
+  <div class="bagian-isi">
+    <div class="kisi">
+      <div class="isi-item dibaca-guru">
+        <div class="tanda">dibaca guru</div>
+        <label for="rf_berubah">Satu hal yang berubah dari dugaanmu sebelum percobaan tadi</label>
+        <textarea id="rf_berubah" placeholder="Tadi saya mengira … ternyata …"></textarea>
+      </div>
+      <div class="isi-item dibaca-guru">
+        <div class="tanda">dibaca guru</div>
+        <label for="rf_lama">Baris mana dalam rencanamu yang paling lama kamu ragukan, dan apa yang akhirnya meyakinkanmu?</label>
+        <textarea id="rf_lama" placeholder="Baris … karena …"></textarea>
+      </div>
+      <div class="isi-item dibaca-guru">
+        <div class="tanda">dibaca guru</div>
+        <label for="rf_tanya">Satu pertanyaan yang masih kamu simpan tentang segmen kasar</label>
+        <textarea id="rf_tanya" placeholder="Saya masih ingin tahu …"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+
+</div><!-- /wrap -->
+
+<div class="bilah-bawah">
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">0 dari 0 isian dijawab</div>
+      <button class="periksa" id="btn_periksa" type="button">Periksa kelengkapan</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+.kosong-el{border-color:#C05621 !important; background:#FFF7F1 !important;}
+.centang label{display:block; font-size:13px; font-weight:400; color:#12333A; margin:5px 0; cursor:pointer;}
+.centang input{margin-right:7px; transform:scale(1.15);}
+</style>
+
+<script>
+(function(){
+"use strict";
+
+var KUNCI_NUM = {
+  "g-kalor": [2.16, 0.05],
+  "g-vd":    [4.05, 0.05]
+};
+
+var KUNCI_PIL = {
+  "g-acuan":     "B",
+  "g-segmen":    "BC",
+  "g-alasan":    "C",
+  "g-suku":      "satu",
+  "g-verdikt":   "GAGAL",
+  "g-perbaikan": "B"
+};
+
+
+/* Kotak yang tidak dinilai otomatis tetapi wajib terisi di kelas.
+   Kotak bagian pengganti (simulasi) sengaja tidak masuk daftar ini. */
+var WAJIB = [
+  "c2_wf","c2_ekc","c2_epd","c2_ekd","c2_vd","c2_verdikt","c2_kalimat",
+  "lp_jelas1",
+  "lp_vd","lp_verdikt","lp_perbaikan",
+  "pr_ramalan","pr_alasanramalan",
+  "pr_p1_h","pr_p1_x","pr_p1_s1","pr_p1_s2","pr_p1_s3","pr_p1_rata","pr_p1_seb",
+  "pr_a1_h","pr_a1_x","pr_a1_s1","pr_a1_s2","pr_a1_s3","pr_a1_rata","pr_a1_seb",
+  "pr_p2_h","pr_p2_x","pr_p2_s1","pr_p2_s2","pr_p2_s3","pr_p2_rata","pr_p2_seb",
+  "pr_a2_h","pr_a2_x","pr_a2_s1","pr_a2_s2","pr_a2_s3","pr_a2_rata","pr_a2_seb",
+  "pr_mumeja","pr_deltas","pr_bagian","pr_muamplas",
+  "pr_sebbesar","pr_ralat","pr_sumbersebaran","pr_simpulan",
+  "rf_berubah","rf_lama","rf_tanya"
+];
+
+var TOTAL = Object.keys(KUNCI_NUM).length + Object.keys(KUNCI_PIL).length;
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  if ((el.getAttribute("type") || "").toLowerCase() === "checkbox") return el.checked ? "ya" : "";
+  return el.value;
+}
+
+function hitungNilai(){
+  cerminSemua();
+  var benar = 0;
+  for (var id in KUNCI_NUM){
+    var kunci = KUNCI_NUM[id][0], tol = KUNCI_NUM[id][1];
+    var v = bacaBilangan(nilaiElemen(id));
+    if (v !== null && Math.abs(v - kunci) <= tol) benar++;
+  }
+  for (var id2 in KUNCI_PIL){
+    var jawab = nilaiElemen(id2);
+    if (jawab !== null && String(jawab).trim() === String(KUNCI_PIL[id2]).trim()) benar++;
+  }
+  return Math.round((benar / TOTAL) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function daftarIdDinilai(){
+  return Object.keys(KUNCI_NUM).concat(Object.keys(KUNCI_PIL));
+}
+
+function daftarIdWajibIsi(){
+  return daftarIdDinilai().concat(WAJIB);
+}
+
+function perbarui(){
+  var ids = daftarIdWajibIsi();
+  var terisi = 0;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    if (el && String(nilaiElemen(ids[i])).trim() !== "") terisi++;
+  }
+  var pct = Math.round((terisi / ids.length) * 100);
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + ids.length + " isian dijawab";
+}
+
+function periksaKelengkapan(){
+  cerminSemua();
+  var ids = daftarIdWajibIsi();
+  var kosongPertama = null;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    if (!el) continue;
+    var item = el.closest(".isi-item");
+    if (String(nilaiElemen(ids[i])).trim() === ""){
+      if (item) item.classList.add("kosong");
+      el.classList.add("kosong-el");
+      if (!kosongPertama) kosongPertama = el;
+    } else {
+      if (item) item.classList.remove("kosong");
+      el.classList.remove("kosong-el");
+    }
+  }
+  var pesan = document.getElementById("pesan_teks");
+  if (kosongPertama){
+    kosongPertama.scrollIntoView({behavior:"smooth", block:"center"});
+    if (pesan) pesan.textContent = "Masih ada kotak yang kosong — kotak itu ditandai oranye.";
+  } else {
+    if (pesan) pesan.textContent = "Seluruh kotak sudah terisi. Serahkan lembarmu sesuai arahan gurumu.";
+  }
+  perbarui();
+}
+
+document.addEventListener("input", function(ev){
+  cermin(ev.target);
+  perbarui();
+}, false);
+document.addEventListener("change", function(ev){
+  cermin(ev.target);
+  perbarui();
+}, false);
+document.addEventListener("blur", function(ev){
+  cermin(ev.target);
+}, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua();
+  perbarui();
+  var btn = document.getElementById("btn_periksa");
+  if (btn) btn.addEventListener("click", periksaKelengkapan);
+});
+
+cerminSemua();
+
+})();
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

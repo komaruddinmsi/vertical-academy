@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartu Kerja Fisika · Usaha & Energi (bagian kedua)</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{margin:0; font-family:'Segoe UI',Arial,sans-serif; background:#F6FAFB; color:var(--tinta); padding-bottom:120px;}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;}
+.kepala::before,.kepala::after{content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:640px; position:relative;}
+.kartu{background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+.aturan{background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px; padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.aturan strong{color:#8A6604;}
+.aturan ol{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+.bagian{margin:26px 0;}
+.bagian-judul{background:linear-gradient(100deg, var(--tosca), var(--tosca2)); color:#fff; padding:10px 16px;
+  border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px; font-size:15.5px; font-weight:600; flex-wrap:wrap;}
+.lencana{background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5); border-radius:999px;
+  padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;}
+.bagian-isi{border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;}
+.naskah{background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px; padding:12px 14px; font-size:14px; margin:10px 0;}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:6px 0 10px;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item input[type=text], .isi-item select{width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;}
+.isi-item.kosong input, .isi-item.kosong select, .isi-item.kosong textarea{border-color:var(--oranye); background:#FFF7F1;}
+textarea{width:100%; min-height:88px; padding:9px 11px; border:1.5px solid #C9DADC; border-radius:8px; font-size:13.5px; font-family:inherit; resize:vertical;}
+table.klas{width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px;}
+table.klas th{background:var(--tosca); color:#fff; padding:8px 10px; text-align:left; font-size:12.5px; vertical-align:top;}
+table.klas td{padding:7px 10px; border-bottom:1px solid #E5EEEF; vertical-align:top;}
+table.klas tr:nth-child(even) td{background:#F7FBFB;}
+@media (max-width:640px){
+  table.klas, table.klas thead, table.klas tbody, table.klas tr, table.klas th, table.klas td{display:block;}
+  table.klas thead{display:none;}
+  table.klas tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px;}
+  table.klas td{border:none; padding:4px 2px;}
+  table.klas td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca);}
+}
+.bilah-bawah{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{background:var(--tosca); color:#fff; border:none; border-radius:8px; padding:9px 18px; font-size:13.5px; font-weight:600; cursor:pointer;}
+button.kecil{background:#fff; color:var(--tosca); border:1.5px solid var(--tosca2); border-radius:8px; padding:6px 13px; font-size:12.5px; font-weight:600; cursor:pointer;}
+.kaki{text-align:center; font-size:12px; color:var(--abu); margin:30px 0 10px; line-height:1.7;}
+
+
+.kerja{border:1px solid #D7E6E8; border-radius:14px; background:#fff; margin:22px 0; overflow:hidden;}
+.kerja-kepala{background:linear-gradient(100deg, var(--tosca), var(--tosca2)); color:#fff; padding:12px 16px;
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+.kerja-kepala h2{font-size:16.5px; margin:0; font-weight:600;}
+.kerja-kepala .sortir{background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.5); border-radius:999px;
+  padding:2px 10px; font-size:11.5px; letter-spacing:1px; font-weight:700; white-space:nowrap;}
+.kerja-isi{padding:16px 18px;}
+.sasar{background:var(--merahB); border-left:5px solid var(--merah); border-radius:7px; padding:10px 14px; font-size:13.5px; margin:0 0 14px;}
+.tayangan{background:var(--toscaB); border:1px solid #BFE3E7; border-radius:10px; padding:12px 14px; margin:0 0 16px;}
+.tayangan-kepala{font-weight:700; color:var(--tosca0); font-size:14px; margin-bottom:8px;}
+.tayangan-kepala .durasi{background:#fff; border:1px solid var(--tosca2); color:var(--tosca); border-radius:999px; padding:1px 9px; font-size:11.5px; margin-left:6px; white-space:nowrap;}
+.tayangan-baris{font-size:13px; margin:5px 0;}
+.tayangan code{background:#fff; border:1px solid #C9DADC; border-radius:5px; padding:1px 5px; font-size:12.5px;}
+.rintisan{margin:10px 0 4px; font-size:12.5px;}
+.rintisan summary{cursor:pointer; color:var(--tosca); font-weight:600;}
+ol.beat{margin:8px 0 0; padding-left:20px; color:var(--abu);}
+ol.beat li{margin:3px 0;}
+.luring{background:#fff; border:1.5px dashed var(--oranye2); border-radius:9px; padding:12px 14px; margin-top:12px;}
+.luring-judul{font-weight:700; color:var(--oranye); font-size:13.5px;}
+.luring-gambar{margin:8px 0;}
+.luring-dua{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+@media (max-width:640px){ .luring-dua{grid-template-columns:1fr;} }
+.luring-kiri{background:var(--merahB); border-radius:7px; padding:8px 10px;}
+.luring-kanan{background:var(--hijauB); border-radius:7px; padding:8px 10px;}
+.luring-kepala{font-size:12px; font-weight:700; letter-spacing:0.4px; margin-bottom:4px;}
+.luring-kiri .luring-kepala{color:var(--merah);} .luring-kanan .luring-kepala{color:var(--hijau);}
+.luring ol{margin:4px 0 0; padding-left:18px; font-size:12.5px;}
+.luring li{margin:3px 0;}
+.contoh{background:var(--hijauB); border-left:5px solid var(--hijau); border-radius:7px; padding:12px 14px; margin:0 0 16px; font-size:13.5px;}
+.contoh .ck{font-weight:700; color:var(--hijau); margin-bottom:5px;}
+.contoh ol{margin:7px 0 0; padding-left:20px;} .contoh li{margin:4px 0;}
+.tugas{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.tugas-judul{background:var(--abuB); color:var(--tosca0); font-weight:700; padding:7px 14px; font-size:13px;}
+.tugas-isi{padding:12px 14px;}
+.keputusan{background:var(--kuningB); border-left:5px solid var(--kuning); border-radius:7px; padding:10px 14px; font-size:13px; margin:12px 0;}
+.penutup{border-top:1px dashed #D7E6E8; margin-top:14px; padding-top:10px; font-size:12.5px; color:var(--abu);
+  display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;}
+@media print{
+  body{background:#fff; padding-bottom:0;} .bilah-bawah, .no-cetak{display:none !important;}
+  .kerja{page-break-after:always; break-after:page; border:1px solid #999;}
+  .kerja:last-of-type{page-break-after:auto; break-after:auto;}
+  .rintisan[open] summary, .rintisan{display:block;}
+  details{display:block;} details > *{display:block;}
+  body.satu-kartu .kerja:not(.cetak-ini){display:none !important;}
+  body.satu-kartu .sembunyi-cetak{display:none !important;}
+  .kerja{page-break-inside:auto;}
+}
+
+</style>
+</head>
+<body>
+<div class="kepala"><div class="wrap">
+<div class="baris-kecil">Fisika &middot; Fase F &middot; kelas 11&ndash;12 &middot; F.USE.1</div>
+<h1>Kartu Kerja Fisika &middot; Usaha &amp; Energi (bagian kedua)</h1>
+<div class="penjelas">Kamu menerima <strong>satu</strong> kartu dari berkas ini, bukan seluruhnya. Kerjakan kartu yang gurumu berikan saja.</div>
+</div></div>
+<div class="wrap">
+<div class="kartu sembunyi-cetak"><div class="identitas">
+<div><label for="id_nama">Nama</label><input type="text" id="id_nama" name="id_nama"></div>
+<div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas" name="id_kelas"></div>
+<div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" name="id_tanggal"></div>
+<div><label for="id_kode">Kode kartu yang kamu terima</label><input type="text" id="id_kode" name="id_kode"></div>
+</div></div>
+<div class="aturan sembunyi-cetak"><strong>Cara mengisi</strong>
+<ol>
+<li>Tulis kode kartumu di kotak identitas, lalu kerjakan hanya kartu berkode itu.</li>
+<li>Tulis hitunganmu baris demi baris. Jawaban yang hanya berisi angka akhir belum menunjukkan jalanmu.</li>
+<li>Angka boleh ditulis dengan koma maupun titik, dan satuannya ditulis apa adanya di kotak yang sama.</li>
+<li>Berkas ini tidak memberi nilai dan tidak memberi tahu benar atau salah. Jawabanmu dibaca gurumu.</li>
+<li>Seluruh kartu dapat dikerjakan tanpa gawai: isi tayangan sudah tercetak di kotak gambar pendampingnya.</li>
+</ol></div>
+<div class="bagian sembunyi-cetak"><div class="bagian-judul"><span class="lencana">Planning</span><span>K2.1 &middot; Menyusun rencana per segmen sebelum menghitung</span></div>
+<div class="bagian-isi"><p class="bantu">Empat kartu di bawah ini menyasar pekerjaan yang sama dari empat arah berbeda. Gurumu memberikan satu.</p></div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menuliskan persamaannya sebelum angkanya</h2><span class="sortir">PLN-ri</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Menuliskan satu persamaan kekal penuh untuk seluruh lintasan, termasuk bagian yang kasar.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Satu baris yang hilang ketika lintasannya kasar <span class="durasi">2 menit 40 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Satu-Baris-Yang-Hilang.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Menuliskan satu persamaan kekal penuh untuk seluruh lintasan, termasuk bagian yang kasar.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan baris tengah yang ditambahkan ke papan — baris itulah yang tidak ada pada rencana yang keliru.</p>
+<div class="isi-item"><label for="p2_pln_ri_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p2_pln_ri_1_v1" name="p2_pln_ri_1_v1"></textarea></div>
+<div class="isi-item"><label for="p2_pln_ri_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p2_pln_ri_1_v2" name="p2_pln_ri_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Satu baris di papan: mgh_awal = mgh_akhir. » “Rencana ini pendek. Ia juga bocor.”</li>
+<li>0:15 — Gambar lintasan tiga bagian: licin turun, datar kasar, licin naik; bagian kasar diarsir.</li>
+<li>0:35 — » “Berapa banyak persamaan yang kamu perlukan? Hitung segmennya, bukan soalnya.” […] jeda 3 detik</li>
+<li>0:55 — Tiga baris ditulis berurutan, satu per segmen; baris tengah diberi suku −f·d dengan spidol warna lain.</li>
+<li>1:25 — f = μ_k · m · g ditulis di pinggir. » “Suku ini bertanda kurang. Ia tidak pernah menambah.”</li>
+<li>1:50 — Acuan Ep = 0 ditandai di titik terendah, lalu ditekankan: satu acuan untuk seluruh lintasan. […] penekanan</li>
+<li>2:15 — Rencana yang keliru dan rencana yang benar ditaruh berdampingan; baris yang hilang ditunjuk.</li>
+<li>2:40 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Satu baris yang hilang</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Lintasan licin, kasar, licin dengan tiga baris persamaan"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><path d="M14 22 L96 80 L208 80 L296 30" fill="none" stroke="#0B4F58" stroke-width="3"/><rect x="96" y="78" width="112" height="7" fill="#C05621"/><text x="40" y="44" font-size="11" fill="#0B4F58">licin</text><text x="134" y="99" font-size="11" fill="#C05621">kasar</text><text x="250" y="44" font-size="11" fill="#0B4F58">licin</text><line x1="96" y1="88" x2="96" y2="100" stroke="#6A7F84" stroke-width="1"/><line x1="208" y1="88" x2="208" y2="100" stroke="#6A7F84" stroke-width="1"/><text x="14" y="104" font-size="10" fill="#6A7F84">acuan Ep = 0 di lintasan datar</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Lihat tinggi awal dan tinggi akhir.</li>
+<li>Tulis mgh_awal = mgh_akhir.</li>
+<li>Masukkan angka.</li>
+<li>Selesai — satu baris.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Tandai acuan Ep = 0 di titik terendah, satu untuk seluruh lintasan.</li>
+<li>Hitung segmennya: licin, kasar, licin → tiga baris.</li>
+<li>Segmen licin: kekal penuh. Segmen kasar: dikurangi f · d, dengan f = μ_k · m · g.</li>
+<li>Baru masukkan angka, berurutan dari segmen pertama.</li>
+</ol></div></div></div>
+</div>
+<div class="contoh"><div class="ck">Contoh terkerjakan &mdash; angkanya berbeda dari pekerjaanmu</div>
+<p>Sebuah kelereng bermassa 0,4 kg dilepas diam pada ketinggian 1,25 m di lintasan licin.</p><ol>
+<li>Keputusan dulu: seluruh lintasan licin, jadi persamaannya kekal penuh — tidak ada suku pengurang.</li>
+<li>Tulis persamaannya: m g h = ½ m v².</li>
+<li>Massa tercoret di kedua ruas: g h = ½ v² → v = √(2 g h).</li>
+<li>Baru angkanya: v = √(2 × 10 × 1,25) = √25 = 5 m/s.</li>
+<li>Simpulan: laju kelereng di dasar lintasan 5 m/s.</li>
+</ol></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah kelereng bermassa 0,5 kg dilepas diam pada ketinggian 0,45 m di lintasan licin. Tuliskan dulu persamaan yang berlaku untuk lintasan licin, baru masukkan angkanya. Hitung laju kelereng itu di dasar lintasan.</div>
+<p class="bantu">Bentuk jawabanmu: Tulis persamaannya lebih dulu dalam lambang, baru hitungannya baris demi baris, lalu angka akhir beserta satuannya.</p>
+<div class="isi-item"><label for="p2_pln_ri_1">Tulis jawabanmu di sini</label><textarea id="p2_pln_ri_1" name="p2_pln_ri_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p2_pln_ri_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p2_pln_ri_1_pd" name="p2_pln_ri_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 10 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menyusun rencana dua segmen tanpa penanda</h2><span class="sortir">PLN-ka</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Menuliskan satu persamaan kekal penuh untuk seluruh lintasan, termasuk bagian yang kasar.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Satu baris yang hilang ketika lintasannya kasar <span class="durasi">2 menit 40 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Satu-Baris-Yang-Hilang.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Menuliskan satu persamaan kekal penuh untuk seluruh lintasan, termasuk bagian yang kasar.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan baris tengah yang ditambahkan ke papan — baris itulah yang tidak ada pada rencana yang keliru.</p>
+<div class="isi-item"><label for="p2_pln_ka_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p2_pln_ka_1_v1" name="p2_pln_ka_1_v1"></textarea></div>
+<div class="isi-item"><label for="p2_pln_ka_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p2_pln_ka_1_v2" name="p2_pln_ka_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Satu baris di papan: mgh_awal = mgh_akhir. » “Rencana ini pendek. Ia juga bocor.”</li>
+<li>0:15 — Gambar lintasan tiga bagian: licin turun, datar kasar, licin naik; bagian kasar diarsir.</li>
+<li>0:35 — » “Berapa banyak persamaan yang kamu perlukan? Hitung segmennya, bukan soalnya.” […] jeda 3 detik</li>
+<li>0:55 — Tiga baris ditulis berurutan, satu per segmen; baris tengah diberi suku −f·d dengan spidol warna lain.</li>
+<li>1:25 — f = μ_k · m · g ditulis di pinggir. » “Suku ini bertanda kurang. Ia tidak pernah menambah.”</li>
+<li>1:50 — Acuan Ep = 0 ditandai di titik terendah, lalu ditekankan: satu acuan untuk seluruh lintasan. […] penekanan</li>
+<li>2:15 — Rencana yang keliru dan rencana yang benar ditaruh berdampingan; baris yang hilang ditunjuk.</li>
+<li>2:40 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Satu baris yang hilang</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Lintasan licin, kasar, licin dengan tiga baris persamaan"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><path d="M14 22 L96 80 L208 80 L296 30" fill="none" stroke="#0B4F58" stroke-width="3"/><rect x="96" y="78" width="112" height="7" fill="#C05621"/><text x="40" y="44" font-size="11" fill="#0B4F58">licin</text><text x="134" y="99" font-size="11" fill="#C05621">kasar</text><text x="250" y="44" font-size="11" fill="#0B4F58">licin</text><line x1="96" y1="88" x2="96" y2="100" stroke="#6A7F84" stroke-width="1"/><line x1="208" y1="88" x2="208" y2="100" stroke="#6A7F84" stroke-width="1"/><text x="14" y="104" font-size="10" fill="#6A7F84">acuan Ep = 0 di lintasan datar</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Lihat tinggi awal dan tinggi akhir.</li>
+<li>Tulis mgh_awal = mgh_akhir.</li>
+<li>Masukkan angka.</li>
+<li>Selesai — satu baris.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Tandai acuan Ep = 0 di titik terendah, satu untuk seluruh lintasan.</li>
+<li>Hitung segmennya: licin, kasar, licin → tiga baris.</li>
+<li>Segmen licin: kekal penuh. Segmen kasar: dikurangi f · d, dengan f = μ_k · m · g.</li>
+<li>Baru masukkan angka, berurutan dari segmen pertama.</li>
+</ol></div></div></div>
+</div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah kelereng bermassa 0,5 kg dilepas diam pada ketinggian 0,4 m di lintasan licin, lalu memasuki lorong datar kasar sepanjang 1 m dengan μk = 0,2. Susun rencana dua segmen untuk lintasan ini, lalu hitung laju benda itu di ujung lorong kasar.</div>
+<p class="bantu">Bentuk jawabanmu: Tabel dua baris: segmen — licin atau kasar — persamaan yang berlaku. Baru hitungannya baris demi baris, lalu angka akhir beserta satuannya.</p>
+<div class="isi-item"><label for="p2_pln_ka_1">Tulis jawabanmu di sini</label><textarea id="p2_pln_ka_1" name="p2_pln_ka_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p2_pln_ka_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p2_pln_ka_1_pd" name="p2_pln_ka_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 12 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Merencanakan lintasan tiga segmen, sendiri</h2><span class="sortir">PLN-no</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah kelereng bermassa 0,3 kg dilepas diam pada ketinggian 1,3 m, licin menuju titik acuan. Dari situ, lintasan datar kasar sepanjang 2,5 m dengan μk = 0,2, lalu licin naik menuju titik akhir pada ketinggian 0,6 m. Syaratnya, laju di titik akhir sekurang-kurangnya 1 m/s. Hitung laju di titik akhir, dan nyatakan verdiktnya.</div>
+<p class="bantu">Bentuk jawabanmu: Tulis acuannya, lalu satu baris persamaan per segmen, baru hitungannya, lalu laju akhir beserta satuannya dan verdiktnya.</p>
+<div class="isi-item"><label for="p2_pln_no_1">Tulis jawabanmu di sini</label><textarea id="p2_pln_no_1" name="p2_pln_no_1"></textarea></div>
+</div></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 2</div><div class="tugas-isi">
+<div class="naskah">Sebuah lintasan tiga segmen berurutan: kasar datar, lalu licin turun, lalu licin naik. Susunlah rencana per segmen untuk lintasan ini — tanpa menghitung hasil akhirnya — dan tentukan di titik mana acuan ketinggiannya paling wajar dipilih.</div>
+<p class="bantu">Bentuk jawabanmu: Tiga baris persamaan dalam lambang, lalu satu kalimat: di titik mana acuannya kamu pilih dan mengapa.</p>
+<div class="isi-item"><label for="p2_pln_no_2">Tulis jawabanmu di sini</label><textarea id="p2_pln_no_2" name="p2_pln_no_2"></textarea></div>
+</div></div>
+<div class="keputusan"><strong>Tulis keputusanmu, bukan hanya hasilnya.</strong> Untuk tiap pekerjaan di atas, sebutkan keputusan apa yang kamu ambil lebih dulu dan mengapa.</div>
+<div class="isi-item"><label for="p2_pln_no_1_kep">Keputusan-keputusanmu</label><textarea id="p2_pln_no_1_kep" name="p2_pln_no_1_kep"></textarea></div>
+<div class="penutup"><span>Lama kerja: 18 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Lintasan empat segmen dengan titik periksa di tengah bagian kasar</h2><span class="sortir">PLN-se</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Kelereng 0,2kg dilepas diam di puncak lintasan licin P (h_P=6m) turun ke Q; QR datar kasar 3m (μ₁=0,2); RS licin menanjak ke S (h_S=2m); ST datar kasar 5m (μ₂=0,3). Titik pemeriksaan M berada 2m setelah S, di dalam segmen ST. Tuliskan rencana: acuan, persamaan tiap segmen, dan cara menangani target di tengah segmen kasar.</div>
+<p class="bantu">Bentuk jawabanmu: Tulis acuannya, lalu satu baris persamaan per segmen dalam lambang, lalu satu paragraf: cara menangani titik pemeriksaan yang berada di tengah segmen kasar.</p>
+<div class="isi-item"><label for="p2_pln_se_1">Tulis jawabanmu di sini</label><textarea id="p2_pln_se_1" name="p2_pln_se_1"></textarea></div>
+</div></div>
+<div class="penutup"><span>Lama kerja: 13 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="bagian sembunyi-cetak"><div class="bagian-judul"><span class="lencana">Producing</span><span>K2.2 &middot; Menjalankan hitungan berurutan dan memberi verdikt</span></div>
+<div class="bagian-isi"><p class="bantu">Empat kartu di bawah ini menyasar pekerjaan yang sama dari empat arah berbeda. Gurumu memberikan satu.</p></div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Mengurangkan energi yang menjadi kalor, satu segmen</h2><span class="sortir">PRD-ri</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Menghitung sampai titik akhir tanpa mengurangkan energi yang menjadi kalor di segmen kasar.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Angka yang terlihat wajar dari jalan yang salah <span class="durasi">2 menit 50 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Angka-Wajar-Dari-Jalan-Yang-Salah.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Menghitung sampai titik akhir tanpa mengurangkan energi yang menjadi kalor di segmen kasar.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan dua hasil yang muncul berdampingan: keduanya terlihat masuk akal, hanya satu yang jalannya sah.</p>
+<div class="isi-item"><label for="p2_prd_ri_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p2_prd_ri_1_v1" name="p2_prd_ri_1_v1"></textarea></div>
+<div class="isi-item"><label for="p2_prd_ri_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p2_prd_ri_1_v2" name="p2_prd_ri_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Dua hasil ditulis berdampingan: 6,63 m/s dan 5,66 m/s. » “Keduanya wajar. Satu di antaranya didapat dengan cara yang salah.”</li>
+<li>0:20 — Jalan kiri dibuka: energi awal langsung disamakan dengan energi akhir, segmen kasar dilewati. […] sorot layar</li>
+<li>0:50 — Jalan kanan dibuka: neraca empat baris, baris kalor diberi kotak.</li>
+<li>1:15 — » “Periksa bukan hasilnya. Periksa barisnya. Ada berapa baris kalor di neraca kamu?”</li>
+<li>1:40 — Selisih 1 J ditunjukkan sebagai energi yang tidak pernah dicatat pada jalan kiri.</li>
+<li>2:05 — Verdikt ditulis lengkap: angka, syarat, lalu LOLOS/GAGAL. » “Angka tanpa verdikt belum menjawab pertanyaannya.” […] jeda</li>
+<li>2:30 — Penutup: satu kalimat simpulan yang menyebut ke mana energinya pergi.</li>
+<li>2:50 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Angka wajar dari jalan yang salah</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Neraca energi empat baris dengan baris kalor diberi kotak"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><text x="14" y="22" font-size="12" fill="#0B4F58">energi awal</text><text x="14" y="44" font-size="12" fill="#0B4F58">&#8722; energi menjadi kalor (f &#183; d)</text><rect x="8" y="30" width="230" height="20" fill="none" stroke="#C05621" stroke-width="2"/><text x="14" y="66" font-size="12" fill="#0B4F58">&#8722; energi tersimpan (m g h)</text><text x="14" y="88" font-size="12" fill="#1F7A4D">= energi di titik akhir</text><line x1="8" y1="74" x2="238" y2="74" stroke="#6A7F84" stroke-width="1"/><text x="250" y="88" font-size="11" fill="#B32B2B">verdikt?</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Hitung energi di titik awal.</li>
+<li>Samakan dengan energi di titik akhir.</li>
+<li>Dapat laju akhir — angkanya masuk akal.</li>
+<li>Tulis angkanya saja.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Hitung energi di titik awal.</li>
+<li>Kurangi energi yang menjadi kalor di tiap segmen kasar: W_f = f · d.</li>
+<li>Baru hitung energi dan laju di titik akhir.</li>
+<li>Tulis angka, bandingkan dengan syaratnya, lalu tulis verdiktnya dan ke mana energinya pergi.</li>
+</ol></div></div></div>
+</div>
+<div class="contoh"><div class="ck">Contoh terkerjakan &mdash; angkanya berbeda dari pekerjaanmu</div>
+<p>Sebuah balok bermassa 0,6 kg memasuki lorong datar kasar dengan laju 5 m/s. Lorong itu sepanjang 1,5 m dengan μk = 0,3.</p><ol>
+<li>Energi gerak di mulut lorong: Ek = ½ × 0,6 × 5² = 7,5 J.</li>
+<li>Gaya gesek: f = μ_k · m · g = 0,3 × 0,6 × 10 = 1,8 N.</li>
+<li>Energi yang menjadi kalor di lorong: W_f = f · d = 1,8 × 1,5 = 2,7 J.</li>
+<li>Energi gerak di ujung lorong: Ek = 7,5 − 2,7 = 4,8 J.</li>
+<li>Laju di ujung lorong: 4,8 = ½ × 0,6 × v² → v² = 16 → v = 4 m/s.</li>
+<li>Simpulan: balok keluar lorong dengan laju 4 m/s; 2,7 J berubah menjadi kalor (dan sedikit bunyi).</li>
+</ol></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah balok bermassa 0,5 kg memasuki lorong datar kasar dengan laju 3 m/s. Lorong itu sepanjang 2 m dengan μk = 0,2. Hitung laju balok itu saat keluar dari lorong.</div>
+<p class="bantu">Bentuk jawabanmu: Hitunganmu baris demi baris mengikuti urutan contoh di atas, lalu angka akhir beserta satuannya.</p>
+<div class="isi-item"><label for="p2_prd_ri_1">Tulis jawabanmu di sini</label><textarea id="p2_prd_ri_1" name="p2_prd_ri_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p2_prd_ri_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p2_prd_ri_1_pd" name="p2_prd_ri_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 10 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menghitung tuntas dua segmen lalu menuliskan simpulannya</h2><span class="sortir">PRD-ka</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Menghitung sampai titik akhir tanpa mengurangkan energi yang menjadi kalor di segmen kasar.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Angka yang terlihat wajar dari jalan yang salah <span class="durasi">2 menit 50 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Angka-Wajar-Dari-Jalan-Yang-Salah.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Menghitung sampai titik akhir tanpa mengurangkan energi yang menjadi kalor di segmen kasar.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan dua hasil yang muncul berdampingan: keduanya terlihat masuk akal, hanya satu yang jalannya sah.</p>
+<div class="isi-item"><label for="p2_prd_ka_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p2_prd_ka_1_v1" name="p2_prd_ka_1_v1"></textarea></div>
+<div class="isi-item"><label for="p2_prd_ka_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p2_prd_ka_1_v2" name="p2_prd_ka_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Dua hasil ditulis berdampingan: 6,63 m/s dan 5,66 m/s. » “Keduanya wajar. Satu di antaranya didapat dengan cara yang salah.”</li>
+<li>0:20 — Jalan kiri dibuka: energi awal langsung disamakan dengan energi akhir, segmen kasar dilewati. […] sorot layar</li>
+<li>0:50 — Jalan kanan dibuka: neraca empat baris, baris kalor diberi kotak.</li>
+<li>1:15 — » “Periksa bukan hasilnya. Periksa barisnya. Ada berapa baris kalor di neraca kamu?”</li>
+<li>1:40 — Selisih 1 J ditunjukkan sebagai energi yang tidak pernah dicatat pada jalan kiri.</li>
+<li>2:05 — Verdikt ditulis lengkap: angka, syarat, lalu LOLOS/GAGAL. » “Angka tanpa verdikt belum menjawab pertanyaannya.” […] jeda</li>
+<li>2:30 — Penutup: satu kalimat simpulan yang menyebut ke mana energinya pergi.</li>
+<li>2:50 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Angka wajar dari jalan yang salah</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Neraca energi empat baris dengan baris kalor diberi kotak"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><text x="14" y="22" font-size="12" fill="#0B4F58">energi awal</text><text x="14" y="44" font-size="12" fill="#0B4F58">&#8722; energi menjadi kalor (f &#183; d)</text><rect x="8" y="30" width="230" height="20" fill="none" stroke="#C05621" stroke-width="2"/><text x="14" y="66" font-size="12" fill="#0B4F58">&#8722; energi tersimpan (m g h)</text><text x="14" y="88" font-size="12" fill="#1F7A4D">= energi di titik akhir</text><line x1="8" y1="74" x2="238" y2="74" stroke="#6A7F84" stroke-width="1"/><text x="250" y="88" font-size="11" fill="#B32B2B">verdikt?</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Hitung energi di titik awal.</li>
+<li>Samakan dengan energi di titik akhir.</li>
+<li>Dapat laju akhir — angkanya masuk akal.</li>
+<li>Tulis angkanya saja.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Hitung energi di titik awal.</li>
+<li>Kurangi energi yang menjadi kalor di tiap segmen kasar: W_f = f · d.</li>
+<li>Baru hitung energi dan laju di titik akhir.</li>
+<li>Tulis angka, bandingkan dengan syaratnya, lalu tulis verdiktnya dan ke mana energinya pergi.</li>
+</ol></div></div></div>
+</div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah balok bermassa 0,5 kg memasuki lorong datar kasar dengan laju 4 m/s. Lorong itu sepanjang 1,2 m dengan μk = 0,25, lalu balok itu naik ke lintasan licin menuju titik akhir pada ketinggian 0,3 m. Susun rencana dua segmen untuk bagian ini, lalu hitung laju balok itu di titik akhir.</div>
+<p class="bantu">Bentuk jawabanmu: Rencana dua baris, lalu hitungan baris demi baris, lalu laju akhir beserta satuannya, lalu satu kalimat simpulan yang menyebut ke mana energi yang berkurang itu pergi.</p>
+<div class="isi-item"><label for="p2_prd_ka_1">Tulis jawabanmu di sini</label><textarea id="p2_prd_ka_1" name="p2_prd_ka_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p2_prd_ka_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p2_prd_ka_1_pd" name="p2_prd_ka_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 12 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menghitung tuntas, memberi verdikt, lalu memperbaiki rancangannya</h2><span class="sortir">PRD-no</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah balok bermassa 0,4 kg dilepas diam pada ketinggian 1 m, licin menuju titik acuan. Dari situ, lintasan datar kasar sepanjang 2 m dengan μk = 0,25, lalu licin naik menuju titik akhir pada ketinggian 0,6 m, dengan syarat laju sekurang-kurangnya 2 m/s. Tunjukkan bahwa rancangan ini tidak memenuhi syarat, lalu hitung ketinggian titik akhir maksimum yang masih bisa dicapainya.</div>
+<p class="bantu">Bentuk jawabanmu: Hitungan baris demi baris, verdiktnya, lalu angka ketinggian maksimum beserta satuannya dan satu kalimat alasan.</p>
+<div class="isi-item"><label for="p2_prd_no_1">Tulis jawabanmu di sini</label><textarea id="p2_prd_no_1" name="p2_prd_no_1"></textarea></div>
+</div></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 2</div><div class="tugas-isi">
+<div class="naskah">Sebuah kelereng bermassa 0,2 kg dilepas diam di titik tertinggi pada ketinggian 1 m, licin menuju titik acuan. Dari titik acuan, lintasan datar kasar sepanjang 1 m dengan μk = 0,35 menuju titik berikutnya. Dari situ, lintasan licin naik menuju titik akhir pada ketinggian 0,2 m. Syaratnya, kelereng itu harus tiba di titik akhir dengan laju sekurang-kurangnya 2 m/s. Hitung laju kelereng di titik akhir, dan nyatakan verdiktnya.</div>
+<p class="bantu">Bentuk jawabanmu: Hitungan baris demi baris, laju akhir beserta satuannya, lalu verdiktnya dalam satu kata.</p>
+<div class="isi-item"><label for="p2_prd_no_2">Tulis jawabanmu di sini</label><textarea id="p2_prd_no_2" name="p2_prd_no_2"></textarea></div>
+</div></div>
+<div class="keputusan"><strong>Tulis keputusanmu, bukan hanya hasilnya.</strong> Untuk tiap pekerjaan di atas, sebutkan keputusan apa yang kamu ambil lebih dulu dan mengapa.</div>
+<div class="isi-item"><label for="p2_prd_no_1_kep">Keputusan-keputusanmu</label><textarea id="p2_prd_no_1_kep" name="p2_prd_no_1_kep"></textarea></div>
+<div class="penutup"><span>Lama kerja: 18 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Melaksanakan rencana wahana lalu mengusulkan revisinya</h2><span class="sortir">PRD-se</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Laksanakan rencana pada kartu PLN-se secara tuntas. Syarat wahana: kelereng harus tiba di T (5m dari S) dengan v_T≥7 m/s. Apakah terpenuhi? Bila tidak, tunjukkan di mana energi paling banyak berkurang dan berapa h_P minimum yang membuat syarat tepat terpenuhi.</div>
+<p class="bantu">Bentuk jawabanmu: Hitungan tuntas baris demi baris, verdiktnya, lalu dua jawaban: di segmen mana energi paling banyak berkurang, dan angka ketinggian pelepasan minimum beserta satuannya.</p>
+<div class="isi-item"><label for="p2_prd_se_1">Tulis jawabanmu di sini</label><textarea id="p2_prd_se_1" name="p2_prd_se_1"></textarea></div>
+</div></div>
+<div class="penutup"><span>Lama kerja: 15 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+</div>
+<div class="bilah-bawah no-cetak"><div class="wrap"><div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div><div class="baris-bawah"><div class="hitungan" id="hitungan_teks">0 dari 0 isian dijawab</div><div><button type="button" class="kecil" id="btn_cetak_semua">Cetak seluruh kartu</button></div></div></div></div>
+<div class="wrap"><div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div></div>
+<script>
+(function(){
+"use strict";
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){ s = s.replace(/\./g, "").replace(",", "."); }
+      else { s = s.replace(/,/g, ""); }
+    } else if (hasComma){ s = s.replace(",", "."); }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+document.addEventListener("input", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("change", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("blur", function(ev){ cermin(ev.target); }, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){ if (document.visibilityState === "hidden") cerminSemua(); });
+
+
+function daftarIsian(){ return document.querySelectorAll(".kerja textarea, .kerja input[type=text]"); }
+function perbarui(){
+  var els = daftarIsian(), terisi = 0;
+  for (var i = 0; i < els.length; i++){ if (String(els[i].value).trim() !== "") terisi++; }
+  var pct = els.length ? Math.round((terisi / els.length) * 100) : 0;
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + els.length + " isian dijawab";
+}
+function cetakSatu(el){
+  var semua = document.querySelectorAll(".kerja");
+  for (var i = 0; i < semua.length; i++) semua[i].classList.remove("cetak-ini");
+  el.classList.add("cetak-ini");
+  document.body.classList.add("satu-kartu");
+  var buka = [];
+  var det = el.querySelectorAll("details");
+  for (var j = 0; j < det.length; j++){ if (!det[j].open){ det[j].open = true; buka.push(det[j]); } }
+  window.print();
+  document.body.classList.remove("satu-kartu");
+  el.classList.remove("cetak-ini");
+  for (var m = 0; m < buka.length; m++) buka[m].open = false;
+}
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua(); perbarui();
+  var tombol = document.querySelectorAll("[data-cetak]");
+  for (var i = 0; i < tombol.length; i++){
+    tombol[i].addEventListener("click", function(ev){
+      cetakSatu(ev.target.closest(".kerja"));
+    });
+  }
+  var semua = document.getElementById("btn_cetak_semua");
+  if (semua) semua.addEventListener("click", function(){ window.print(); });
+});
+cerminSemua();
+})();
+
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "selesai";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

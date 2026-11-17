@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartu Kerja Fisika · Usaha & Energi (bagian pertama)</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{margin:0; font-family:'Segoe UI',Arial,sans-serif; background:#F6FAFB; color:var(--tinta); padding-bottom:120px;}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;}
+.kepala::before,.kepala::after{content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:640px; position:relative;}
+.kartu{background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+.aturan{background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px; padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.aturan strong{color:#8A6604;}
+.aturan ol{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+.bagian{margin:26px 0;}
+.bagian-judul{background:linear-gradient(100deg, var(--tosca), var(--tosca2)); color:#fff; padding:10px 16px;
+  border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px; font-size:15.5px; font-weight:600; flex-wrap:wrap;}
+.lencana{background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5); border-radius:999px;
+  padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;}
+.bagian-isi{border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;}
+.naskah{background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px; padding:12px 14px; font-size:14px; margin:10px 0;}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:6px 0 10px;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item input[type=text], .isi-item select{width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;}
+.isi-item.kosong input, .isi-item.kosong select, .isi-item.kosong textarea{border-color:var(--oranye); background:#FFF7F1;}
+textarea{width:100%; min-height:88px; padding:9px 11px; border:1.5px solid #C9DADC; border-radius:8px; font-size:13.5px; font-family:inherit; resize:vertical;}
+table.klas{width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px;}
+table.klas th{background:var(--tosca); color:#fff; padding:8px 10px; text-align:left; font-size:12.5px; vertical-align:top;}
+table.klas td{padding:7px 10px; border-bottom:1px solid #E5EEEF; vertical-align:top;}
+table.klas tr:nth-child(even) td{background:#F7FBFB;}
+@media (max-width:640px){
+  table.klas, table.klas thead, table.klas tbody, table.klas tr, table.klas th, table.klas td{display:block;}
+  table.klas thead{display:none;}
+  table.klas tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px;}
+  table.klas td{border:none; padding:4px 2px;}
+  table.klas td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca);}
+}
+.bilah-bawah{position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{height:100%; width:0%; border-radius:999px; background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{background:var(--tosca); color:#fff; border:none; border-radius:8px; padding:9px 18px; font-size:13.5px; font-weight:600; cursor:pointer;}
+button.kecil{background:#fff; color:var(--tosca); border:1.5px solid var(--tosca2); border-radius:8px; padding:6px 13px; font-size:12.5px; font-weight:600; cursor:pointer;}
+.kaki{text-align:center; font-size:12px; color:var(--abu); margin:30px 0 10px; line-height:1.7;}
+
+
+.kerja{border:1px solid #D7E6E8; border-radius:14px; background:#fff; margin:22px 0; overflow:hidden;}
+.kerja-kepala{background:linear-gradient(100deg, var(--tosca), var(--tosca2)); color:#fff; padding:12px 16px;
+  display:flex; align-items:flex-start; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+.kerja-kepala h2{font-size:16.5px; margin:0; font-weight:600;}
+.kerja-kepala .sortir{background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.5); border-radius:999px;
+  padding:2px 10px; font-size:11.5px; letter-spacing:1px; font-weight:700; white-space:nowrap;}
+.kerja-isi{padding:16px 18px;}
+.sasar{background:var(--merahB); border-left:5px solid var(--merah); border-radius:7px; padding:10px 14px; font-size:13.5px; margin:0 0 14px;}
+.tayangan{background:var(--toscaB); border:1px solid #BFE3E7; border-radius:10px; padding:12px 14px; margin:0 0 16px;}
+.tayangan-kepala{font-weight:700; color:var(--tosca0); font-size:14px; margin-bottom:8px;}
+.tayangan-kepala .durasi{background:#fff; border:1px solid var(--tosca2); color:var(--tosca); border-radius:999px; padding:1px 9px; font-size:11.5px; margin-left:6px; white-space:nowrap;}
+.tayangan-baris{font-size:13px; margin:5px 0;}
+.tayangan code{background:#fff; border:1px solid #C9DADC; border-radius:5px; padding:1px 5px; font-size:12.5px;}
+.rintisan{margin:10px 0 4px; font-size:12.5px;}
+.rintisan summary{cursor:pointer; color:var(--tosca); font-weight:600;}
+ol.beat{margin:8px 0 0; padding-left:20px; color:var(--abu);}
+ol.beat li{margin:3px 0;}
+.luring{background:#fff; border:1.5px dashed var(--oranye2); border-radius:9px; padding:12px 14px; margin-top:12px;}
+.luring-judul{font-weight:700; color:var(--oranye); font-size:13.5px;}
+.luring-gambar{margin:8px 0;}
+.luring-dua{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+@media (max-width:640px){ .luring-dua{grid-template-columns:1fr;} }
+.luring-kiri{background:var(--merahB); border-radius:7px; padding:8px 10px;}
+.luring-kanan{background:var(--hijauB); border-radius:7px; padding:8px 10px;}
+.luring-kepala{font-size:12px; font-weight:700; letter-spacing:0.4px; margin-bottom:4px;}
+.luring-kiri .luring-kepala{color:var(--merah);} .luring-kanan .luring-kepala{color:var(--hijau);}
+.luring ol{margin:4px 0 0; padding-left:18px; font-size:12.5px;}
+.luring li{margin:3px 0;}
+.contoh{background:var(--hijauB); border-left:5px solid var(--hijau); border-radius:7px; padding:12px 14px; margin:0 0 16px; font-size:13.5px;}
+.contoh .ck{font-weight:700; color:var(--hijau); margin-bottom:5px;}
+.contoh ol{margin:7px 0 0; padding-left:20px;} .contoh li{margin:4px 0;}
+.tugas{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.tugas-judul{background:var(--abuB); color:var(--tosca0); font-weight:700; padding:7px 14px; font-size:13px;}
+.tugas-isi{padding:12px 14px;}
+.keputusan{background:var(--kuningB); border-left:5px solid var(--kuning); border-radius:7px; padding:10px 14px; font-size:13px; margin:12px 0;}
+.penutup{border-top:1px dashed #D7E6E8; margin-top:14px; padding-top:10px; font-size:12.5px; color:var(--abu);
+  display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; align-items:center;}
+@media print{
+  body{background:#fff; padding-bottom:0;} .bilah-bawah, .no-cetak{display:none !important;}
+  .kerja{page-break-after:always; break-after:page; border:1px solid #999;}
+  .kerja:last-of-type{page-break-after:auto; break-after:auto;}
+  .rintisan[open] summary, .rintisan{display:block;}
+  details{display:block;} details > *{display:block;}
+  body.satu-kartu .kerja:not(.cetak-ini){display:none !important;}
+  body.satu-kartu .sembunyi-cetak{display:none !important;}
+  .kerja{page-break-inside:auto;}
+}
+
+</style>
+</head>
+<body>
+<div class="kepala"><div class="wrap">
+<div class="baris-kecil">Fisika &middot; Fase F &middot; kelas 11&ndash;12 &middot; F.USE.1-pra</div>
+<h1>Kartu Kerja Fisika &middot; Usaha &amp; Energi (bagian pertama)</h1>
+<div class="penjelas">Kamu menerima <strong>satu</strong> kartu dari berkas ini, bukan seluruhnya. Kerjakan kartu yang gurumu berikan saja.</div>
+</div></div>
+<div class="wrap">
+<div class="kartu sembunyi-cetak"><div class="identitas">
+<div><label for="id_nama">Nama</label><input type="text" id="id_nama" name="id_nama"></div>
+<div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas" name="id_kelas"></div>
+<div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" name="id_tanggal"></div>
+<div><label for="id_kode">Kode kartu yang kamu terima</label><input type="text" id="id_kode" name="id_kode"></div>
+</div></div>
+<div class="aturan sembunyi-cetak"><strong>Cara mengisi</strong>
+<ol>
+<li>Tulis kode kartumu di kotak identitas, lalu kerjakan hanya kartu berkode itu.</li>
+<li>Tulis hitunganmu baris demi baris. Jawaban yang hanya berisi angka akhir belum menunjukkan jalanmu.</li>
+<li>Angka boleh ditulis dengan koma maupun titik, dan satuannya ditulis apa adanya di kotak yang sama.</li>
+<li>Berkas ini tidak memberi nilai dan tidak memberi tahu benar atau salah. Jawabanmu dibaca gurumu.</li>
+<li>Seluruh kartu dapat dikerjakan tanpa gawai: isi tayangan sudah tercetak di kotak gambar pendampingnya.</li>
+</ol></div>
+<div class="bagian sembunyi-cetak"><div class="bagian-judul"><span class="lencana">Classifying</span><span>K1.1 &middot; Usaha: kapan gaya benar-benar bekerja</span></div>
+<div class="bagian-isi"><p class="bantu">Empat kartu di bawah ini menyasar pekerjaan yang sama dari empat arah berbeda. Gurumu memberikan satu.</p></div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Arah gaya dulu, angkanya kemudian</h2><span class="sortir">CLS-ri</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Mengalikan gaya dengan jarak tanpa memeriksa lebih dulu arah gaya terhadap arah perpindahan.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Arah dulu, baru angkanya <span class="durasi">2 menit 30 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Arah-Dulu-Baru-Angkanya.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Mengalikan gaya dengan jarak tanpa memeriksa lebih dulu arah gaya terhadap arah perpindahan.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan saat penghitungan di layar berhenti sejenak untuk memeriksa arah gaya — sebelum satu angka pun ditulis.</p>
+<div class="isi-item"><label for="p1_cls_ri_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p1_cls_ri_1_v1" name="p1_cls_ri_1_v1"></textarea></div>
+<div class="isi-item"><label for="p1_cls_ri_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p1_cls_ri_1_v2" name="p1_cls_ri_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Layar menampilkan satu baris saja: 15 N × 8 m = 120 J. » “Angka ini rapi. Ia juga salah.”</li>
+<li>0:18 — Gambar orang berjalan mendatar sambil menahan kotak ke atas; dua anak panah digambar: gaya ke atas, perpindahan ke kanan.</li>
+<li>0:40 — » “Sebelum mengalikan, tanya satu hal: searah, menyilang, atau berlawanan?” […] tiga kemungkinan ditulis di papan</li>
+<li>1:05 — Sudut antara kedua anak panah ditandai 90°; cos 90° = 0 ditulis besar.</li>
+<li>1:25 — Baris pertama dicoret, diganti W = F · s · cos θ = 15 × 8 × 0 = 0 J. […] jeda 3 detik tanpa suara</li>
+<li>1:50 — » “Gaya itu nyata, rasa lelah itu nyata. Usahanya tetap nol, karena arahnya menyilang.”</li>
+<li>2:10 — Satu kasus kedua ditunjukkan sekilas: tali mendatar menarik peti mendatar → cos 0° = 1. […] penutup</li>
+<li>2:30 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Arah dulu, baru angkanya</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Gaya ke atas, perpindahan mendatar, sudut 90 derajat"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><line x1="30" y1="85" x2="290" y2="85" stroke="#6A7F84" stroke-width="2"/><rect x="120" y="55" width="44" height="30" fill="#E3F5F6" stroke="#0B4F58" stroke-width="2"/><line x1="142" y1="55" x2="142" y2="16" stroke="#C05621" stroke-width="3"/><polygon points="142,8 137,20 147,20" fill="#C05621"/><text x="150" y="20" font-size="12" fill="#C05621">gaya 15 N</text><line x1="170" y1="70" x2="258" y2="70" stroke="#17A2AF" stroke-width="3"/><polygon points="266,70 254,65 254,75" fill="#17A2AF"/><text x="190" y="62" font-size="12" fill="#0B4F58">perpindahan 8 m</text><path d="M142 40 A18 18 0 0 1 160 58" fill="none" stroke="#B32B2B" stroke-width="2"/><text x="163" y="46" font-size="12" fill="#B32B2B">90&#176;</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Baca gaya: 15 N.</li>
+<li>Baca jarak: 8 m.</li>
+<li>Kalikan: 15 × 8 = 120 J.</li>
+<li>Tulis 120 J.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Baca gaya: 15 N, arahnya ke atas.</li>
+<li>Baca perpindahan: 8 m, arahnya mendatar.</li>
+<li>Bandingkan arah: menyilang, sudutnya 90°.</li>
+<li>W = F · s · cos 90° = 15 × 8 × 0 = 0 J.</li>
+</ol></div></div></div>
+</div>
+<div class="contoh"><div class="ck">Contoh terkerjakan &mdash; angkanya berbeda dari pekerjaanmu</div>
+<p>Seorang pelayan menahan nampan ke atas dengan gaya 12 N sambil berjalan mendatar sejauh 6 m.</p><ol>
+<li>Keputusan dulu: arah gaya penahan ke atas, arah perpindahan mendatar → kedua arah menyilang, sudutnya 90°.</li>
+<li>Baru angkanya: W = F · s · cos θ = 12 × 6 × cos 90°.</li>
+<li>cos 90° = 0, maka W = 12 × 6 × 0 = 0 J.</li>
+<li>Simpulan: usaha gaya penahan nampan itu 0 J.</li>
+</ol></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Seseorang menahan sebuah kotak ke atas dengan gaya 15 N sambil berjalan mendatar sejauh 8 m. Tuliskan dulu: bagaimana arah gaya itu dibandingkan arah jalannya? Baru kemudian hitung usaha gaya penahan itu.</div>
+<p class="bantu">Bentuk jawabanmu: Tulis keputusan arahnya dalam satu kalimat, lalu hitunganmu baris demi baris, lalu angka akhir beserta satuannya.</p>
+<div class="isi-item"><label for="p1_cls_ri_1">Tulis jawabanmu di sini</label><textarea id="p1_cls_ri_1" name="p1_cls_ri_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p1_cls_ri_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p1_cls_ri_1_pd" name="p1_cls_ri_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 10 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Dua keputusan sekaligus: arah dan besar usahanya</h2><span class="sortir">CLS-ka</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Mengalikan gaya dengan jarak tanpa memeriksa lebih dulu arah gaya terhadap arah perpindahan.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Arah dulu, baru angkanya <span class="durasi">2 menit 30 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Arah-Dulu-Baru-Angkanya.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Mengalikan gaya dengan jarak tanpa memeriksa lebih dulu arah gaya terhadap arah perpindahan.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan saat penghitungan di layar berhenti sejenak untuk memeriksa arah gaya — sebelum satu angka pun ditulis.</p>
+<div class="isi-item"><label for="p1_cls_ka_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p1_cls_ka_1_v1" name="p1_cls_ka_1_v1"></textarea></div>
+<div class="isi-item"><label for="p1_cls_ka_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p1_cls_ka_1_v2" name="p1_cls_ka_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Layar menampilkan satu baris saja: 15 N × 8 m = 120 J. » “Angka ini rapi. Ia juga salah.”</li>
+<li>0:18 — Gambar orang berjalan mendatar sambil menahan kotak ke atas; dua anak panah digambar: gaya ke atas, perpindahan ke kanan.</li>
+<li>0:40 — » “Sebelum mengalikan, tanya satu hal: searah, menyilang, atau berlawanan?” […] tiga kemungkinan ditulis di papan</li>
+<li>1:05 — Sudut antara kedua anak panah ditandai 90°; cos 90° = 0 ditulis besar.</li>
+<li>1:25 — Baris pertama dicoret, diganti W = F · s · cos θ = 15 × 8 × 0 = 0 J. […] jeda 3 detik tanpa suara</li>
+<li>1:50 — » “Gaya itu nyata, rasa lelah itu nyata. Usahanya tetap nol, karena arahnya menyilang.”</li>
+<li>2:10 — Satu kasus kedua ditunjukkan sekilas: tali mendatar menarik peti mendatar → cos 0° = 1. […] penutup</li>
+<li>2:30 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Arah dulu, baru angkanya</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Gaya ke atas, perpindahan mendatar, sudut 90 derajat"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><line x1="30" y1="85" x2="290" y2="85" stroke="#6A7F84" stroke-width="2"/><rect x="120" y="55" width="44" height="30" fill="#E3F5F6" stroke="#0B4F58" stroke-width="2"/><line x1="142" y1="55" x2="142" y2="16" stroke="#C05621" stroke-width="3"/><polygon points="142,8 137,20 147,20" fill="#C05621"/><text x="150" y="20" font-size="12" fill="#C05621">gaya 15 N</text><line x1="170" y1="70" x2="258" y2="70" stroke="#17A2AF" stroke-width="3"/><polygon points="266,70 254,65 254,75" fill="#17A2AF"/><text x="190" y="62" font-size="12" fill="#0B4F58">perpindahan 8 m</text><path d="M142 40 A18 18 0 0 1 160 58" fill="none" stroke="#B32B2B" stroke-width="2"/><text x="163" y="46" font-size="12" fill="#B32B2B">90&#176;</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Baca gaya: 15 N.</li>
+<li>Baca jarak: 8 m.</li>
+<li>Kalikan: 15 × 8 = 120 J.</li>
+<li>Tulis 120 J.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Baca gaya: 15 N, arahnya ke atas.</li>
+<li>Baca perpindahan: 8 m, arahnya mendatar.</li>
+<li>Bandingkan arah: menyilang, sudutnya 90°.</li>
+<li>W = F · s · cos 90° = 15 × 8 × 0 = 0 J.</li>
+</ol></div></div></div>
+</div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah gerobak ditarik tali bersudut 53° terhadap lantai dengan gaya 25 N, berpindah 4 m. Hitung usaha gaya tali itu.</div>
+<p class="bantu">Bentuk jawabanmu: Tulis sudut antara gaya dan perpindahan, lalu hitunganmu baris demi baris, lalu angka akhir beserta satuannya.</p>
+<div class="isi-item"><label for="p1_cls_ka_1">Tulis jawabanmu di sini</label><textarea id="p1_cls_ka_1" name="p1_cls_ka_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p1_cls_ka_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p1_cls_ka_1_pd" name="p1_cls_ka_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 10 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menggolongkan tiga gaya pada satu peristiwa, sendiri</h2><span class="sortir">CLS-no</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah peti diseret dengan tali horizontal bergaya 35 N sejauh 10 m di atas lantai mendatar. Selain gaya tali, ada pula gaya berat dan gaya normal yang bekerja pada peti. Hitung usaha oleh masing-masing dari ketiga gaya itu.</div>
+<p class="bantu">Bentuk jawabanmu: Satu baris per gaya: nama gaya — arahnya terhadap perpindahan — hitungan — angka beserta satuannya.</p>
+<div class="isi-item"><label for="p1_cls_no_1">Tulis jawabanmu di sini</label><textarea id="p1_cls_no_1" name="p1_cls_no_1"></textarea></div>
+</div></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 2</div><div class="tugas-isi">
+<div class="naskah">Seorang kurir mendorong troli paket dengan gaya 30 N yang arahnya tegak lurus terhadap arah troli berpindah sejauh 4 m — sebelum kamu menghitung apa pun, ramalkan lebih dulu: apakah usaha gaya itu akan bernilai nol, positif, atau negatif, dan mengapa? Baru setelah itu, hitung nilainya untuk memastikan ramalanmu.</div>
+<p class="bantu">Bentuk jawabanmu: Tulis ramalanmu beserta alasannya lebih dulu, baru hitungannya, lalu satu kalimat: ramalanmu cocok atau tidak.</p>
+<div class="isi-item"><label for="p1_cls_no_2">Tulis jawabanmu di sini</label><textarea id="p1_cls_no_2" name="p1_cls_no_2"></textarea></div>
+</div></div>
+<div class="keputusan"><strong>Tulis keputusanmu, bukan hanya hasilnya.</strong> Untuk tiap pekerjaan di atas, sebutkan keputusan apa yang kamu ambil lebih dulu dan mengapa.</div>
+<div class="isi-item"><label for="p1_cls_no_1_kep">Keputusan-keputusanmu</label><textarea id="p1_cls_no_1_kep" name="p1_cls_no_1_kep"></textarea></div>
+<div class="penutup"><span>Lama kerja: 18 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Peti ditarik tali yang bersudut</h2><span class="sortir">CLS-se</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Peti 10kg ditarik sejauh 5m di lantai mendatar oleh tali bersudut 60° terhadap lantai dengan gaya 40N. Bekerja pula gaya berat, gaya normal, dan gaya gesek 12N. Golongkan tiap gaya (usaha positif/negatif/nol) dan hitung usaha gaya tali.</div>
+<p class="bantu">Bentuk jawabanmu: Satu baris per gaya: nama gaya — golongannya (usaha positif / negatif / nol) — alasannya. Lalu hitungan usaha gaya tali, baris demi baris, beserta satuannya.</p>
+<div class="isi-item"><label for="p1_cls_se_1">Tulis jawabanmu di sini</label><textarea id="p1_cls_se_1" name="p1_cls_se_1"></textarea></div>
+</div></div>
+<div class="penutup"><span>Lama kerja: 13 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="bagian sembunyi-cetak"><div class="bagian-judul"><span class="lencana">Explaining</span><span>K1.2 &middot; Usaha total dan perubahan energi gerak</span></div>
+<div class="bagian-isi"><p class="bantu">Empat kartu di bawah ini menyasar pekerjaan yang sama dari empat arah berbeda. Gurumu memberikan satu.</p></div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menamai ke mana energi itu pergi</h2><span class="sortir">EXP-ri</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Berhenti pada kata “hilang” ketika benda berhenti, tanpa menyebut bentuk energi tujuannya.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Ke mana perginya energi itu <span class="durasi">2 menit 45 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Ke-Mana-Perginya-Energi-Itu.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Berhenti pada kata “hilang” ketika benda berhenti, tanpa menyebut bentuk energi tujuannya.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan bagian ketika dua balok kayu digosokkan lalu disentuh — di situlah nama bentuk energinya muncul.</p>
+<div class="isi-item"><label for="p1_exp_ri_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p1_exp_ri_1_v1" name="p1_exp_ri_1_v1"></textarea></div>
+<div class="isi-item"><label for="p1_exp_ri_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p1_exp_ri_1_v2" name="p1_exp_ri_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Balok meluncur di meja lalu berhenti sendiri. » “Tadi ia punya energi gerak. Sekarang tidak. Jadi energinya hilang?”</li>
+<li>0:20 — Kata “HILANG” ditulis di papan, lalu diberi tanda tanya besar.</li>
+<li>0:35 — Dua balok kayu digosokkan sepuluh detik, lalu permukaannya disentuh di depan kamera. […] reaksi tangan</li>
+<li>1:00 — » “Hangat. Itu bukan perasaan — itu energinya, dalam bentuk lain.”</li>
+<li>1:20 — Neraca ditulis: Ek awal = Ek akhir + kalor (+ sedikit bunyi). Kata “HILANG” dicoret, diganti “BERUBAH BENTUK”.</li>
+<li>1:45 — Angka contoh dimasukkan: Ek awal 24 J, berhenti → 24 J menjadi kalor dan bunyi. […] jeda</li>
+<li>2:15 — » “Kalau kamu menulis ‘hilang’, kalimatmu belum selesai. Sebut ke mana.”</li>
+<li>2:45 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Ke mana perginya energi itu</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Energi gerak berubah menjadi kalor dan bunyi"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><rect x="18" y="34" width="86" height="44" rx="6" fill="#E3F5F6" stroke="#0B4F58" stroke-width="2"/><text x="61" y="52" font-size="11" fill="#0B4F58" text-anchor="middle">energi</text><text x="61" y="67" font-size="11" fill="#0B4F58" text-anchor="middle">gerak</text><line x1="112" y1="56" x2="176" y2="56" stroke="#C05621" stroke-width="3"/><polygon points="184,56 172,51 172,61" fill="#C05621"/><text x="118" y="46" font-size="11" fill="#C05621">gesekan</text><rect x="196" y="16" width="106" height="36" rx="6" fill="#FDEBDD" stroke="#C05621" stroke-width="2"/><text x="249" y="39" font-size="12" fill="#C05621" text-anchor="middle">kalor</text><rect x="196" y="62" width="106" height="34" rx="6" fill="#FEF6DA" stroke="#E9B308" stroke-width="2"/><text x="249" y="84" font-size="12" fill="#8A6604" text-anchor="middle">sedikit bunyi</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Balok berhenti.</li>
+<li>Energi kinetiknya nol.</li>
+<li>Jadi energinya hilang.</li>
+<li>Tulis: energi hilang.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Balok berhenti; Ek akhir = 0.</li>
+<li>Ek awal tidak lenyap — ia dipindahkan oleh gaya gesek.</li>
+<li>Permukaan yang bergesekan memanas; sebagian terdengar sebagai bunyi.</li>
+<li>Tulis: Ek awal berubah menjadi kalor (dan sedikit bunyi); energi total tetap.</li>
+</ol></div></div></div>
+</div>
+<div class="contoh"><div class="ck">Contoh terkerjakan &mdash; angkanya berbeda dari pekerjaanmu</div>
+<p>Sebuah balok bermassa 3 kg didorong gaya mendatar tetap 12 N sejauh 4,5 m di lantai licin, mulai dari diam.</p><ol>
+<li>Keputusan dulu: lantai licin, jadi seluruh usaha gaya dorong menjadi tambahan energi gerak.</li>
+<li>W = F · s = 12 × 4,5 = 54 J.</li>
+<li>W = ΔEk, dan balok mulai dari diam, maka Ek akhir = 54 J.</li>
+<li>Ek = ½ m v² → 54 = ½ × 3 × v² → v² = 36 → v = 6 m/s.</li>
+<li>Simpulan: usaha gaya dorong 54 J, dan laju balok sesudahnya 6 m/s.</li>
+</ol></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah balok bermassa 1 kg didorong dengan gaya tetap 6 N sejauh 2 m di lantai licin, mulai dari diam. Berapa usaha yang dilakukan gaya itu, dan berapa laju balok sesudahnya?</div>
+<p class="bantu">Bentuk jawabanmu: Hitunganmu baris demi baris, lalu dua angka akhir beserta satuannya: usaha dan laju.</p>
+<div class="isi-item"><label for="p1_exp_ri_1">Tulis jawabanmu di sini</label><textarea id="p1_exp_ri_1" name="p1_exp_ri_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p1_exp_ri_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p1_exp_ri_1_pd" name="p1_exp_ri_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 10 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menjelaskan perpindahan energi tanpa kartu pemicu</h2><span class="sortir">EXP-ka</span></div>
+<div class="kerja-isi">
+<div class="sasar"><strong>Yang diperbaiki kartu ini:</strong> Berhenti pada kata “hilang” ketika benda berhenti, tanpa menyebut bentuk energi tujuannya.</div>
+<div class="tayangan">
+<div class="tayangan-kepala">Tayangan pendek &middot; Ke mana perginya energi itu <span class="durasi">2 menit 45 detik</span></div>
+<p class="tayangan-baris"><strong>Berkas yang akan dipasang:</strong> <code>S09_Klip-Ke-Mana-Perginya-Energi-Itu.mp4</code> &mdash; belum tersedia saat kartu ini dicetak. Kerjakan kartu ini lewat kotak gambar di bawah; isinya sama.</p>
+<p class="tayangan-baris"><strong>Yang disasar:</strong> Berhenti pada kata “hilang” ketika benda berhenti, tanpa menyebut bentuk energi tujuannya.</p>
+<p class="tayangan-baris"><strong>Apa yang harus kamu perhatikan:</strong> Perhatikan bagian ketika dua balok kayu digosokkan lalu disentuh — di situlah nama bentuk energinya muncul.</p>
+<div class="isi-item"><label for="p1_exp_ka_1_v1">1. Kekeliruan mana yang ditunjukkan tayangan ini? Tulis dengan kalimatmu sendiri.</label><textarea id="p1_exp_ka_1_v1" name="p1_exp_ka_1_v1"></textarea></div>
+<div class="isi-item"><label for="p1_exp_ka_1_v2">2. Di langkah ke berapa kekeliruan itu muncul pada pekerjaanmu sendiri?</label><textarea id="p1_exp_ka_1_v2" name="p1_exp_ka_1_v2"></textarea></div>
+<details class="rintisan"><summary>Rintisan teks tayangan (bagian yang belum terekam ditandai &hellip;)</summary><ol class="beat">
+<li>0:00 — Balok meluncur di meja lalu berhenti sendiri. » “Tadi ia punya energi gerak. Sekarang tidak. Jadi energinya hilang?”</li>
+<li>0:20 — Kata “HILANG” ditulis di papan, lalu diberi tanda tanya besar.</li>
+<li>0:35 — Dua balok kayu digosokkan sepuluh detik, lalu permukaannya disentuh di depan kamera. […] reaksi tangan</li>
+<li>1:00 — » “Hangat. Itu bukan perasaan — itu energinya, dalam bentuk lain.”</li>
+<li>1:20 — Neraca ditulis: Ek awal = Ek akhir + kalor (+ sedikit bunyi). Kata “HILANG” dicoret, diganti “BERUBAH BENTUK”.</li>
+<li>1:45 — Angka contoh dimasukkan: Ek awal 24 J, berhenti → 24 J menjadi kalor dan bunyi. […] jeda</li>
+<li>2:15 — » “Kalau kamu menulis ‘hilang’, kalimatmu belum selesai. Sebut ke mana.”</li>
+<li>2:45 — Selesai.</li>
+</ol></details>
+<div class="luring"><div class="luring-judul">Kartu gambar pendamping · Ke mana perginya energi itu</div>
+<p class="bantu">Kotak ini memuat isi yang sama dengan tayangan di atas. Kamu dapat mengerjakan seluruh kartu ini tanpa menonton apa pun.</p>
+<div class="luring-gambar"><svg viewBox="0 0 320 110" width="100%" height="110" role="img" aria-label="Energi gerak berubah menjadi kalor dan bunyi"><rect x="0" y="0" width="320" height="110" fill="#F7FBFB"/><rect x="18" y="34" width="86" height="44" rx="6" fill="#E3F5F6" stroke="#0B4F58" stroke-width="2"/><text x="61" y="52" font-size="11" fill="#0B4F58" text-anchor="middle">energi</text><text x="61" y="67" font-size="11" fill="#0B4F58" text-anchor="middle">gerak</text><line x1="112" y1="56" x2="176" y2="56" stroke="#C05621" stroke-width="3"/><polygon points="184,56 172,51 172,61" fill="#C05621"/><text x="118" y="46" font-size="11" fill="#C05621">gesekan</text><rect x="196" y="16" width="106" height="36" rx="6" fill="#FDEBDD" stroke="#C05621" stroke-width="2"/><text x="249" y="39" font-size="12" fill="#C05621" text-anchor="middle">kalor</text><rect x="196" y="62" width="106" height="34" rx="6" fill="#FEF6DA" stroke="#E9B308" stroke-width="2"/><text x="249" y="84" font-size="12" fill="#8A6604" text-anchor="middle">sedikit bunyi</text></svg></div>
+<div class="luring-dua"><div class="luring-kiri"><div class="luring-kepala">Langkah yang keliru</div><ol>
+<li>Balok berhenti.</li>
+<li>Energi kinetiknya nol.</li>
+<li>Jadi energinya hilang.</li>
+<li>Tulis: energi hilang.</li>
+</ol></div><div class="luring-kanan"><div class="luring-kepala">Langkah yang betul</div><ol>
+<li>Balok berhenti; Ek akhir = 0.</li>
+<li>Ek awal tidak lenyap — ia dipindahkan oleh gaya gesek.</li>
+<li>Permukaan yang bergesekan memanas; sebagian terdengar sebagai bunyi.</li>
+<li>Tulis: Ek awal berubah menjadi kalor (dan sedikit bunyi); energi total tetap.</li>
+</ol></div></div></div>
+</div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah balok bermassa 3 kg meluncur licin dengan laju 4 m/s, lalu memasuki lantai kasar dan berhenti setelah 6 m. Berapa besar gaya gesek rata-ratanya, dan ke mana energi geraknya pergi?</div>
+<p class="bantu">Bentuk jawabanmu: Hitunganmu baris demi baris, angka gaya gesek beserta satuannya, lalu satu kalimat yang menyebut nama bentuk energi tujuannya.</p>
+<div class="isi-item"><label for="p1_exp_ka_1">Tulis jawabanmu di sini</label><textarea id="p1_exp_ka_1" name="p1_exp_ka_1"></textarea></div>
+</div></div>
+<div class="isi-item"><label for="p1_exp_ka_1_pd">Periksa diri: dari mana kamu tahu jawabanmu masuk akal?</label><textarea id="p1_exp_ka_1_pd" name="p1_exp_ka_1_pd"></textarea></div>
+<div class="penutup"><span>Lama kerja: 10 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Menjelaskan perubahan energi pada peristiwa baru, sendiri</h2><span class="sortir">EXP-no</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Sebuah balok bermassa 4 kg meluncur licin dengan laju 5 m/s, memasuki lantai kasar, dan berhenti tepat setelah 5 m. Hitung energi kinetik awalnya dan besar gaya gesek rata-ratanya, lalu jelaskan dengan kalimatmu sendiri ke mana energi itu pergi.</div>
+<p class="bantu">Bentuk jawabanmu: Hitunganmu baris demi baris, dua angka akhir beserta satuannya, lalu dua sampai tiga kalimat penjelasan.</p>
+<div class="isi-item"><label for="p1_exp_no_1">Tulis jawabanmu di sini</label><textarea id="p1_exp_no_1" name="p1_exp_no_1"></textarea></div>
+</div></div>
+<div class="tugas"><div class="tugas-judul">Pekerjaan 2</div><div class="tugas-isi">
+<div class="naskah">Sebuah balok bermassa 1 kg bergerak dengan laju 2 m/s di lantai licin, lalu didorong searah geraknya sehingga usaha sebesar 20 J bekerja padanya. Berapa laju balok itu sesudahnya? Tuliskan dulu energi kinetik awalnya sebelum menghitung energi kinetik akhirnya.</div>
+<p class="bantu">Bentuk jawabanmu: Tulis energi kinetik awal, energi kinetik akhir, lalu laju akhir beserta satuannya.</p>
+<div class="isi-item"><label for="p1_exp_no_2">Tulis jawabanmu di sini</label><textarea id="p1_exp_no_2" name="p1_exp_no_2"></textarea></div>
+</div></div>
+<div class="keputusan"><strong>Tulis keputusanmu, bukan hanya hasilnya.</strong> Untuk tiap pekerjaan di atas, sebutkan keputusan apa yang kamu ambil lebih dulu dan mengapa.</div>
+<div class="isi-item"><label for="p1_exp_no_1_kep">Keputusan-keputusanmu</label><textarea id="p1_exp_no_1_kep" name="p1_exp_no_1_kep"></textarea></div>
+<div class="penutup"><span>Lama kerja: 18 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+<div class="kerja">
+<div class="kerja-kepala"><h2>Balok didorong di lantai kasar — dan bagaimana kalau gayanya diubah</h2><span class="sortir">EXP-se</span></div>
+<div class="kerja-isi">
+<div class="tugas"><div class="tugas-judul">Pekerjaan 1</div><div class="tugas-isi">
+<div class="naskah">Balok 2kg mula-mula diam didorong gaya mendatar tetap 8N sejauh 3m di lantai kasar; gaya gesek 5N melawan. (a) Mengapa Ek akhir ≠ 8×3=24J? (b) Berapa Ek akhirnya, dan ke mana sisanya? (c) Bagaimana kalau gaya dorong hanya 5N?</div>
+<p class="bantu">Bentuk jawabanmu: Jawab (a), (b), dan (c) berurutan. Tiap jawaban: hitungan baris demi baris bila ada angkanya, lalu satu kalimat simpulan.</p>
+<div class="isi-item"><label for="p1_exp_se_1">Tulis jawabanmu di sini</label><textarea id="p1_exp_se_1" name="p1_exp_se_1"></textarea></div>
+</div></div>
+<div class="penutup"><span>Lama kerja: 13 menit. Kumpulkan kartu ini kepada gurumu di meja depan sebelum jam pelajaran berakhir.</span><button type="button" class="kecil no-cetak" data-cetak="1">Cetak kartu ini saja</button></div>
+</div></div>
+</div>
+<div class="bilah-bawah no-cetak"><div class="wrap"><div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div><div class="baris-bawah"><div class="hitungan" id="hitungan_teks">0 dari 0 isian dijawab</div><div><button type="button" class="kecil" id="btn_cetak_semua">Cetak seluruh kartu</button></div></div></div></div>
+<div class="wrap"><div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div></div>
+<script>
+(function(){
+"use strict";
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){ s = s.replace(/\./g, "").replace(",", "."); }
+      else { s = s.replace(/,/g, ""); }
+    } else if (hasComma){ s = s.replace(",", "."); }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+document.addEventListener("input", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("change", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("blur", function(ev){ cermin(ev.target); }, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){ if (document.visibilityState === "hidden") cerminSemua(); });
+
+
+function daftarIsian(){ return document.querySelectorAll(".kerja textarea, .kerja input[type=text]"); }
+function perbarui(){
+  var els = daftarIsian(), terisi = 0;
+  for (var i = 0; i < els.length; i++){ if (String(els[i].value).trim() !== "") terisi++; }
+  var pct = els.length ? Math.round((terisi / els.length) * 100) : 0;
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + els.length + " isian dijawab";
+}
+function cetakSatu(el){
+  var semua = document.querySelectorAll(".kerja");
+  for (var i = 0; i < semua.length; i++) semua[i].classList.remove("cetak-ini");
+  el.classList.add("cetak-ini");
+  document.body.classList.add("satu-kartu");
+  var buka = [];
+  var det = el.querySelectorAll("details");
+  for (var j = 0; j < det.length; j++){ if (!det[j].open){ det[j].open = true; buka.push(det[j]); } }
+  window.print();
+  document.body.classList.remove("satu-kartu");
+  el.classList.remove("cetak-ini");
+  for (var m = 0; m < buka.length; m++) buka[m].open = false;
+}
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua(); perbarui();
+  var tombol = document.querySelectorAll("[data-cetak]");
+  for (var i = 0; i < tombol.length; i++){
+    tombol[i].addEventListener("click", function(ev){
+      cetakSatu(ev.target.closest(".kerja"));
+    });
+  }
+  var semua = document.getElementById("btn_cetak_semua");
+  if (semua) semua.addEventListener("click", function(){ window.print(); });
+});
+cerminSemua();
+})();
+
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "selesai";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>

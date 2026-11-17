@@ -1,0 +1,11 @@
+{
+  "kode": "F.USE.1",
+  "judul": "Hukum Kekekalan Energi Mekanik",
+  "teks": "Menerapkan usaha, energi, dan Hukum Kekekalan Energi Mekanik untuk menyelesaikan masalah gerak nyata pada lintasan berlapis.",
+  "bloom": "C6",
+  "urutan_ajar": 2,
+  "prasyarat": [
+    "F.USE.1-pra"
+  ],
+  "ambang": 75
+}

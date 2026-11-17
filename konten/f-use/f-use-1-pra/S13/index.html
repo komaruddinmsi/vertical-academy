@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kuis Ingatan Tunda — Usaha, Energi Kinetik & Potensial</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  padding-bottom:130px;
+}
+.wrap{max-width:880px; margin:0 auto; padding:0 16px;}
+.kepala{
+  position:relative; overflow:hidden;
+  background:linear-gradient(110deg, var(--tosca0), var(--tosca) 55%, var(--tosca2));
+  color:#fff; padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg, var(--kuning), var(--oranye2)) 1;
+}
+.kepala::before,.kepala::after{
+  content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,0.08);
+}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:0.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:0.92; max-width:620px; position:relative;}
+
+.kartu{
+  background:#fff; border:1px solid #D7E6E8; border-radius:14px; padding:18px 20px; margin:18px 0;
+}
+.identitas{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px;}
+.identitas label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.identitas input{width:100%; padding:8px 10px; border:1px solid #C9DADC; border-radius:8px; font-size:14px;}
+
+.aturan{
+  background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;
+}
+.aturan strong{color:#8A6604;}
+.aturan ol{margin:6px 0 0; padding-left:20px;}
+.aturan li{margin:4px 0;}
+
+.syarat{
+  background:var(--merahB); border-left:6px solid var(--merah); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;
+}
+.syarat strong{color:var(--merah);}
+.syarat ul{margin:6px 0 0; padding-left:20px;}
+.syarat li{margin:4px 0;}
+.tutup-list{list-style:none; padding-left:0; margin:8px 0 0;}
+.tutup-list li{margin:3px 0;}
+.tanda-x{color:var(--merah); font-weight:700; font-family:"Consolas",monospace;}
+.tanda-w{color:var(--hijau); font-weight:700; font-family:"Consolas",monospace;}
+
+.bagian{margin:26px 0;}
+.bagian-judul{
+  background:linear-gradient(100deg, var(--tosca), var(--tosca2));
+  color:#fff; padding:10px 16px; border-radius:10px 10px 0 0; display:flex; align-items:center; gap:10px;
+  font-size:15.5px; font-weight:600;
+}
+.lencana{
+  background:rgba(255,255,255,0.22); border:1px solid rgba(255,255,255,0.5);
+  border-radius:999px; padding:2px 11px; font-size:12px; font-weight:700; letter-spacing:0.5px;
+}
+.bagian-isi{
+  border:1px solid #D7E6E8; border-top:none; border-radius:0 0 12px 12px; padding:16px 18px; background:#fff;
+}
+
+.soal{border:1px solid #E1EBEC; border-radius:10px; margin:14px 0; overflow:hidden;}
+.soal-judul{background:var(--toscaB); color:var(--tosca0); font-weight:700; padding:8px 14px; font-size:13.5px;}
+.soal-isi{padding:14px 16px;}
+.naskah{
+  background:var(--abuB); border-left:4px solid var(--tosca); border-radius:6px;
+  padding:12px 14px; font-size:14px; margin-bottom:10px;
+}
+.bantu{font-size:12.5px; color:var(--abu); font-style:italic; margin:-4px 0 12px;}
+.arah-positif{font-size:12.5px; color:var(--oranye); font-weight:600; margin:6px 0 10px;}
+
+.kisi{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:12px; margin:10px 0;}
+.isi-item label{display:block; font-size:12.5px; color:var(--abu); margin-bottom:4px;}
+.isi-item .satuan{color:var(--abu); font-weight:400;}
+.isi-item input[type=text], .isi-item select{
+  width:100%; padding:8px 10px; border:1.5px solid #C9DADC; border-radius:8px; font-size:14px; background:#fff;
+}
+.isi-item input[type=text]:not(:placeholder-shown), .isi-item select:valid{
+  border-color: var(--tosca2);
+}
+.isi-item.kosong input, .isi-item.kosong select{border-color:var(--oranye); background:#FFF7F1;}
+.isi-item.lebar{grid-column:1 / -1;}
+
+.dibaca-guru{position:relative;}
+.dibaca-guru .tanda{
+  display:inline-block; background:var(--oranyeB); color:var(--oranye); font-size:11px; font-weight:700;
+  border-radius:999px; padding:2px 9px; margin-bottom:6px; letter-spacing:0.3px;
+}
+textarea{
+  width:100%; min-height:64px; padding:9px 11px; border:1.5px solid #C9DADC; border-radius:8px;
+  font-size:13.5px; font-family:inherit; resize:vertical;
+}
+
+table.klas{width:100%; border-collapse:collapse; margin:10px 0; font-size:13.5px;}
+table.klas th{background:var(--tosca); color:#fff; padding:8px 10px; text-align:left; font-size:12.5px;}
+table.klas td{padding:7px 10px; border-bottom:1px solid #E5EEEF;}
+table.klas tr:nth-child(even) td{background:#F7FBFB;}
+@media (max-width:640px){
+  table.klas, table.klas thead, table.klas tbody, table.klas tr, table.klas th, table.klas td{display:block;}
+  table.klas thead{display:none;}
+  table.klas tr{border:1px solid #E5EEEF; border-radius:8px; margin-bottom:8px; padding:6px 8px;}
+  table.klas td{border:none; padding:4px 2px;}
+  table.klas td::before{content:attr(data-label) ": "; font-weight:600; color:var(--tosca);}
+}
+
+.bilah-bawah{
+  position:fixed; left:0; right:0; bottom:0; background:#fff; border-top:1px solid #D7E6E8;
+  box-shadow:0 -4px 18px rgba(0,0,0,0.08); padding:10px 16px 14px; z-index:50;
+}
+.bilah-luar{background:#E7EEEF; border-radius:999px; height:10px; overflow:hidden; margin-bottom:6px;}
+.bilah-dalam{
+  height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg, var(--kuning), var(--oranye2)); transition:width 0.25s;
+}
+.baris-bawah{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
+.hitungan{font-size:12.5px; color:var(--abu);}
+button.periksa{
+  background:var(--tosca); color:#fff; border:none; border-radius:8px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; cursor:pointer;
+}
+button.periksa:hover{background:var(--tosca0);}
+button.kunci{
+  background:var(--oranye); color:#fff; border:none; border-radius:8px; padding:9px 18px;
+  font-size:13.5px; font-weight:600; cursor:pointer;
+}
+button.kunci:hover{background:#9C4518;}
+.pesan{font-size:12.5px; color:var(--tosca0); flex-basis:100%;}
+
+.kaki{font-size:12px; color:var(--abu); text-align:center; margin:26px 0 10px;}
+
+@media (max-width:640px){
+  .kisi{grid-template-columns:1fr;}
+  .kepala h1{font-size:20px;}
+}
+</style>
+</head>
+<body>
+
+<div class="kepala"><div class="wrap">
+  <div class="baris-kecil">Fisika &middot; Kelas XI &middot; Kode TP F.USE.1-pra</div>
+  <h1>Kuis Ingatan Tunda</h1>
+  <div class="penjelas">Usaha, Energi Kinetik &amp; Potensial &mdash; enam soal, dikerjakan dari ingatan, beberapa hari sesudah latihanmu yang terakhir.</div>
+</div></div>
+
+<div class="wrap">
+
+<div class="kartu identitas">
+  <div><label for="id_nama">Nama lengkap</label><input type="text" id="id_nama"></div>
+  <div><label for="id_kelas">Kelas</label><input type="text" id="id_kelas"></div>
+  <div><label for="id_tanggal">Tanggal</label><input type="text" id="id_tanggal" placeholder="mis. 24-11-2026"></div>
+</div>
+
+<div class="syarat">
+  <strong>Syarat sahnya pekerjaanmu &mdash; baca sebelum mulai</strong>
+  <ul>
+    <li><b>Satu kali duduk.</b> Sekali kamu mulai, kerjakan sampai selesai tanpa jeda. Kuis ini tidak dilanjutkan di lain waktu.</li>
+    <li><b>Waktunya.</b> Kerjakan pada hari ke-2 sampai hari ke-7 sesudah latihan terakhirmu pada tujuan pembelajaran ini. Di luar rentang itu, pekerjaanmu tidak dipakai.</li>
+    <li><b>Tidak ada apa pun yang dibuka.</b> Yang boleh ada di hadapanmu hanya halaman ini, kertas coretan kosong, dan alat tulis.</li>
+  </ul>
+  <ul class="tutup-list">
+    <li><span class="tanda-w">&#9632;</span> halaman kuis ini</li>
+    <li><span class="tanda-x">&#10005;</span> modul konsep &mdash; tidak dibuka, baik berkasnya maupun cetakannya</li>
+    <li><span class="tanda-x">&#10005;</span> catatan, lembar latihan lama, kartu rumus</li>
+    <li><span class="tanda-x">&#10005;</span> video, simulasi, animasi</li>
+    <li><span class="tanda-x">&#10005;</span> halaman lain, mesin pencari, obrolan dengan siapa pun</li>
+  </ul>
+  <p style="margin:10px 0 0;"><b>Kamu dinyatakan lulus kuis ini bila menjawab benar sekurang-kurangnya 16 dari 22 kotak yang dinilai.</b>
+  Angka ini ditulis di sini supaya kamu tahu sejak awal apa yang diminta. Kotak bertanda &ldquo;dibaca guru&rdquo; tidak ikut dihitung.</p>
+  <p style="margin:8px 0 0;">Jawabanmu tidak diperiksa di layar ini. Kunci dan pembahasannya dibuka gurumu sesudah hari ke-7 berlalu bagi seluruh kelas.</p>
+</div>
+
+<div class="aturan">
+  <strong>Cara mengisi</strong>
+  <ol>
+    <li>Bilangan boleh memakai koma atau titik; keduanya diterima.</li>
+    <li>Tulis angkanya saja, tanpa satuan &mdash; satuannya sudah tercetak di sebelah kotak.</li>
+    <li>Kalau jawabannya negatif, jangan lupa tanda minus; pada besaran berarah, tanda adalah setengah dari jawaban.</li>
+    <li>Kotak bertanda &ldquo;dibaca guru&rdquo; tidak dinilai otomatis, tetapi tetap diisi.</li>
+    <li>Arah positif sudah ditetapkan pada soal yang membutuhkannya supaya jawaban seluruh kelas dapat dibandingkan.</li>
+    <li>Jawabanmu tersimpan begitu kamu berpindah ke kotak berikutnya. Jangan menutup halaman sebelum selesai &mdash; kuis ini satu kali duduk.</li>
+    <li>Ambil g = 10 m/s&sup2; di seluruh soal.</li>
+  </ol>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.1</span> Usaha: kapan gaya benar-benar bekerja</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 1</div>
+  <div class="soal-isi">
+    <div class="naskah">Di dapur, sebuah panci berisi air digeser mendatar di atas meja sejauh 0,6 m. Gaya dorong tangan besarnya 35 N dan searah penuh dengan arah geserannya. Berat panci 26 N menekan lurus ke bawah, dan meja menahan panci dengan gaya normal yang besarnya sama, lurus ke atas.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="p1_wdorong">Usaha gaya dorong tangan <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p1_wdorong">
+      </div>
+      <div class="isi-item">
+        <label for="p1_wberat">Usaha gaya berat panci bernilai&hellip;</label>
+        <select id="p1_wberat">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="nol">nol</option>
+            <option value="positif">positif</option>
+            <option value="negatif">negatif</option>
+        </select>
+      </div>
+      <div class="isi-item lebar">
+        <label for="p1_alasan">Alasan yang tepat untuk jawaban di atas</label>
+        <select id="p1_alasan">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Berat panci cukup besar, jadi gaya berat tetap melakukan usaha besar &mdash; menggeser panci berat memang melelahkan.</option>
+            <option value="B">B. Gaya berat tegak lurus terhadap arah panci berpindah, sehingga tidak ada bagian gaya itu yang searah perpindahan.</option>
+            <option value="C">C. Usaha gaya berat = 26 &times; 0,6 = 15,6 J, dihitung dengan cara yang sama seperti gaya dorong.</option>
+            <option value="D">D. Gaya berat dan gaya normal sama besar dan berlawanan arah, sehingga usaha keduanya saling meniadakan menjadi nol.</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="soal">
+  <div class="soal-judul">Soal 2</div>
+  <div class="soal-isi">
+    <div class="naskah">Di taman bermain, seorang anak meluncur lurus sejauh 2,2 m di sepanjang papan perosotan. Selama meluncur, gaya gesek papan sebesar 15 N bekerja melawan arah luncurnya. Gaya normal papan menekan tegak lurus terhadap arah luncur itu.</div>
+    <div class="arah-positif">Arah positif: Arah luncur anak ditetapkan sebagai arah positif.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="p2_wgesek">Usaha gaya gesek papan <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p2_wgesek">
+      </div>
+      <div class="isi-item">
+        <label for="p2_wnormal">Usaha gaya normal papan <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p2_wnormal">
+      </div>
+      <div class="isi-item lebar">
+        <label for="p2_golong">Penggolongan kedua gaya itu</label>
+        <select id="p2_golong">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Gaya gesek: usaha negatif. Gaya normal: usaha nol.</option>
+            <option value="B">B. Gaya gesek: usaha negatif. Gaya normal: usaha negatif.</option>
+            <option value="C">C. Gaya gesek: usaha nol. Gaya normal: usaha nol.</option>
+            <option value="D">D. Gaya gesek: usaha positif. Gaya normal: usaha positif.</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.2</span> Usaha total dan perubahan energi gerak</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 3</div>
+  <div class="soal-isi">
+    <div class="naskah">Pada latihan di aula olahraga, sebuah bola medis bermassa 5 kg mula-mula diam di atas matras. Bola itu didorong mendatar dengan gaya tetap 45 N sejauh 2 m. Gaya gesek matras 25 N melawan arah gerak bola sepanjang jarak yang sama.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="p3_wdorong">Usaha gaya dorong saja <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p3_wdorong">
+      </div>
+      <div class="isi-item">
+        <label for="p3_wtotal">Usaha total pada bola <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p3_wtotal">
+      </div>
+      <div class="isi-item">
+        <label for="p3_v">Laju bola setelah menempuh 2 m <span class="satuan">(m/s)</span></label>
+        <input type="text" inputmode="decimal" id="p3_v">
+      </div>
+      <div class="isi-item lebar">
+        <label for="p3_mengapa">Mengapa energi gerak akhirnya bukan 90 J?</label>
+        <select id="p3_mengapa">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Energi geraknya memang 90 J; usaha gesek baru dihitung belakangan sebagai kerugian yang terpisah.</option>
+            <option value="B">B. Yang sama dengan perubahan energi gerak adalah usaha total, dan usaha gesek yang bernilai negatif sudah ikut dihitung di dalamnya.</option>
+            <option value="C">C. Rumus usaha sama dengan perubahan energi gerak memang selalu dipakai begitu saja; tidak perlu alasan lain.</option>
+            <option value="D">D. Sebagian energi dorongan lenyap dari alam semesta karena diserap matras.</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="soal">
+  <div class="soal-judul">Soal 4</div>
+  <div class="soal-isi">
+    <div class="naskah">Sebuah bola bowling mini bermassa 2,5 kg menggelinding di lantai keramik ruang keluarga dengan laju 4 m/s. Bola itu lalu masuk ke petak lantai berpelapis kasar sepanjang 2,5 m dan berhenti tepat di ujung petak itu.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="p4_ek">Energi gerak bola saat memasuki petak <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p4_ek">
+      </div>
+      <div class="isi-item">
+        <label for="p4_f">Gaya gesek rata-rata petak itu <span class="satuan">(N)</span></label>
+        <input type="text" inputmode="decimal" id="p4_f">
+      </div>
+      <div class="isi-item">
+        <label for="p4_kalor">Energi yang diterima petak dan bola sebagai kalor dan bunyi <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p4_kalor">
+      </div>
+      <div class="isi-item lebar">
+        <label for="p4_kemana">Ke mana energi gerak bola itu pergi?</label>
+        <select id="p4_kemana">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Energi gerak bola habis dan lenyap, sebab bolanya sudah berhenti.</option>
+            <option value="B">B. Energi gerak bola berubah menjadi kalor pada permukaan petak dan bola, serta sedikit bunyi; jumlah seluruh energinya tetap.</option>
+            <option value="C">C. Energi gerak bola berubah menjadi energi potensial, sebab bola berhenti di tempat yang lebih tinggi.</option>
+            <option value="D">D. Energi gerak bola tetap tersimpan di dalam bola sebagai energi gerak yang sedang menunggu dilepaskan.</option>
+        </select>
+      </div>
+      <div class="isi-item lebar dibaca-guru">
+        <span class="tanda">dibaca guru</span>
+        <label for="p4_kalimat">Tulis satu kalimat: ke mana energi gerak bola itu pergi, dan dari mana kamu tahu angkanya?</label>
+        <textarea id="p4_kalimat"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.3</span> Energi kinetik dan energi potensial: dua wajah energi mekanik</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 5</div>
+  <div class="soal-isi">
+    <div class="naskah">Di dapur, sebuah toples bermassa 1,2 kg berada di rak gantung, 1,4 m di atas permukaan meja. Meja itu sendiri tingginya 0,85 m dari lantai. Pada saat yang sama, sebuah bola kasti bermassa 0,3 kg menggelinding di atas meja dengan laju 5 m/s. Ambil g = 10 m/s&sup2;.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="p5_ep_meja">Energi potensial toples, acuan di permukaan meja <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p5_ep_meja">
+      </div>
+      <div class="isi-item">
+        <label for="p5_ep_lantai">Energi potensial toples, acuan di lantai <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p5_ep_lantai">
+      </div>
+      <div class="isi-item">
+        <label for="p5_ek">Energi gerak bola kasti <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p5_ek">
+      </div>
+      <div class="isi-item lebar">
+        <label for="p5_beda">Bila acuan tinggi dipindahkan dari meja ke lantai, apa yang berubah?</label>
+        <select id="p5_beda">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Kedua energi itu berubah angkanya, sebab keduanya sama-sama energi.</option>
+            <option value="B">B. Hanya energi potensial toples yang berubah; energi gerak bola tetap, sebab ia hanya ditentukan oleh laju.</option>
+            <option value="C">C. Hanya energi gerak bola yang berubah; energi potensial toples tetap, sebab tinggi toples terhadap rak tidak berubah.</option>
+            <option value="D">D. Tidak ada yang berubah; angka energi selalu milik bendanya sendiri.</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="bagian">
+  <div class="bagian-judul"><span class="lencana">K1.1 + K1.2</span> Penggabungan: arah gaya dan nasib energi dalam satu kejadian</div>
+  <div class="bagian-isi">
+<div class="soal">
+  <div class="soal-judul">Soal 6</div>
+  <div class="soal-isi">
+    <div class="naskah">Di aula olahraga, sebuah kotak bola bermassa 7 kg didorong naik sebuah papan landai yang licin oleh gaya yang sejajar papan. Sesudah itu kotak melintasi lantai aula yang kasar, dan di lantai itu lajunya berkurang dari 3 m/s menjadi 1 m/s.</div>
+    <div class="kisi">
+      <div class="isi-item">
+        <label for="p6_wnormal">Usaha gaya normal papan sepanjang landai</label>
+        <select id="p6_wnormal">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="nol">nol</option>
+            <option value="taknol">tak-nol</option>
+        </select>
+      </div>
+      <div class="isi-item lebar">
+        <label for="p6_alasan">Alasan yang tepat</label>
+        <select id="p6_alasan">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Tak-nol, sebab besarnya bergantung pada sudut kemiringan papan.</option>
+            <option value="B">B. Nol, sebab gaya normal selalu tegak lurus terhadap arah gerak di sepanjang permukaan, berapa pun kemiringan papannya.</option>
+            <option value="C">C. Nol, sebab gaya normal selalu lebih kecil daripada gaya dorong.</option>
+            <option value="D">D. Tak-nol, sebab gaya normal ikut menahan kotak sehingga usahanya negatif.</option>
+        </select>
+      </div>
+      <div class="isi-item lebar">
+        <label for="p6_bentuk">Di lantai aula yang kasar, energi gerak yang berkurang itu menjadi apa?</label>
+        <select id="p6_bentuk">
+            <option value="">&mdash; pilih &mdash;</option>
+            <option value="A">A. Kalor pada lantai dan kotak, serta sedikit bunyi.</option>
+            <option value="B">B. Energi potensial, sebab kotak sudah berada di lantai aula.</option>
+            <option value="C">C. Tidak menjadi apa pun; energi itu lenyap karena kotak melambat.</option>
+            <option value="D">D. Energi gerak yang berpindah ke udara di sekitar kotak.</option>
+        </select>
+      </div>
+      <div class="isi-item">
+        <label for="p6_kalor">Berapa joule yang berubah bentuk di lantai aula itu <span class="satuan">(J)</span></label>
+        <input type="text" inputmode="decimal" id="p6_kalor">
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+
+</div><!-- /wrap -->
+
+<div class="bilah-bawah">
+  <div class="wrap">
+    <div class="bilah-luar"><div class="bilah-dalam" id="bilah_dalam"></div></div>
+    <div class="baris-bawah">
+      <div class="hitungan" id="hitungan_teks">0 dari 22 isian dijawab</div>
+      <button class="periksa" id="btn_periksa" type="button">Periksa kelengkapan</button>
+      <div class="pesan" id="pesan_teks"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+"use strict";
+
+function bacaBilangan(s){
+  if (s === null || s === undefined) return null;
+  s = String(s).trim();
+  if (s === "") return null;
+  var neg = false;
+  if (s[0] === "-"){ neg = true; s = s.slice(1); }
+  if (/^\d{1,3}([.,]\d{3})+$/.test(s)){
+    s = s.replace(/[.,]/g, "");
+  } else {
+    var hasDot = s.indexOf(".") !== -1, hasComma = s.indexOf(",") !== -1;
+    if (hasDot && hasComma){
+      var lastDot = s.lastIndexOf("."), lastComma = s.lastIndexOf(",");
+      if (lastComma > lastDot){
+        s = s.replace(/\./g, "").replace(",", ".");
+      } else {
+        s = s.replace(/,/g, "");
+      }
+    } else if (hasComma){
+      s = s.replace(",", ".");
+    }
+  }
+  if (!/^\d*\.?\d+$/.test(s)) return null;
+  var v = parseFloat(s);
+  if (isNaN(v)) return null;
+  return neg ? -v : v;
+}
+
+function cermin(el){
+  if (!el) return;
+  var tag = el.tagName ? el.tagName.toLowerCase() : "";
+  var type = (el.getAttribute && el.getAttribute("type") || "").toLowerCase();
+  if (tag === "select"){
+    var opts = el.options;
+    for (var i = 0; i < opts.length; i++){
+      if (opts[i].selected) opts[i].setAttribute("selected", "selected");
+      else opts[i].removeAttribute("selected");
+    }
+  } else if (tag === "textarea"){
+    el.textContent = el.value;
+  } else if (type === "checkbox" || type === "radio"){
+    if (el.checked) el.setAttribute("checked", "checked");
+    else el.removeAttribute("checked");
+  } else {
+    el.setAttribute("value", el.value);
+  }
+}
+
+function cerminSemua(){
+  var els = document.querySelectorAll("input, select, textarea");
+  for (var i = 0; i < els.length; i++) cermin(els[i]);
+}
+
+function nilaiElemen(id){
+  var el = document.getElementById(id);
+  if (!el) return null;
+  return el.value;
+}
+
+function sha256(ascii){
+  function rr(n,x){return (n>>>x)|(n<<(32-x));}
+  var mx=Math.pow,h=[],k=[],p=2,i=0,j,res="";
+  while(i<64){
+    var isP=true;
+    for(j=2;j*j<=p;j++){ if(p%j===0){isP=false;break;} }
+    if(isP){ if(i<8) h[i]=(mx(p,.5)%1*4294967296)|0; k[i]=(mx(p,1/3)%1*4294967296)|0; i++; }
+    p++;
+  }
+  var bytes=[];
+  for(i=0;i<ascii.length;i++){
+    var c=ascii.charCodeAt(i);
+    if(c<128) bytes.push(c);
+    else if(c<2048){ bytes.push(192|(c>>6),128|(c&63)); }
+    else { bytes.push(224|(c>>12),128|((c>>6)&63),128|(c&63)); }
+  }
+  var bitLen=bytes.length*8;
+  bytes.push(128);
+  while(bytes.length%64!==56) bytes.push(0);
+  for(i=7;i>=0;i--) bytes.push((bitLen/mx(2,i*8))&255);
+  var w=[],a,b,cc,d,e,f,g,hh,ta,tb;
+  for(var blk=0;blk<bytes.length;blk+=64){
+    for(i=0;i<16;i++){
+      w[i]=(bytes[blk+i*4]<<24)|(bytes[blk+i*4+1]<<16)|(bytes[blk+i*4+2]<<8)|(bytes[blk+i*4+3]);
+    }
+    for(i=16;i<64;i++){
+      var s0=rr(w[i-15],7)^rr(w[i-15],18)^(w[i-15]>>>3);
+      var s1=rr(w[i-2],17)^rr(w[i-2],19)^(w[i-2]>>>10);
+      w[i]=(w[i-16]+s0+w[i-7]+s1)|0;
+    }
+    a=h[0];b=h[1];cc=h[2];d=h[3];e=h[4];f=h[5];g=h[6];hh=h[7];
+    for(i=0;i<64;i++){
+      var S1=rr(e,6)^rr(e,11)^rr(e,25);
+      var ch=(e&f)^((~e)&g);
+      ta=(hh+S1+ch+k[i]+w[i])|0;
+      var S0=rr(a,2)^rr(a,13)^rr(a,22);
+      var maj=(a&b)^(a&cc)^(b&cc);
+      tb=(S0+maj)|0;
+      hh=g;g=f;f=e;e=(d+ta)|0;d=cc;cc=b;b=a;a=(ta+tb)|0;
+    }
+    h[0]=(h[0]+a)|0;h[1]=(h[1]+b)|0;h[2]=(h[2]+cc)|0;h[3]=(h[3]+d)|0;
+    h[4]=(h[4]+e)|0;h[5]=(h[5]+f)|0;h[6]=(h[6]+g)|0;h[7]=(h[7]+hh)|0;
+  }
+  for(i=0;i<8;i++){
+    var v=h[i]>>>0, s=v.toString(16);
+    while(s.length<8) s="0"+s;
+    res+=s;
+  }
+  return res;
+}
+var GARAM = "F.USE-piloting-2026-kunci-tidak-tercetak-pada-berkas-murid";
+var FAKTOR = 20;
+function cocokNum(id, nilai, daftar){
+  var N = Math.round(nilai * FAKTOR);
+  var c = sha256(GARAM + "|" + id + "|" + N);
+  for (var i = 0; i < daftar.length; i++){ if (daftar[i] === c) return true; }
+  return false;
+}
+function cocokSel(id, jawab, kunci){
+  return sha256(GARAM + "|" + id + "|" + String(jawab).trim()) === kunci;
+}
+var KUNCI_NUM = {
+  p1_wdorong:        [["fdb76d9e90df8290a0e5ceb9647c2c2c80ab63eb2aeca695b3957ee58aec2dc3","66c40a2e962af96c258b23f649acb5b2bd5c9dbd8e47e2e352dd42f2e13fa0f8","0cf957e3ce79b8d5e39ed4d2bc7d3d60b7347e65deebd191773d818377e8a89a"], 0.05],
+  p2_wgesek:         [["009886ef694d2ace75d1f8a16c37311f0c1188ea591d604f5558e43f030c7c3d","739a9a2e798d8fe0ec73547d9108c1bc00533d91a2099a0f7d4ba9e8f415c09a","8818ea3f67c0761128aaf43baeb005284251961538c3f1344846d5b16774fa01"], 0.05],
+  p2_wnormal:        [["daef8792cbad19cd18e7ffc8d46f75ecdf1ade0e82db811663c53db4e5a9f3d8","db0052dfb9c59f65c2e8d64cefc8dbffd1c3692819d3d5158e8742a0cc048a1d","9ce5c30cb13ce216ddb13ed78dd1f3ef9e9321cdff913eca1464f3c017b7e1fc"], 0.05],
+  p3_wdorong:        [["dd2d1441b03268c2296cae27a93d0bba7b83f89fcb4d46753a1ee755c420df96","8b926da738c3edd6f556c227d36aa77be12e3709072bde08c42a309ac4264e7b","dd9e44f5714b41fe76572b01b1299338bca83fce0c7cb3c4d052d1b4231bf778"], 0.05],
+  p3_wtotal:         [["3c0012b0621507fe18457767d78e708f283d5439f2b6442f50352fb0cc6b289e","3d031d18333f0a6794af060908c3cb8ac8cad9ccd11c0d0271c3821ba3ba52a6","bcf925a1e6c25f9922a5bd24a7a636de724af1548360defc0f73c94692543536"], 0.05],
+  p3_v:              [["9dcfac6eb1447d821b969e84f9c9a6189259ff4aac4eb9f5041385cefb4b6581","7ec2263ff4a68d837e5452491139624f50b2b1e192fe7b3e17bc6d623e4fae6a","965ce3e22336df90b6d5eba257faaa8b344f63076b7acd797b3d6c78cad50ee3"], 0.05],
+  p4_ek:             [["e3e6bc4c23abf651a4a51e60f3a47e1259294c890cda16d05ecea7c974cf90de","f49ac4aadea788f36c32c92ef0062615a3de6a2c034e887b755f95787a6eb76f","92cc06812c202c4cc678d66bf54b2177cba90811f0349a454998439c4b28159b"], 0.05],
+  p4_f:              [["7d51d6a67543cda598cc11fa2a60791763a058d97513e4a15f4931f2204410fd","596704ecd914adbb716afbb1c2fe267da849a9acf04acf8baadbc2b0017ec6f0","c93d2d66b5b828d471fb153cb287d0f5264970b44671e44d9af2d91a80cd7de1"], 0.05],
+  p4_kalor:          [["62923abff13469f2a938a1510994a57f73829e596895c9bc40b103dac975d022","cc02b3a4f465ead26943ca93ac4eb05f744a0f8d0619c8db1bb0733661825df7","626f35382d335f16b3cda578c5eba499721f1ecaccff8d36f239e199305439ee"], 0.05],
+  p5_ep_meja:        [["4a37b26fb21b9fe09b80ed6b242641e51be9e854b90eeeb89dcd8b2cb47bef1c","5d5f896106d220afdd6a935e3a196d207540aeb3578bf8ab2db5e5572b7dc98b","3ba59f3db449781864f86fbe28839cbb9d05a51581861a6db3f056023702cd57"], 0.05],
+  p5_ep_lantai:      [["ee2cc08c063daf4e437a6116ebec15b45b239a8417c046525e2c936e3ea52ce6","d15db48194b58a5e29eccad271ce7f7a7a1f9206289d817565b45ae48d797cdc","c0054661f8493e0c163f3f04ed5f357c3cb6f9622f2b5f802024ed60b72c3d3c"], 0.05],
+  p5_ek:             [["45cd5e52d0b4eb900695ed1d58cd3e85f4b252eb2f57a9f5f3287585249d4c06","1e30c6036c1732f99284fd0a49da2f855e5885460294206a87e645c72385e4c3","beacdf9d195de24564706849e582c1a756a466ef89805eede256d85343a853f1"], 0.05],
+  p6_kalor:          [["f415bc52d26873ad3538b0fb55c204e16404870d5909bf808c473291ee0571dd","ce269e094fb88fbd72ffd0ee6cfa8db5568e19165e0784d14055bc91a82d94a0","919e0f2a11edee976a519ff8043ca75b4c8094b3d21765ae970f769366e2fcf4"], 0.05]
+};
+
+var KUNCI_PIL = {
+  p1_wberat:         "02f4cf5dc57bf5f3b1f220806f305c93f0543521531dd4da36e207c84ce63116",
+  p1_alasan:         "de264cbc089aa80d3585e0178511a07ff0ba0db622cf24e5669a6e8ff9194f9a",
+  p2_golong:         "e79c657663f3260f181be6c8559d1da84ebc94a0b5a08ba692fcf26608588820",
+  p3_mengapa:        "d38cdfd79305d18f2cb9633f7b4be31ac35481fac64e7accbf8a6ec348ffd9c3",
+  p4_kemana:         "ce4d361c4887c67757c61e594d0245e9bbd8ba2504cc36d77505a22a2f6a674a",
+  p5_beda:           "bb6c989f25f7132cc7628a38e57bafe147f3137cd3e1862581a4d3409e5ad7da",
+  p6_wnormal:        "c49d77048ccbfb5d7b65a879634ba0200646c9aeca58d70ec419d5762bf2bbbb",
+  p6_alasan:         "df11b1af318a8894feaa287d65f03fea4f7962cedff09c58558a86dba4e776e1",
+  p6_bentuk:         "3ecf0795e54ad5aac7a3725587c5ec4e467b4d010d7de782fe5e3c00f1ca6d8b"
+};
+
+var TOTAL = Object.keys(KUNCI_NUM).length + Object.keys(KUNCI_PIL).length;
+
+function hitungNilai(){
+  cerminSemua();
+  var benar = 0;
+  for (var id in KUNCI_NUM){
+    var v = bacaBilangan(nilaiElemen(id));
+    if (v !== null && cocokNum(id, v, KUNCI_NUM[id][0])) benar++;
+  }
+  for (var id2 in KUNCI_PIL){
+    var jawab = nilaiElemen(id2);
+    if (jawab !== null && String(jawab).trim() !== "" && cocokSel(id2, jawab, KUNCI_PIL[id2])) benar++;
+  }
+  return Math.round((benar / TOTAL) * 100);
+}
+window.hitungNilai = hitungNilai;
+
+function jumlahBenar(){
+  cerminSemua();
+  var benar = 0;
+  for (var id in KUNCI_NUM){
+    var v = bacaBilangan(nilaiElemen(id));
+    if (v !== null && cocokNum(id, v, KUNCI_NUM[id][0])) benar++;
+  }
+  for (var id2 in KUNCI_PIL){
+    var jawab = nilaiElemen(id2);
+    if (jawab !== null && String(jawab).trim() !== "" && cocokSel(id2, jawab, KUNCI_PIL[id2])) benar++;
+  }
+  return benar;
+}
+window.jumlahBenar = jumlahBenar;
+
+function daftarIdDinilai(){
+  return Object.keys(KUNCI_NUM).concat(Object.keys(KUNCI_PIL));
+}
+
+function perbarui(){
+  var ids = daftarIdDinilai();
+  var terisi = 0;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    if (el && String(el.value).trim() !== "") terisi++;
+  }
+  var pct = Math.round((terisi / ids.length) * 100);
+  var bilah = document.getElementById("bilah_dalam");
+  if (bilah) bilah.style.width = pct + "%";
+  var teks = document.getElementById("hitungan_teks");
+  if (teks) teks.textContent = terisi + " dari " + ids.length + " isian dijawab";
+  if (typeof perbaruiTautan === "function") perbaruiTautan();
+}
+
+function periksaKelengkapan(){
+  cerminSemua();
+  var ids = daftarIdDinilai();
+  var kosongPertama = null;
+  for (var i = 0; i < ids.length; i++){
+    var el = document.getElementById(ids[i]);
+    var item = el ? el.closest(".isi-item") : null;
+    if (!el) continue;
+    if (el.closest(".sesi-isi") && el.closest(".sesi-isi").style.display === "none") continue;
+    if (String(el.value).trim() === ""){
+      if (item) item.classList.add("kosong");
+      if (!kosongPertama) kosongPertama = el;
+    } else {
+      if (item) item.classList.remove("kosong");
+    }
+  }
+  var pesan = document.getElementById("pesan_teks");
+  if (kosongPertama){
+    kosongPertama.scrollIntoView({behavior:"smooth", block:"center"});
+    if (pesan) pesan.textContent = "Masih ada kotak yang kosong — kotak itu ditandai oranye.";
+  } else {
+    if (pesan) pesan.textContent = "Seluruh kotak sudah terisi. Kumpulkan berkas ini sesuai arahan gurumu.";
+  }
+  perbarui();
+}
+
+document.addEventListener("input", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("change", function(ev){ cermin(ev.target); perbarui(); }, false);
+document.addEventListener("blur", function(ev){ cermin(ev.target); }, true);
+window.addEventListener("beforeunload", cerminSemua);
+window.addEventListener("pagehide", cerminSemua);
+document.addEventListener("visibilitychange", function(){
+  if (document.visibilityState === "hidden") cerminSemua();
+});
+
+document.addEventListener("DOMContentLoaded", function(){
+  cerminSemua();
+  if (typeof siapkanSesi === "function") siapkanSesi();
+  perbarui();
+  var btn = document.getElementById("btn_periksa");
+  if (btn) btn.addEventListener("click", periksaKelengkapan);
+});
+
+cerminSemua();
+
+})();
+</script>
+<!-- ==== FIMS-SHIM v1 · pelapor ke mesin alur · jangan disunting per halaman ==== -->
+<script>
+(function(){
+  "use strict";
+  var LAPOR   = "skor";          /* "skor" atau "selesai" */
+  var TERPASANG = (window.parent !== window);
+  var sudah = false;
+
+  function bulat(n){
+    n = Math.round(Number(n));
+    if (!isFinite(n)) n = 0;
+    if (n < 0) n = 0;
+    if (n > 100) n = 100;
+    return n;
+  }
+
+  function lapor(){
+    if (!TERPASANG) return false;            /* dibuka sendiri: tetap lembar biasa */
+    try {
+      if (LAPOR === "skor") {
+        var n = (typeof window.hitungNilai === "function") ? bulat(window.hitungNilai()) : 0;
+        parent.postMessage({ fims: "skor", skor: n }, "*");
+      } else {
+        parent.postMessage({ fims: "selesai" }, "*");
+      }
+      sudah = true;
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function tandai(el){
+    var k = document.getElementById("fims-kabar");
+    if (!k) {
+      k = document.createElement("p");
+      k.id = "fims-kabar";
+      k.setAttribute("role", "status");
+      k.style.cssText = "margin:12px 0 0;padding:10px 14px;border-radius:10px;"
+        + "background:#E6F4EC;color:#1F7A4D;border:1px solid #1F7A4D;"
+        + "font:600 15px 'Segoe UI',Arial,sans-serif;";
+      (el && el.parentNode ? el.parentNode : document.body).appendChild(k);
+    }
+    k.textContent = sudah ? "Hasilmu sudah terkirim." : "Tercatat di halaman ini.";
+  }
+
+  function pasang(){
+    var el = document.getElementById("fims-kirim")
+          || document.getElementById("btn_selesai")
+          || document.getElementById("btn_periksa");
+    if (!el) {
+      if (!TERPASANG) return;                /* tanpa bingkai: tidak menambah apa pun */
+      el = document.createElement("button");
+      el.type = "button";
+      el.id = "fims-kirim";
+      el.textContent = "Kirim hasil";
+      el.style.cssText = "display:block;margin:18px auto;padding:12px 26px;border:0;"
+        + "border-radius:10px;background:#0B4F58;color:#fff;cursor:pointer;"
+        + "font:700 16px 'Segoe UI',Arial,sans-serif;";
+      document.body.appendChild(el);
+    }
+    el.addEventListener("click", function(){
+      setTimeout(function(){ lapor(); tandai(el); }, 0);
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", pasang);
+  } else { pasang(); }
+})();
+</script>
+<!-- ==== akhir FIMS-SHIM v1 ==== -->
+</body>
+</html>
