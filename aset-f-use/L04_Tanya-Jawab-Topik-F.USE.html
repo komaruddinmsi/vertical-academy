@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tanya-Jawab Topik &mdash; Usaha dan Energi</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --putih:#fff;
+  --hijau:#1F7A4D; --hijauB:#E6F4EC; --merah:#B32B2B; --merahB:#FBEAEA;
+  --bingkai:#D7E6E8; --aturanTebal:#8A6604;
+}
+*{box-sizing:border-box;}
+body{margin:0; font-family:"Segoe UI",Arial,sans-serif; background:#F6FAFB; color:var(--tinta);
+  line-height:1.6; padding-bottom:30px;}
+.wrap{max-width:780px; margin:0 auto; padding:0 16px;}
+.kepala{position:relative; overflow:hidden;
+  background:linear-gradient(110deg,var(--tosca0),var(--tosca) 55%,var(--tosca2)); color:#fff;
+  padding:26px 20px 22px; border-bottom:5px solid;
+  border-image:linear-gradient(90deg,var(--kuning),var(--oranye2)) 1;}
+.kepala::before,.kepala::after{content:""; position:absolute; border-radius:50%; background:rgba(255,255,255,.08);}
+.kepala::before{width:260px; height:260px; top:-110px; right:-60px;}
+.kepala::after{width:150px; height:150px; bottom:-90px; right:120px;}
+.kepala .baris-kecil{font-size:12px; letter-spacing:2px; text-transform:uppercase; opacity:.85; position:relative;}
+.kepala h1{font-size:24px; margin:6px 0 4px; position:relative;}
+.kepala .penjelas{font-size:13.5px; opacity:.92; max-width:620px; position:relative;}
+.aturan{background:var(--kuningB); border-left:6px solid var(--kuning); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.aturan strong{color:var(--aturanTebal);}
+.aturan p{margin:6px 0 0;}
+.pakai{background:var(--toscaB); border-left:6px solid var(--tosca2); border-radius:8px;
+  padding:14px 18px; margin:18px 0; font-size:13.5px;}
+.pakai strong{color:var(--tosca0);}
+.pakai ul{margin:6px 0 0; padding-left:20px;}
+details{background:#fff; border:1px solid var(--bingkai); border-radius:12px; margin:12px 0; overflow:hidden;}
+details[open]{box-shadow:0 2px 10px rgba(7,59,68,.06);}
+summary{cursor:pointer; list-style:none; padding:14px 16px; font-weight:600; font-size:15px;
+  color:var(--tosca0); background:var(--toscaB); display:flex; gap:10px; align-items:flex-start;}
+summary::-webkit-details-marker{display:none;}
+summary::before{content:"?"; flex:0 0 auto; width:24px; height:24px; border-radius:50%;
+  background:var(--tosca2); color:#fff; font-size:14px; line-height:24px; text-align:center; font-weight:800;}
+details[open] summary{background:linear-gradient(100deg,var(--tosca),var(--tosca2)); color:#fff;}
+details[open] summary::before{background:rgba(255,255,255,.25);}
+.isi{padding:14px 18px 16px;}
+.isi p{margin:0 0 10px; font-size:14px;}
+.periksa{background:var(--hijauB); border-left:4px solid var(--hijau); border-radius:8px;
+  padding:11px 13px; font-size:13.5px; margin:12px 0 0;}
+.periksa b{color:var(--hijau); display:block; margin-bottom:3px;}
+.lanjut{background:var(--abuB); border-left:4px solid var(--abu); border-radius:8px;
+  padding:11px 13px; font-size:13px; margin:10px 0 0;}
+.lanjut b{color:var(--tosca0); display:block; margin-bottom:3px;}
+.lanjut a{color:var(--tosca); word-break:break-word;}
+.lanjut .alamat{display:none; font-size:11.5px; color:var(--abu); word-break:break-all;}
+.lanjut .tugas{display:block; margin-top:4px; font-style:italic; color:var(--abu);}
+.kelompok{margin:26px 0 6px; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--abu); border-bottom:1px solid var(--bingkai); padding-bottom:5px;}
+.kaki{text-align:center; font-size:12px; color:var(--abu); padding:22px 16px 8px;}
+@media (max-width:640px){ .kepala h1{font-size:20px;} summary{font-size:14px;} }
+@media (max-width:360px){ .wrap{padding:0 10px;} .isi{padding:12px 12px 14px;} }
+@media print{
+  body{background:#fff; padding:0; font-size:11.5pt;}
+  .kepala{background:#fff; color:#000; border-bottom:2px solid #000;}
+  .kepala::before,.kepala::after{display:none;}
+  details{break-inside:avoid; box-shadow:none; border:1px solid #999;}
+  details > .isi{display:block !important;}
+  summary{background:#fff !important; color:#000 !important;}
+  summary::before{background:#000 !important; color:#fff !important;}
+  .lanjut .alamat{display:block;}
+  .lanjut a{color:#000; text-decoration:none;}
+}
+
+</style>
+</head>
+<body>
+<div class="kepala"><div class="wrap">
+  <div class="baris-kecil">Fisika &middot; Kelas XI &middot; Usaha &amp; Energi</div>
+  <h1>Tanya-Jawab Topik &mdash; Usaha dan Energi</h1>
+  <div class="penjelas">Enam pertanyaan yang paling sering muncul ketika orang baru mempelajari topik ini,
+  beserta jawabannya dan satu cara memeriksa dirimu sendiri.</div>
+</div></div>
+<div class="wrap">
+<div class="pakai">
+  <strong>Cara memakai halaman ini</strong>
+  <ul>
+    <li>Klik sebuah pertanyaan untuk membuka jawabannya. Bacalah yang kamu rasa paling mirip dengan isi kepalamu.</li>
+    <li>Tiap jawaban diakhiri satu <b>cara memeriksa dirimu</b>. Kerjakan bagian itu &mdash; membaca saja jarang mengubah apa pun.</li>
+    <li>Halaman ini <b>tidak dinilai</b> dan bukan syarat lulus. Ia boleh kamu buka kapan saja, kecuali saat kamu sedang mengerjakan kuis.</li>
+    <li>Halaman ini bisa langsung dicetak: seluruh jawaban terbuka sendiri dan alamat bacaan lanjutannya ikut tercetak.</li>
+  </ul>
+</div>
+<div class="aturan">
+  <strong>Daftar ini masih sementara</strong>
+  <p>Enam pertanyaan di bawah belum datang dari kelasmu sendiri. Keenamnya disusun dari pertanyaan yang
+  memang diperkirakan akan muncul pada topik ini, dan dipakai sebagai daftar awal supaya halaman ini
+  sudah berguna sejak hari pertama.</p>
+  <p><b>Aturan yang berlaku untuk daftar ini:</b> begitu pertanyaan kelasmu sendiri terkumpul,
+  tiap pertanyaan di bawah yang ternyata <b>tidak benar-benar ditanyakan siapa pun</b> akan dibuang dari
+  halaman ini &mdash; bukan diperbaiki, bukan diberi catatan, dibuang &mdash; dan digantikan pertanyaan
+  yang sungguh kalian ajukan. Jadi kalau ada yang membingungkanmu dan belum ada di sini, katakan;
+  pertanyaanmu yang akan menggantikan salah satu dari ini.</p>
+</div>
+<div class="kelompok">Bagian pertama &mdash; usaha dan dua wajah energi</div>
+<details><summary>Kalau aku menggendong karung berat jalan jauh sampai capek banget, masa iya usahaku nol? Terus capeknya itu apa dong?</summary><div class="isi"><p>Dugaanmu masuk akal: badanmu memang benar-benar mengeluarkan tenaga, dan rasa capek itu nyata.</p><p>Tetapi usaha dalam fisika hanya menghitung bagian gaya yang searah dengan arah benda berpindah. Waktu kamu menggendong karung sambil berjalan mendatar, gaya penahanmu menunjuk ke atas sedangkan karungnya berpindah ke samping — jadi usaha gaya penahanmu nol, sebesar apa pun karungnya.</p><p>Capekmu datang dari otot yang terus-menerus berkontraksi menahan beban, bukan dari usaha terhadap karung itu. Dua hal itu sering muncul bersamaan, dan itulah yang membuat keduanya terasa sama.</p><div class="periksa"><b>Cara memeriksa dirimu</b>Bandingkan dua hal ini: menggendong karung berjalan mendatar 20 m, dan mengangkat karung yang sama setinggi 1 m lalu berhenti. Kalau jawabanmu untuk “mana yang usahanya nol” berubah setelah membaca ini, kamu sudah lepas dari dugaan lama.</div><div class="lanjut"><b>Kalau kamu ingin menggali lebih jauh</b><a href="https://id.wikipedia.org/wiki/Usaha_(fisika)" target="_blank" rel="noopener">Usaha (fisika) — Wikipedia bahasa Indonesia</a><span class="alamat">https://id.wikipedia.org/wiki/Usaha_(fisika)</span><span class="tugas">Yang dicari di sana: Cari kalimat yang menyebut gaya tegak lurus arah gerak, lalu tuliskan satu contohmu sendiri. 5 menit.</span></div></div></details>
+<details><summary>Kalau benda sudah berhenti, energinya kan hilang. Kok masih bisa dihitung?</summary><div class="isi"><p>Wajar kalau kamu berpikir begitu: yang kamu lihat memang benda yang tadi bergerak lalu diam, dan tidak ada apa pun yang kelihatan tersisa.</p><p>Yang hilang hanya lajunya, bukan energinya. Energi gerak itu berubah bentuk menjadi kalor — permukaan benda dan lantai jadi sedikit lebih hangat — ditambah sedikit bunyi.</p><p>Justru karena energinya tidak hilang, kamu bisa menghitung mundur: energi gerak yang tadi ada dibagi jarak berhentinya memberi besar gaya gesek yang menghentikannya. Kalau energi itu benar-benar lenyap, angka gaya gesek itu tidak akan pernah bisa dihitung.</p><div class="periksa"><b>Cara memeriksa dirimu</b>Gosokkan dua balok kayu kuat-kuat selama sepuluh detik, lalu sentuh permukaannya. Kalau kamu bisa menyebut ke mana energi gerak tanganmu pergi tanpa memakai kata “hilang”, kamu sudah lepas dari dugaan lama.</div><div class="lanjut"><b>Kalau kamu ingin menggali lebih jauh</b><a href="https://id.wikipedia.org/wiki/Hukum_kekekalan_energi" target="_blank" rel="noopener">Hukum kekekalan energi — Wikipedia bahasa Indonesia</a><span class="alamat">https://id.wikipedia.org/wiki/Hukum_kekekalan_energi</span><span class="tugas">Yang dicari di sana: Temukan satu contoh perubahan bentuk energi di laman itu yang belum pernah disebut di kelas. 5 menit.</span></div></div></details>
+<details><summary>Energi itu kan angka milik bendanya. Kenapa jawaban temanku beda padahal bendanya sama persis?</summary><div class="isi"><p>Dugaanmu benar untuk setengahnya. Energi gerak memang milik bendanya sendiri: ia hanya bergantung pada massa dan laju, jadi siapa pun yang menghitungnya akan dapat angka yang sama.</p><p>Energi posisi berbeda. Ia selalu terikat pada titik yang kamu pilih sebagai nol ketinggian. Ganti titik nolnya, ganti pula angkanya — meskipun bendanya tidak bergeser sedikit pun.</p><p>Jadi kamu dan temanmu bisa sama-sama benar, asalkan masing-masing menyebutkan acuan yang dipakainya. Yang keliru bukan angkanya, melainkan menyebut angka energi posisi tanpa menyebut acuannya.</p><div class="periksa"><b>Cara memeriksa dirimu</b>Letakkan sebuah benda di atas meja. Hitung energi posisinya dua kali: sekali dengan acuan lantai, sekali dengan acuan permukaan meja. Lalu hitung energi geraknya dua kali juga. Kalau kamu bisa menjelaskan mengapa hanya satu dari dua angka itu berubah, kamu sudah paham.</div><div class="lanjut"><b>Kalau kamu ingin menggali lebih jauh</b><a href="https://id.wikipedia.org/wiki/Energi_potensial" target="_blank" rel="noopener">Energi potensial — Wikipedia bahasa Indonesia</a><span class="alamat">https://id.wikipedia.org/wiki/Energi_potensial</span><span class="tugas">Yang dicari di sana: Catat satu kalimat dari laman itu yang tidak lengkap tanpa menyebut titik acuan. 5 menit.</span></div></div></details>
+<div class="kelompok">Bagian kedua &mdash; jalur licin, jalur kasar, dan rancangannya</div>
+<details><summary>Kalau tingginya sama, lajunya di bawah pasti sama juga kan? Licin atau kasar kan sama-sama turun dari tinggi yang sama.</summary><div class="isi"><p>Dugaanmu benar untuk lintasan yang licin: di sana bentuk lintasannya memang tidak berpengaruh, hanya ketinggiannya yang menentukan laju di bawah.</p><p>Pada lintasan kasar, ceritanya berubah. Sepanjang bagian yang kasar ada energi yang berubah menjadi kalor, dan energi itu tidak ikut menjadi laju. Semakin panjang atau semakin kasar bagian itu, semakin sedikit laju yang tersisa.</p><p>Itulah sebabnya rencana hitunganmu harus dipecah per bagian, bukan ditulis sebagai satu persamaan dari ujung ke ujung. Tiap bagian yang kasar wajib membawa satu suku pengurang tersendiri.</p><div class="periksa"><b>Cara memeriksa dirimu</b>Lepaskan dua benda yang sama dari ketinggian yang sama pada dua papan luncur identik, satu dilapisi amplas. Ramalkan dulu jarak luncurnya di lantai, baru amati. Kalau ramalanmu “sama”, dugaan lamamu masih bekerja.</div><div class="lanjut"><b>Kalau kamu ingin menggali lebih jauh</b><a href="https://phet.colorado.edu/in/simulations/energy-skate-park-basics" target="_blank" rel="noopener">Energi Skate: Dasar — simulasi PhET (bahasa Indonesia)</a><span class="alamat">https://phet.colorado.edu/in/simulations/energy-skate-park-basics</span><span class="tugas">Yang dicari di sana: Jalankan simulasinya dua kali, sekali tanpa gesekan dan sekali dengan gesekan, lalu catat apa yang terjadi pada batang energi termalnya. 8 menit.</span></div></div></details>
+<details><summary>Hasil hitunganku positif dan angkanya masuk akal, berarti caraku sudah benar kan?</summary><div class="isi"><p>Pertanyaanmu wajar: biasanya angka yang aneh memang tanda ada yang salah, jadi angka yang wajar terasa seperti tanda bahwa semuanya beres.</p><p>Sayangnya cara yang salah pun bisa menghasilkan angka yang wajar. Kalau kamu menulis satu persamaan dari ujung ke ujung tanpa mengurangi bagian yang kasar, hasilnya tetap positif dan tetap kelihatan pantas — hanya saja terlalu besar.</p><p>Jadi yang kamu periksa bukan kewajaran angkanya, melainkan barisnya: pastikan tiap bagian yang kasar benar-benar punya suku pengurang sendiri di dalam rencanamu.</p><div class="periksa"><b>Cara memeriksa dirimu</b>Ambil satu soal jalur berlapis yang sudah kamu kerjakan. Hitung ulang dengan sengaja mengabaikan bagian kasarnya, lalu bandingkan kedua angkanya. Kalau kamu bisa menunjuk baris mana yang membuat keduanya berbeda, kamu sudah punya alat periksanya.</div><div class="lanjut"><b>Kalau kamu ingin menggali lebih jauh</b><a href="https://id.wikipedia.org/wiki/Gesekan" target="_blank" rel="noopener">Gesekan — Wikipedia bahasa Indonesia</a><span class="alamat">https://id.wikipedia.org/wiki/Gesekan</span><span class="tugas">Yang dicari di sana: Catat perbedaan koefisien gesek statis dan kinetik, lalu tebak mana yang dipakai pada soal jalur berlapis dan mengapa. 6 menit.</span></div></div></details>
+<details><summary>Kalau bendanya dibuat lebih berat, dia kan jadi lebih berenergi. Berarti pasti sampai lebih jauh kan?</summary><div class="isi"><p>Setengah dugaanmu benar: benda yang lebih berat memang membawa energi yang lebih besar dari ketinggian yang sama. Itu sebabnya dugaan ini terasa sangat masuk akal.</p><p>Tetapi gaya geseknya juga ikut membesar, persis sebanding dengan massanya. Energi yang lebih besar dan pengurangan yang lebih besar saling meniadakan, sehingga massa tercoret dari persamaan akhirnya.</p><p>Akibatnya menambah massa sama sekali tidak mengubah hasilnya. Yang benar-benar mengubah hasil hanya ketinggian awal, ketinggian akhir, kekasaran permukaan, dan panjang bagian yang kasar.</p><div class="periksa"><b>Cara memeriksa dirimu</b>Tulis persamaan jalurnya lengkap dengan huruf m di tiap suku, lalu coret m di kedua ruas. Kalau sesudah itu kamu masih bisa menyebut di mana massa seharusnya berpengaruh, periksa lagi suku yang kamu lewatkan.</div><div class="lanjut"><b>Kalau kamu ingin menggali lebih jauh</b><a href="https://id.wikipedia.org/wiki/Energi_kinetik" target="_blank" rel="noopener">Energi kinetik — Wikipedia bahasa Indonesia</a><span class="alamat">https://id.wikipedia.org/wiki/Energi_kinetik</span><span class="tugas">Yang dicari di sana: Tulis ulang rumus energi kinetik lalu tunjukkan di mana massa muncul, dan bandingkan dengan tempat massa muncul pada gaya gesek. 5 menit.</span></div></div></details>
+</div>
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+<script>
+
+(function(){
+  "use strict";
+  function bukaSemua(){
+    var d = document.querySelectorAll("details"), i;
+    for (i = 0; i < d.length; i++) d[i].setAttribute("open", "open");
+  }
+  if (window.matchMedia){
+    var mm = window.matchMedia("print");
+    if (mm.addEventListener) mm.addEventListener("change", function(e){ if (e.matches) bukaSemua(); });
+    else if (mm.addListener) mm.addListener(function(e){ if (e.matches) bukaSemua(); });
+  }
+  window.addEventListener("beforeprint", bukaSemua);
+})();
+
+</script>
+</body>
+</html>

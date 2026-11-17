@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latihan TKA Fisika — Usaha &amp; Energi (F.USE)</title>
+<style>
+:root{
+  --tosca0:#073B44; --tosca:#0B4F58; --tosca2:#17A2AF; --tosca3:#6FCFD8; --toscaB:#E3F5F6;
+  --oranye:#C05621; --oranye2:#E27A2E; --oranyeB:#FDEBDD;
+  --kuning:#E9B308; --kuningB:#FEF6DA; --amber:#8A6604;
+  --tinta:#12333A; --abu:#6A7F84; --abuB:#F1F5F6; --garis:#D7E6E8;
+  --hijau:#1E7D5A; --hijauB:#E2F4EC; --merah:#A83B12; --merahB:#FAE6DA;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:0;background:#F6FAFB;color:var(--tinta);
+  font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.62}
+.bungkus{max-width:880px;margin:0 auto;padding:0 16px}
+[hidden]{display:none!important}
+
+/* ---------- kepala ---------- */
+.kepala{position:relative;overflow:hidden;color:#fff;
+  background:linear-gradient(110deg,var(--tosca0) 0%,var(--tosca) 48%,var(--tosca2) 100%);
+  border-bottom:5px solid;border-image:linear-gradient(90deg,var(--kuning),var(--oranye2)) 1;
+  padding:30px 0 26px}
+.kepala::before,.kepala::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.10)}
+.kepala::before{width:190px;height:190px;right:-45px;top:-70px}
+.kepala::after{width:110px;height:110px;right:95px;bottom:-55px;background:rgba(255,255,255,.07)}
+.kepala h1{margin:0 0 8px;font-size:29px;line-height:1.2;font-weight:800;letter-spacing:-.3px}
+.kepala p{margin:0;font-size:14.5px;color:#DCF1F3;max-width:640px}
+
+/* ---------- kartu ---------- */
+.kartu{background:#fff;border:1px solid var(--garis);border-radius:14px;
+  margin:20px 0;padding:20px;box-shadow:0 1px 2px rgba(7,59,68,.05)}
+.kartu h2{margin:0 0 12px;font-size:17px;color:var(--tosca)}
+.caraisi{background:var(--kuningB);border:1px solid var(--kuning);border-left:6px solid var(--kuning);
+  border-radius:10px;padding:13px 18px;margin:0 0 16px;font-size:14.5px}
+.caraisi b{display:block;color:var(--amber);margin-bottom:6px}
+.caraisi ol{margin:0;padding-left:20px}
+.caraisi li{margin-bottom:4px}
+.caraisi p{margin:9px 0 0;color:var(--tinta)}
+.kisi{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+label.medan{display:block;font-size:14px;font-weight:600;margin-bottom:5px}
+input[type=text]{width:100%;padding:10px 12px;font:inherit;font-size:15px;color:var(--tinta);
+  background:#fff;border:1.5px solid #CFE0E3;border-radius:8px;outline:none}
+input[type=text]:focus{border-color:var(--tosca2);box-shadow:0 0 0 3px rgba(23,162,175,.15)}
+button{background:linear-gradient(105deg,var(--tosca),var(--tosca2));color:#fff;border:0;
+  border-radius:9px;padding:11px 24px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+button:hover{filter:brightness(1.07)}
+button.sekunder{background:var(--abuB);color:var(--tosca)}
+button:disabled{opacity:.45;cursor:not-allowed;filter:none}
+
+/* ---------- legenda ---------- */
+.legenda{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.legenda div{flex:1 1 200px;background:var(--toscaB);border:1px solid var(--tosca3);
+  border-radius:10px;padding:10px 13px;font-size:13.5px}
+.legenda b{display:block;color:var(--tosca);font-size:13px;margin-bottom:2px}
+
+/* ---------- bilah soal ---------- */
+.bilah{display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  background:#fff;border:1px solid var(--garis);border-radius:14px;padding:12px 18px;margin:20px 0 0}
+.bilah .nomor{font-size:15px;font-weight:700;color:var(--tosca0)}
+.bilah .jalur{flex:1 1 180px;min-width:150px}
+.bilah .rel{height:8px;background:var(--abuB);border-radius:999px;overflow:hidden}
+.bilah .maju{height:100%;width:0;border-radius:999px;
+  background:linear-gradient(90deg,var(--tosca2),var(--kuning));transition:width .3s}
+.cincin{position:relative;width:62px;height:62px;flex:0 0 62px}
+.cincin svg{transform:rotate(-90deg)}
+.cincin .sisa{transition:stroke-dashoffset 1s linear,stroke .3s}
+.cincin span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-size:13.5px;font-weight:700;color:var(--tosca0)}
+
+/* ---------- soal ---------- */
+.pil{display:inline-block;border-radius:999px;padding:2px 11px;font-size:11.5px;font-weight:700;
+  letter-spacing:.05em;margin-right:6px}
+.pil.sub{background:var(--toscaB);color:var(--tosca)}
+.pil.lvl{background:var(--kuningB);color:var(--amber)}
+.pil.bnt{background:var(--oranyeB);color:var(--oranye)}
+.stimulus{background:var(--abuB);border-left:4px solid var(--tosca2);border-radius:0 8px 8px 0;
+  padding:13px 16px;margin:14px 0;font-size:15.5px}
+.stem{font-size:16px;font-weight:600;margin:14px 0 12px}
+.opsi{display:block;border:1.5px solid #CFE0E3;border-radius:10px;padding:11px 14px;margin-bottom:9px;
+  cursor:pointer;font-size:15px;background:#fff;transition:border-color .15s,background .15s}
+.opsi:hover{border-color:var(--tosca3);background:#FBFEFE}
+.opsi input{margin-right:10px}
+.opsi.dipilih{border-color:var(--tosca2);background:var(--toscaB)}
+.opsi.benar{border-color:var(--hijau);background:var(--hijauB)}
+.opsi.salah{border-color:var(--merah);background:var(--merahB)}
+.opsi .huruf{font-weight:700;color:var(--tosca);margin-right:7px}
+table.bs{width:100%;border-collapse:collapse;margin:6px 0 12px;font-size:15px}
+table.bs th{background:var(--tosca);color:#fff;text-align:left;padding:9px 12px;font-size:13.5px}
+table.bs th.c,table.bs td.c{text-align:center;width:88px}
+table.bs td{border-bottom:1px solid #E4EDEF;padding:10px 12px;vertical-align:middle}
+table.bs tr:nth-child(even) td{background:#FAFDFD}
+table.bs td.kode{font-weight:700;color:var(--tosca);width:44px}
+table.bs tr.benar td{background:var(--hijauB)}
+table.bs tr.salah td{background:var(--merahB)}
+
+/* ---------- umpan balik ---------- */
+.feedback-head{margin:18px 0 12px}
+.result-pill{display:inline-block;border-radius:999px;padding:5px 16px;font-size:14px;font-weight:700}
+.result-pill.ok{background:var(--hijauB);color:var(--hijau);border:1px solid var(--hijau)}
+.result-pill.no{background:var(--merahB);color:var(--merah);border:1px solid var(--merah)}
+.result-pill.tm{background:var(--kuningB);color:var(--amber);border:1px solid var(--kuning)}
+.panel{border-radius:12px;padding:16px 20px;margin-bottom:14px}
+.panel h3{margin:0 0 8px;font-size:15px;letter-spacing:.03em;text-transform:uppercase}
+.panel.pembahasan{background:var(--toscaB);border:1px solid var(--tosca2)}
+.panel.pembahasan h3{color:var(--tosca)}
+.panel.pembahasan ol{margin:0;padding-left:20px}
+.panel.pembahasan li{margin-bottom:9px;font-size:14.5px}
+.panel.review{background:var(--kuningB);border:1px solid var(--kuning)}
+.panel.review h3{color:var(--amber)}
+.panel.review p{margin:0;font-size:14.5px}
+
+/* ---------- review jawaban ---------- */
+.reviewkep{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.reviewkep h2{margin:0;flex:1 1 auto}
+.kisinum{display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:9px;margin:4px 0 0}
+.rnum{background:var(--abuB);color:var(--tosca0);border:1.5px solid var(--garis);
+  border-radius:9px;padding:10px 0;font-size:15px;font-weight:700;text-align:center;
+  cursor:pointer;font-family:inherit}
+.rnum:hover{border-color:var(--tosca2)}
+.rnum.benar{background:var(--hijauB);border-color:var(--hijau);color:var(--hijau)}
+.rnum.salah{background:var(--merahB);border-color:var(--merah);color:var(--merah)}
+.rnum.aktif{outline:3px solid var(--kuning);outline-offset:1px}
+.ketnum{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--abu);margin-top:12px}
+.ketnum span{display:inline-flex;align-items:center;gap:6px}
+.ketnum i{width:14px;height:14px;border-radius:4px;display:inline-block;border:1px solid var(--garis)}
+.rjawabmu{font-size:14px;color:var(--abu);margin:0 0 10px}
+.rjawabmu b{color:var(--tinta)}
+.opsi.pilihanmu{border-color:var(--merah);background:var(--merahB)}
+.opsi.pilihanmu.benar{border-color:var(--hijau);background:var(--hijauB)}
+.tandaop{float:right;font-size:12px;font-weight:700;letter-spacing:.04em}
+.tandaop.k{color:var(--hijau)}
+.tandaop.p{color:var(--merah)}
+
+/* ---------- hasil ---------- */
+.skor{text-align:center;padding:10px 0 4px}
+.skor .angka{font-size:52px;font-weight:800;color:var(--tosca0);line-height:1}
+.skor .ket{font-size:14.5px;color:var(--abu)}
+table.ana{width:100%;border-collapse:collapse;margin:14px 0;font-size:14.5px}
+table.ana th{background:var(--tosca);color:#fff;text-align:left;padding:9px 12px;font-size:13.5px}
+table.ana td{border-bottom:1px solid #E4EDEF;padding:9px 12px}
+table.ana tr:nth-child(even) td{background:#FAFDFD}
+.rek{background:var(--oranyeB);border:1px solid var(--oranye2);border-left:6px solid var(--oranye);
+  border-radius:10px;padding:14px 18px;margin-bottom:12px}
+.rek b{color:var(--oranye)}
+.kaki{text-align:center;color:var(--abu);font-size:13px;padding:26px 0 34px}
+
+@media (max-width:640px){
+  .kepala h1{font-size:23px}
+  .bungkus{padding:0 13px}
+  .kisi{grid-template-columns:1fr}
+  table.bs th.c,table.bs td.c{width:66px}
+}
+</style>
+</head>
+<body>
+
+<header class="kepala">
+  <div class="bungkus">
+    <h1 id="judul">Latihan TKA Fisika &mdash; Usaha &amp; Energi</h1>
+    <p><b>Ini lembar latihan, bukan ujian.</b> Begitu kamu mengirim jawaban sebuah soal, pembahasannya langsung terbuka di layar yang sama. Hasil di lembar ini tidak dipakai untuk menilai kamu dan tidak memutuskan apa pun; gunanya satu saja, memperlihatkan di langkah mana jalanmu berbelok selagi masih sempat diperbaiki.</p>
+  </div>
+</header>
+
+<div class="bungkus">
+
+  <!-- ===================== LAYAR PEMBUKA ===================== -->
+  <section id="pembuka">
+    <div class="kartu">
+      <h2>Sebelum mulai</h2>
+      <div class="caraisi">
+        <b>Cara mengisi</b>
+        <ol>
+          <li>Isi nama dan kelasmu, lalu tentukan waktu tiap soal. Bawaannya dua menit.</li>
+          <li>Kerjakan satu soal, lalu tekan <i>Kirim jawaban</i>. Pembahasannya terbuka saat itu juga.</li>
+          <li>Baca pembahasannya sampai habis sebelum menekan <i>Soal berikutnya</i>. Di situlah latihan ini bekerja.</li>
+          <li>Di akhir ada ringkasan tiap bagian dan tombol untuk membuka ulang soal mana pun.</li>
+        </ol>
+        <p>Soal-soal di lembar ini sama dengan yang kamu temui di latihan kelas. Lembar ini memang untuk dilatih,
+        bukan untuk mengukur. Kerjakan tanpa kalkulator, dan pakai g = 10 m/s&sup2;.</p>
+      </div>
+      <div class="kisi">
+        <div><label class="medan" for="nama">Nama lengkap</label><input type="text" id="nama" placeholder="tulis namamu"></div>
+        <div><label class="medan" for="kelas">Kelas</label><input type="text" id="kelas" placeholder="contoh: XI-A"></div>
+        <div><label class="medan" for="durasi">Waktu tiap soal <i>(menit)</i></label>
+          <input type="text" id="durasi" inputmode="decimal" value="2"></div>
+      </div>
+      <p id="pesanPembuka" style="font-size:13.5px;color:var(--oranye);font-weight:600;margin:10px 0 0"></p>
+      <div class="legenda" id="legenda"></div>
+      <p style="font-size:14.5px;color:var(--abu);margin:16px 0 0">
+        Kerjakan tanpa kalkulator. Waktu tiap soal diisi sekali di atas &mdash; bawaannya dua menit &mdash;
+        dan berlaku sama untuk seluruh 25 soal. Bila waktunya habis, soal itu dianggap tidak dijawab dan
+        pembahasannya langsung terbuka. Jawaban yang sudah dikirim tidak dapat diubah.
+      </p>
+      <div style="margin-top:18px"><button id="mulai" disabled>Mulai mengerjakan</button></div>
+    </div>
+  </section>
+
+  <!-- ===================== SOAL ===================== -->
+  <section id="layarSoal" hidden>
+    <div class="bilah">
+      <div class="nomor" id="nomor">Soal 1 dari 25</div>
+      <div class="jalur"><div class="rel"><div class="maju" id="maju"></div></div></div>
+      <div class="cincin">
+        <svg width="62" height="62" viewBox="0 0 62 62">
+          <circle cx="31" cy="31" r="26" fill="none" stroke="#E3F5F6" stroke-width="6"></circle>
+          <circle id="sisa" class="sisa" cx="31" cy="31" r="26" fill="none" stroke="#17A2AF"
+                  stroke-width="6" stroke-linecap="round"
+                  stroke-dasharray="163.36" stroke-dashoffset="0"></circle>
+        </svg>
+        <span id="detik">2:00</span>
+      </div>
+    </div>
+
+    <div class="kartu">
+      <div id="lencana"></div>
+      <div class="stimulus" id="stimulus"></div>
+      <div class="stem" id="stem"></div>
+      <div id="jawaban"></div>
+      <div style="margin-top:16px" id="tombolBar">
+        <button id="kirim" disabled>Kirim jawaban</button>
+      </div>
+      <div id="umpan"></div>
+    </div>
+  </section>
+
+  <!-- ===================== HASIL ===================== -->
+  <section id="layarHasil" hidden>
+    <div class="kartu">
+      <div class="skor">
+        <div class="angka" id="skorAngka">0</div>
+        <div class="ket" id="skorKet">dari 100</div>
+      </div>
+      <p id="sapaan" style="text-align:center;font-size:15px;margin:10px 0 0"></p>
+      <h2 style="margin-top:22px">Penguasaan tiap bagian</h2>
+      <table class="ana">
+        <thead><tr><th>Bagian</th><th>Benar</th><th>Penguasaan</th></tr></thead>
+        <tbody id="anaBody"></tbody>
+      </table>
+      <div id="rekomendasi"></div>
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">
+        <button id="tblReview">Review Jawaban</button>
+        <button id="ulang" class="sekunder">Kerjakan ulang dari awal</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REVIEW JAWABAN ===================== -->
+  <section id="layarReview" hidden>
+    <div class="kartu">
+      <div class="reviewkep">
+        <h2>Review Jawaban</h2>
+        <button id="tblKembali" class="sekunder">Kembali ke hasil</button>
+      </div>
+      <p style="font-size:14.5px;color:var(--abu);margin:0 0 12px">
+        Klik nomor mana pun &mdash; tidak perlu berurutan. Jawabanmu, kunci, dan pembahasannya
+        terbuka di bawah.
+      </p>
+      <div class="kisinum" id="kisinum"></div>
+      <div class="ketnum">
+        <span><i style="background:var(--hijauB);border-color:var(--hijau)"></i> jawabanmu benar</span>
+        <span><i style="background:var(--merahB);border-color:var(--merah)"></i> belum tepat</span>
+      </div>
+    </div>
+    <div id="reviewIsi"></div>
+  </section>
+
+</div>
+
+<div class="kaki">CMS FIMS &middot; Fisika<br>Fitrah Islamic World Academy</div>
+
+<!-- simpanan jawaban: nilainya dicerminkan ke atribut supaya bertahan bila berkas diserialkan ulang -->
+<input type="text" id="simpanan" hidden value="">
+
+<script>
+(function () {
+  "use strict";
+
+  var Q = [{"no":1,"sub":1,"bentuk":"PG","level":"L1","stimulus":"Di sebuah pelabuhan peti kemas, sebuah crane derek menarik peti kemas mendatar sejauh 5,0 m menggunakan gaya tarik 60 N yang searah penuh dengan arah perpindahan peti kemas itu. Peti kemas itu sendiri dicat dengan kode warna biru sesuai jalur pelayarannya.","stem":"Usaha yang dilakukan gaya tarik crane terhadap peti kemas itu adalah &hellip; J.","options":["12","60","300","600","1500"],"correct":2,"distraktor":"Kode warna biru pada peti kemas hanyalah penanda jalur pelayaran, sama sekali tidak memengaruhi perhitungan usaha oleh gaya tarik.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> besar usaha yang dilakukan gaya tarik crane terhadap peti kemas, dalam joule (J).</li><li><b>Formulasi yang digunakan:</b> W = F s cos&theta;, dengan &theta; = sudut antara arah gaya dan arah perpindahan.</li><li><b>Identifikasi data:</b> gaya tarik F = 60 N dan jarak perpindahan s = 5,0 m disebut langsung, dan gaya itu searah penuh dengan perpindahan sehingga &theta; = 0&deg;.</li><li><b>Informasi distraktor (tidak diperlukan):</b> kode warna biru pada peti kemas. Itu penanda jalur pelayaran, tidak muncul dalam rumus usaha.</li><li><b>Substitusi nilai ke formula:</b> W = 60 &times; 5,0 &times; cos0&deg;.</li><li><b>Penyelesaian:</b> cos0&deg; = 1, sehingga W = 60 &times; 5,0 &times; 1 = 300 J. Opsi 12 lahir dari salah membagi alih-alih mengalikan; opsi 1500 lahir dari salah mengalikan dengan angka lain yang tidak relevan.</li><li><b>Kesimpulan jawaban:</b> usaha yang dilakukan gaya tarik crane adalah 300 J, yakni <b>opsi C</b>.</li></ol>","review":"<p>Ketika gaya searah penuh dengan arah perpindahan (&theta; = 0&deg;), usaha dihitung langsung dari W = F s, sebab cos0&deg; = 1 dan tidak mengurangi besar gaya yang bekerja sama sekali.</p>"},{"no":2,"sub":1,"bentuk":"PG","level":"L2","stimulus":"Seorang penumpang di bandara menahan koper travel agar tidak meluncur turun sendiri di eskalator barang yang miring. Gaya tahan yang diberikan penumpang itu besarnya 40 N, membentuk sudut 120&deg; terhadap arah gerak koper (karena gaya itu menahan, bukan mendorong searah gerak), sepanjang perpindahan koper 3,0 m. (cos120&deg; = &minus;0,5)","stem":"Usaha yang dilakukan gaya tahan penumpang itu terhadap koper adalah &hellip; J.","options":["&minus;120","&minus;60","0","60","120"],"correct":1,"distraktor":"Tidak ada angka pengganggu tersendiri pada soal ini; kekeliruan yang perlu dihindari adalah mengabaikan tanda negatif dari cos120&deg;, sebab gaya tahan ini justru melawan arah gerak koper.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> besar usaha yang dilakukan gaya tahan penumpang terhadap koper, dalam joule (J), termasuk tandanya.</li><li><b>Formulasi yang digunakan:</b> W = F s cos&theta;, dengan &theta; = sudut antara gaya dan arah perpindahan; usaha bisa bernilai negatif bila &theta; &gt; 90&deg;.</li><li><b>Identifikasi data:</b> gaya tahan F = 40 N, sudut &theta; = 120&deg; (cos120&deg; = &minus;0,5), dan jarak s = 3,0 m semuanya disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka tersendiri yang tidak relevan; kewaspadaan diperlukan pada tanda hasil akhirnya.</li><li><b>Substitusi nilai ke formula:</b> W = 40 &times; 3,0 &times; (&minus;0,5).</li><li><b>Penyelesaian:</b> 40 &times; 3,0 = 120, lalu 120 &times; (&minus;0,5) = &minus;60. Jadi W = &minus;60 J. Opsi 60 keliru karena mengabaikan tanda negatif; opsi 0 keliru karena menyangka gaya tegak lurus arah gerak.</li><li><b>Kesimpulan jawaban:</b> usaha oleh gaya tahan penumpang adalah &minus;60 J, yakni <b>opsi B</b>.</li></ol>","review":"<p>Ketika sudut antara gaya dan arah perpindahan lebih dari 90&deg;, usahanya bernilai negatif &mdash; gaya itu justru mengurangi energi kinetik benda, bukan menambahnya, walau besarnya (magnitude) tetap dihitung dengan rumus yang sama.</p>"},{"no":3,"sub":1,"bentuk":"PG","level":"L3","stimulus":"Sebuah forklift di gudang ritel mendorong palet barang dengan gaya 90 N yang membentuk sudut 60&deg; terhadap arah gerak palet (cos60&deg; = 0,5). Palet itu bergerak dengan laju mendatar tetap 1,2 m/s selama 5,0 sekon. Gudang tersebut menggunakan sistem rak bertingkat lima untuk efisiensi ruang.","stem":"Usaha yang dilakukan gaya dorong forklift terhadap palet itu adalah &hellip; J.","options":["54","108","270","324","540"],"correct":2,"distraktor":"Sistem rak bertingkat lima di gudang adalah keterangan tentang tata letak ruang penyimpanan, tidak muncul dalam rumus usaha maupun perhitungan jarak tempuh palet.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> besar usaha yang dilakukan gaya dorong forklift terhadap palet, dalam joule (J).</li><li><b>Formulasi yang digunakan:</b> W = F s cos&theta;, dengan jarak tempuh s = laju &times; waktu bila lajunya tetap (konstan).</li><li><b>Identifikasi data:</b> gaya F = 90 N dan sudut &theta; = 60&deg; disebut langsung. Jarak tempuh s tidak disebut langsung sebagai angka, sehingga harus diturunkan lebih dulu dari laju tetap 1,2 m/s selama 5,0 sekon: s = v &times; t.</li><li><b>Informasi distraktor (tidak diperlukan):</b> sistem rak bertingkat lima. Itu keterangan tata letak gudang, tidak muncul dalam rumus usaha.</li><li><b>Substitusi nilai ke formula:</b> s = 1,2 &times; 5,0 = 6,0 m. W = 90 &times; 6,0 &times; 0,5.</li><li><b>Penyelesaian:</b> s = 1,2 &times; 5,0 = 6,0 m. Lalu W = 90 &times; 6,0 &times; 0,5 = 540 &times; 0,5 = 270 J. Opsi 540 lahir dari lupa mengalikan dengan cos60&deg;; opsi 108 lahir dari salah menghitung jarak tempuh.</li><li><b>Kesimpulan jawaban:</b> usaha yang dilakukan gaya dorong forklift adalah 270 J, yakni <b>opsi C</b>.</li></ol>","review":"<p>Ketika jarak tempuh tidak diberikan langsung tetapi laju tetap dan waktu tempuh diketahui, jarak itu harus diturunkan lebih dulu lewat s = v &times; t, baru dipakai pada rumus usaha W = F s cos&theta;.</p>"},{"no":4,"sub":1,"bentuk":"PGK","level":"L3","stimulus":"Sebuah mesin penggulung kain di pabrik tekstil menarik gulungan kain dengan gaya 100 N yang membentuk sudut 37&deg; terhadap arah gerak gulungan (sin37&deg; = 0,6; cos37&deg; = 0,8). Lintasan gulungan itu ditandai mulai pada posisi 1,0 m dan berakhir pada posisi 5,0 m dari titik awal jalur mesin.","stem":"Dari pernyataan berikut tentang usaha yang dilakukan mesin itu, manakah yang <b>benar</b>? (jawaban bisa lebih dari satu)","options":["Usaha total yang dilakukan gaya tarik mesin sepanjang lintasan itu adalah 320 J.","Karena sudut antara gaya dan arah gerak adalah 37&deg; (bukan 0&deg;), hanya komponen gaya yang searah perpindahanlah yang menghasilkan usaha.","Jika sudutnya diperbesar menjadi 90&deg; dengan besar gaya dan jarak yang sama, usaha yang dihasilkan akan tetap 320 J.","Komponen gaya yang tegak lurus arah gerak (F sin37&deg;) turut menyumbang usaha pada gerak mendatar gulungan ini.","Bila jarak tempuhnya menjadi dua kali lipat dengan gaya dan sudut yang tetap sama, usaha yang dihasilkan juga menjadi dua kali lipat."],"correct":[0,1,4],"distraktor":"Tidak ada angka pengganggu numerik tersendiri pada soal ini; kewaspadaan yang dibutuhkan adalah tidak keliru menganggap seluruh gaya (bukan hanya komponennya) menghasilkan usaha.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> pernyataan mana yang benar tentang usaha yang dilakukan gaya tarik mesin penggulung kain.</li><li><b>Formulasi yang digunakan:</b> W = F s cos&theta;, dengan jarak s = posisi akhir &minus; posisi mulai; hanya komponen gaya searah perpindahan (F cos&theta;) yang menghasilkan usaha, komponen tegak lurus (F sin&theta;) tidak.</li><li><b>Identifikasi data:</b> gaya F = 100 N dan sudut &theta; = 37&deg; disebut langsung. Jarak tempuh s tidak disebut langsung sebagai angka, melainkan lewat posisi mulai (1,0 m) dan posisi akhir (5,0 m), sehingga s = 5,0 &minus; 1,0 = 4,0 m.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka tersendiri yang tidak relevan; kewaspadaan diperlukan pada pemahaman konsep komponen gaya.</li><li><b>Substitusi nilai ke formula:</b> s = 5,0 &minus; 1,0 = 4,0 m. W = 100 &times; 4,0 &times; 0,8.</li><li><b>Penyelesaian:</b> s = 5,0 &minus; 1,0 = 4,0 m. W = 100 &times; 4,0 &times; 0,8 = 320 J &mdash; pernyataan pertama <b>benar</b>. Pernyataan kedua <b>benar</b> karena memang hanya komponen searah perpindahan yang menghasilkan usaha. Pernyataan ketiga <b>salah</b> karena pada &theta; = 90&deg;, cos90&deg; = 0, sehingga usahanya menjadi 0 J, bukan tetap 320 J. Pernyataan keempat <b>salah</b> karena komponen tegak lurus arah gerak tidak pernah menghasilkan usaha pada arah itu. Pernyataan kelima <b>benar</b> karena W = F s cos&theta; berbanding lurus terhadap s ketika F dan &theta; tetap.</li><li><b>Kesimpulan jawaban:</b> pernyataan yang benar adalah <b>opsi A, B, dan E</b>.</li></ol>","review":"<p>Usaha hanya dihasilkan oleh komponen gaya yang searah (atau berlawanan arah) dengan perpindahan; komponen tegak lurus perpindahan, betapa pun besarnya, tidak pernah menyumbang usaha sama sekali &mdash; inilah sebabnya rumus W = F s cos&theta; selalu memuat faktor cosinus.</p>"},{"no":5,"sub":2,"bentuk":"PG","level":"L1","stimulus":"Sebuah troli obat di gudang apotek rumah sakit mula-mula diam, lalu didorong petugas dengan gaya tetap 15 N searah penuh dengan arah geraknya sepanjang 4,0 m pada lantai yang licin sempurna. Troli itu sendiri dilengkapi rak berlapis empat untuk menyimpan obat.","stem":"Energi kinetik troli itu tepat setelah menempuh jarak tersebut adalah &hellip; J.","options":["3,75","11","19","60","240"],"correct":3,"distraktor":"Rak berlapis empat pada troli adalah keterangan desain penyimpanan obat, tidak muncul dalam perhitungan usaha maupun energi kinetik.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> energi kinetik troli tepat setelah menempuh jarak yang diberikan, dalam joule (J).</li><li><b>Formulasi yang digunakan:</b> teorema usaha-energi, W<sub>total</sub> = &Delta;E<sub>k</sub>. Karena troli mula-mula diam (E<sub>k</sub> awal = 0) dan lantai licin sempurna (tidak ada gesekan), maka W<sub>total</sub> = W oleh gaya dorong = F s.</li><li><b>Identifikasi data:</b> gaya dorong F = 15 N dan jarak s = 4,0 m disebut langsung, gaya searah penuh dengan gerak, dan troli mula-mula diam.</li><li><b>Informasi distraktor (tidak diperlukan):</b> rak berlapis empat pada troli. Itu keterangan desain penyimpanan, tidak muncul dalam rumus usaha maupun energi kinetik.</li><li><b>Substitusi nilai ke formula:</b> E<sub>k</sub> = W = 15 &times; 4,0.</li><li><b>Penyelesaian:</b> E<sub>k</sub> = 15 &times; 4,0 = 60 J. Opsi 19 dan 11 lahir dari kekeliruan aritmetika; opsi 240 lahir dari salah mengalikan angka yang tidak relevan.</li><li><b>Kesimpulan jawaban:</b> energi kinetik troli setelah menempuh jarak itu adalah 60 J, yakni <b>opsi D</b>.</li></ol>","review":"<p>Ketika benda mula-mula diam dan tidak ada gesekan, seluruh usaha oleh gaya dorong berubah langsung menjadi energi kinetik benda: E<sub>k</sub> = W = F s &mdash; inilah bentuk paling sederhana dari teorema usaha-energi.</p>"},{"no":6,"sub":2,"bentuk":"PG","level":"L2","stimulus":"Sebuah balok mesin di lini produksi otomotif bermassa 2,0 kg didorong dari keadaan diam dengan gaya 25 N sepanjang lintasan mendatar kasar sejauh 5,0 m. Gaya gesek yang melawan gerak balok itu besarnya 5,0 N sepanjang lintasan yang sama. Lini produksi itu beroperasi dalam tiga sif kerja setiap harinya.","stem":"Laju balok mesin itu tepat setelah menempuh jarak tersebut adalah &hellip; m/s.","options":["5,0","7,1","10","20","100"],"correct":2,"distraktor":"Tiga sif kerja lini produksi setiap harinya adalah keterangan jadwal operasional pabrik, tidak muncul dalam perhitungan usaha maupun energi kinetik balok.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju balok mesin tepat setelah menempuh jarak yang diberikan, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> W<sub>total</sub> = &Delta;E<sub>k</sub>, dengan W<sub>total</sub> = (F &minus; f) &times; s karena gaya dorong dan gaya gesek berlawanan arah. Karena balok mula-mula diam, E<sub>k</sub> akhir = W<sub>total</sub>.</li><li><b>Identifikasi data:</b> massa m = 2,0 kg, gaya dorong F = 25 N, gaya gesek f = 5,0 N, dan jarak s = 5,0 m semuanya disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tiga sif kerja lini produksi. Itu keterangan jadwal operasional, tidak muncul dalam rumus usaha maupun energi kinetik.</li><li><b>Substitusi nilai ke formula:</b> W<sub>total</sub> = (25 &minus; 5,0) &times; 5,0. E<sub>k</sub> = &frac12; &times; 2,0 &times; v&sup2;.</li><li><b>Penyelesaian:</b> W<sub>total</sub> = 20 &times; 5,0 = 100 J = E<sub>k</sub>. Maka &frac12; &times; 2,0 &times; v&sup2; = 100, sehingga v&sup2; = 100, dan v = &radic;100 = 10 m/s. Opsi 20 lahir dari lupa mengakarkan; opsi 5,0 lahir dari lupa mengurangkan gaya gesek terlebih dulu.</li><li><b>Kesimpulan jawaban:</b> laju balok mesin setelah menempuh jarak itu adalah 10 m/s, yakni <b>opsi C</b>.</li></ol>","review":"<p>Ketika ada gesekan, usaha total yang menentukan perubahan energi kinetik dihitung dari gaya neto (gaya dorong dikurangi gaya gesek) dikalikan jarak tempuh, bukan dari gaya dorong saja.</p>"},{"no":7,"sub":2,"bentuk":"PGK","level":"L3","stimulus":"Sebuah balok uji bermassa 2,0 kg diketahui momentumnya 20 kg&middot;m/s saat memasuki sebuah lintasan mendatar kasar di laboratorium teknik. Sepanjang lintasan kasar itu sejauh 4,0 m, balok itu mengalami gaya gesek tetap sebesar 9,0 N yang melawan arah geraknya.","stem":"Dari pernyataan berikut tentang balok uji itu, manakah yang <b>benar</b>? (jawaban bisa lebih dari satu)","options":["Energi kinetik balok itu sebelum memasuki lintasan kasar adalah 100 J.","Usaha oleh gaya gesek sepanjang lintasan itu adalah 36 J, dan nilainya mengurangi energi kinetik balok.","Energi kinetik akhir balok itu, setelah menempuh seluruh lintasan kasar, adalah 72 J.","Laju akhir balok itu adalah 9,0 m/s.","Karena gesekan bekerja berlawanan arah gerak, usaha totalnya terhadap balok bernilai positif."],"correct":[0,1],"distraktor":"Momentum awal 20 kg&middot;m/s sengaja diberikan bukan sebagai angka yang langsung dipakai di rumus energi kinetik, melainkan sebagai data antara untuk menurunkan laju awal balok lebih dulu.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> pernyataan mana yang benar tentang energi kinetik dan laju balok uji sebelum dan sesudah melewati lintasan kasar.</li><li><b>Formulasi yang digunakan:</b> v<sub>0</sub> = p/m untuk mencari laju awal dari momentum; E<sub>k,0</sub> = &frac12;mv<sub>0</sub>&sup2;; W<sub>f</sub> = f &times; d (usaha gesek, mengurangi energi kinetik); E<sub>k,akhir</sub> = E<sub>k,0</sub> &minus; W<sub>f</sub>.</li><li><b>Identifikasi data:</b> massa m = 2,0 kg dan momentum p = 20 kg&middot;m/s disebut langsung, tetapi laju awal v<sub>0</sub> tidak disebut langsung sebagai angka, sehingga harus diturunkan lebih dulu: v<sub>0</sub> = p/m. Gaya gesek f = 9,0 N dan jarak d = 4,0 m disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka yang sepenuhnya tidak relevan, tetapi momentum 20 kg&middot;m/s sengaja diberikan sebagai data antara untuk mencari v<sub>0</sub>, bukan untuk dipakai langsung.</li><li><b>Substitusi nilai ke formula:</b> v<sub>0</sub> = 20/2,0. E<sub>k,0</sub> = &frac12; &times; 2,0 &times; v<sub>0</sub>&sup2;. W<sub>f</sub> = 9,0 &times; 4,0. E<sub>k,akhir</sub> = E<sub>k,0</sub> &minus; W<sub>f</sub>.</li><li><b>Penyelesaian:</b> v<sub>0</sub> = 20 &divide; 2,0 = 10 m/s. E<sub>k,0</sub> = &frac12; &times; 2,0 &times; 10&sup2; = 100 J &mdash; pernyataan pertama <b>benar</b>. W<sub>f</sub> = 9,0 &times; 4,0 = 36 J, mengurangi energi kinetik &mdash; pernyataan kedua <b>benar</b>. E<sub>k,akhir</sub> = 100 &minus; 36 = 64 J, bukan 72 J seperti pernyataan ketiga &mdash; <b>salah</b>. Laju akhir: &frac12; &times; 2,0 &times; v&sup2; = 64, v&sup2; = 64, v = 8,0 m/s, bukan 9,0 m/s seperti pernyataan keempat &mdash; <b>salah</b>. Pernyataan kelima <b>salah</b> karena gesekan yang melawan arah gerak menghasilkan usaha negatif, bukan positif.</li><li><b>Kesimpulan jawaban:</b> pernyataan yang benar adalah <b>opsi A dan B</b>.</li></ol>","review":"<p>Ketika laju awal tidak diberikan langsung tetapi momentum dan massa diketahui, laju itu diturunkan lebih dulu lewat v = p/m, baru energi kinetik dan pengaruh usaha gesek dihitung berurutan darinya.</p>"},{"no":8,"sub":2,"bentuk":"BS","level":"L3","stimulus":"Sebuah kotak uji bermassa 1,5 kg bergerak dengan laju 4,0 m/s memasuki sebuah lintasan mendatar kasar di bengkel las, mengalami gaya gesek tetap 3,0 N. Lintasan kasar itu ditandai mulai pada posisi 1,0 m dan berakhir pada posisi 5,0 m dari titik awal jalur uji.","stem":"Tentukan benar atau salah untuk setiap pernyataan berikut mengenai kotak uji tersebut.","options":["Energi kinetik kotak itu saat mulai memasuki lintasan kasar adalah 12 J.","Kotak itu tiba tepat di ujung lintasan kasar dengan energi kinetik akhir 0 J (berhenti persis di ujung).","Karena usaha gesekan hanya bergantung pada besar gaya gesek dan bukan pada jarak tempuh, memperpanjang lintasan tidak akan mengubah besar usaha gesek total."],"correct":["B","B","S"],"distraktor":"Penandaan posisi mulai dan akhir lintasan sengaja diberikan sebagai dua titik acuan, bukan sebagai panjang lintasan itu sendiri, sehingga panjang lintasan harus diturunkan lebih dulu dari selisih keduanya.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> kebenaran tiga pernyataan tentang energi kinetik kotak uji dan usaha gesekan sepanjang lintasan kasar.</li><li><b>Formulasi yang digunakan:</b> E<sub>k,0</sub> = &frac12;mv&sup2;; W<sub>f</sub> = f &times; d, dengan d = posisi akhir &minus; posisi mulai; E<sub>k,akhir</sub> = E<sub>k,0</sub> &minus; W<sub>f</sub>.</li><li><b>Identifikasi data:</b> massa m = 1,5 kg, laju awal v = 4,0 m/s, dan gaya gesek f = 3,0 N disebut langsung. Panjang lintasan d tidak disebut langsung sebagai angka, melainkan lewat posisi mulai (1,0 m) dan posisi akhir (5,0 m), sehingga d = 5,0 &minus; 1,0 = 4,0 m.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka yang sepenuhnya tidak relevan, tetapi kedua posisi (bukan panjang lintasan langsung) sengaja diberikan sebagai data antara.</li><li><b>Substitusi nilai ke formula:</b> d = 5,0 &minus; 1,0 = 4,0 m. E<sub>k,0</sub> = &frac12; &times; 1,5 &times; 4,0&sup2;. W<sub>f</sub> = 3,0 &times; 4,0.</li><li><b>Penyelesaian:</b> d = 5,0 &minus; 1,0 = 4,0 m. E<sub>k,0</sub> = &frac12; &times; 1,5 &times; 16 = 12 J &mdash; pernyataan pertama <b>benar</b>. W<sub>f</sub> = 3,0 &times; 4,0 = 12 J, sehingga E<sub>k,akhir</sub> = 12 &minus; 12 = 0 J, artinya kotak berhenti persis di ujung lintasan &mdash; pernyataan kedua <b>benar</b>. Pernyataan ketiga <b>salah</b> karena usaha gesek W<sub>f</sub> = f &times; d justru berbanding lurus dengan jarak tempuh d; memperpanjang lintasan akan menambah besar usaha gesek total.</li><li><b>Kesimpulan jawaban:</b> I Benar, II Benar, III Salah.</li></ol>","review":"<p>Usaha gesekan W<sub>f</sub> = f &times; d selalu berbanding lurus dengan jarak tempuh &mdash; semakin panjang lintasan kasar yang dilalui, semakin besar energi kinetik yang dihabiskan oleh gesekan, sampai-sampai bisa membuat benda berhenti persis sebelum mencapai ujung.</p>"},{"no":9,"sub":3,"bentuk":"PG","level":"L2","stimulus":"Sebuah keranjang belanja beroda di pasar swalayan bermassa 4,0 kg didorong hingga bergerak dengan laju 3,0 m/s pada lantai mendatar. Pasar swalayan itu buka setiap hari mulai pukul tujuh pagi.","stem":"Energi kinetik keranjang belanja itu adalah &hellip; J.","options":["6,0","12","18","24","36"],"correct":2,"distraktor":"Jam buka pasar swalayan mulai pukul tujuh pagi adalah keterangan operasional toko, tidak muncul dalam rumus energi kinetik.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> besar energi kinetik keranjang belanja, dalam joule (J).</li><li><b>Formulasi yang digunakan:</b> E<sub>k</sub> = &frac12;mv&sup2;.</li><li><b>Identifikasi data:</b> massa m = 4,0 kg dan laju v = 3,0 m/s disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> jam buka pasar swalayan. Itu keterangan operasional toko, tidak muncul dalam rumus energi kinetik.</li><li><b>Substitusi nilai ke formula:</b> E<sub>k</sub> = &frac12; &times; 4,0 &times; 3,0&sup2;.</li><li><b>Penyelesaian:</b> 3,0&sup2; = 9,0. Lalu &frac12; &times; 4,0 &times; 9,0 = 2,0 &times; 9,0 = 18 J. Opsi 36 lahir dari lupa mengalikan dengan &frac12;; opsi 6,0 lahir dari salah mengalikan massa dengan laju saja tanpa dikuadratkan.</li><li><b>Kesimpulan jawaban:</b> energi kinetik keranjang belanja itu adalah 18 J, yakni <b>opsi C</b>.</li></ol>","review":"<p>Energi kinetik selalu dihitung dari E<sub>k</sub> = &frac12;mv&sup2; &mdash; laju harus dikuadratkan lebih dulu sebelum dikalikan dengan massa dan &frac12;, bukan sekadar dikalikan langsung dengan massa.</p>"},{"no":10,"sub":3,"bentuk":"PG","level":"L2","stimulus":"Sebuah kotak buku bermassa 3,0 kg diletakkan di rak teratas perpustakaan kota, pada ketinggian 2,5 m dari lantai (dijadikan acuan). Percepatan gravitasi diambil g = 10 m/s&sup2;. Perpustakaan itu memiliki koleksi lebih dari sepuluh ribu judul buku.","stem":"Energi potensial kotak buku itu, diukur dari lantai, adalah &hellip; J.","options":["7,5","25","30","75","750"],"correct":3,"distraktor":"Jumlah koleksi lebih dari sepuluh ribu judul buku adalah keterangan tentang perpustakaan secara keseluruhan, tidak muncul dalam rumus energi potensial.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> besar energi potensial kotak buku, diukur dari lantai, dalam joule (J).</li><li><b>Formulasi yang digunakan:</b> E<sub>p</sub> = mgh.</li><li><b>Identifikasi data:</b> massa m = 3,0 kg dan ketinggian h = 2,5 m disebut langsung, g = 10 m/s&sup2; disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> jumlah koleksi buku perpustakaan. Itu keterangan umum perpustakaan, tidak muncul dalam rumus energi potensial.</li><li><b>Substitusi nilai ke formula:</b> E<sub>p</sub> = 3,0 &times; 10 &times; 2,5.</li><li><b>Penyelesaian:</b> 3,0 &times; 10 = 30, lalu 30 &times; 2,5 = 75 J. Opsi 750 lahir dari salah menempatkan koma desimal; opsi 25 lahir dari lupa mengalikan dengan massa.</li><li><b>Kesimpulan jawaban:</b> energi potensial kotak buku itu adalah 75 J, yakni <b>opsi D</b>.</li></ol>","review":"<p>Energi potensial gravitasi selalu dihitung dari E<sub>p</sub> = mgh, dengan h diukur terhadap titik acuan yang dipilih &mdash; di sini, lantai perpustakaan.</p>"},{"no":11,"sub":3,"bentuk":"PG","level":"L3","stimulus":"Sebuah lampu gantung dekoratif bermassa 2,0 kg dipasang di sebuah aula pertemuan, tergantung 0,3 m di bawah langit-langit yang tingginya 1,8 m dari lantai aula. Percepatan gravitasi diambil g = 10 m/s&sup2;. Aula itu mampu menampung hingga dua ratus kursi.","stem":"Energi potensial lampu gantung itu, diukur dari lantai aula, adalah &hellip; J.","options":["6,0","24","30","36","60"],"correct":2,"distraktor":"Kapasitas aula hingga dua ratus kursi adalah keterangan tentang daya tampung ruangan, tidak muncul dalam rumus energi potensial.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> besar energi potensial lampu gantung, diukur dari lantai aula, dalam joule (J).</li><li><b>Formulasi yang digunakan:</b> E<sub>p</sub> = mgh, dengan h = tinggi langit-langit &minus; jarak lampu di bawah langit-langit.</li><li><b>Identifikasi data:</b> massa m = 2,0 kg disebut langsung. Ketinggian lampu dari lantai tidak disebut langsung sebagai angka, melainkan lewat tinggi langit-langit dari lantai (1,8 m) dan jarak lampu di bawah langit-langit (0,3 m), sehingga h = 1,8 &minus; 0,3 = 1,5 m.</li><li><b>Informasi distraktor (tidak diperlukan):</b> kapasitas aula hingga dua ratus kursi. Itu keterangan daya tampung ruangan, tidak muncul dalam rumus energi potensial.</li><li><b>Substitusi nilai ke formula:</b> h = 1,8 &minus; 0,3 = 1,5 m. E<sub>p</sub> = 2,0 &times; 10 &times; 1,5.</li><li><b>Penyelesaian:</b> h = 1,8 &minus; 0,3 = 1,5 m. E<sub>p</sub> = 2,0 &times; 10 &times; 1,5 = 20 &times; 1,5 = 30 J. Opsi 36 lahir dari salah memakai h = 1,8 m langsung tanpa mengurangkan jarak gantungnya; opsi 6,0 lahir dari lupa mengalikan dengan g.</li><li><b>Kesimpulan jawaban:</b> energi potensial lampu gantung itu adalah 30 J, yakni <b>opsi C</b>.</li></ol>","review":"<p>Ketika ketinggian benda tidak diberikan langsung tetapi posisi acuan lain dan jarak relatifnya diketahui, tinggi h yang sebenarnya harus diturunkan lebih dulu lewat pengurangan, baru dipakai pada rumus E<sub>p</sub> = mgh.</p>"},{"no":12,"sub":3,"bentuk":"BS","level":"L3","stimulus":"Sebuah bola pameran sains bermassa 2,5 kg bergerak mendatar menempuh jarak 6,0 m dalam waktu 1,5 sekon, pada ketinggian 1,2 m dari lantai ruang pameran (dijadikan acuan). Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Tentukan benar atau salah untuk setiap pernyataan berikut mengenai bola pameran tersebut.","options":["Energi kinetik bola akibat gerak mendatarnya adalah 20 J.","Energi potensial bola pada ketinggian itu adalah 24 J.","Karena laju mendatar bola tidak diketahui secara langsung dari soal, satu-satunya cara mengetahuinya adalah menerka nilainya."],"correct":["B","S","S"],"distraktor":"Waktu tempuh 1,5 sekon sengaja diberikan bersama jarak 6,0 m sebagai dua data untuk menurunkan laju bola lebih dulu, bukan sebagai angka yang langsung dipakai pada rumus energi kinetik.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> kebenaran tiga pernyataan tentang energi kinetik dan energi potensial bola pameran.</li><li><b>Formulasi yang digunakan:</b> v = s/t untuk menurunkan laju dari jarak dan waktu tempuh; E<sub>k</sub> = &frac12;mv&sup2;; E<sub>p</sub> = mgh.</li><li><b>Identifikasi data:</b> massa m = 2,5 kg dan ketinggian h = 1,2 m disebut langsung. Laju v tidak disebut langsung sebagai angka, sehingga harus diturunkan lebih dulu dari jarak 6,0 m dan waktu 1,5 sekon: v = s/t.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka yang sepenuhnya tidak relevan, tetapi jarak dan waktu tempuh sengaja diberikan sebagai data antara untuk mencari laju, bukan untuk dipakai langsung.</li><li><b>Substitusi nilai ke formula:</b> v = 6,0/1,5. E<sub>k</sub> = &frac12; &times; 2,5 &times; v&sup2;. E<sub>p</sub> = 2,5 &times; 10 &times; 1,2.</li><li><b>Penyelesaian:</b> v = 6,0 &divide; 1,5 = 4,0 m/s. E<sub>k</sub> = &frac12; &times; 2,5 &times; 4,0&sup2; = 1,25 &times; 16 = 20 J &mdash; pernyataan pertama <b>benar</b>. E<sub>p</sub> = 2,5 &times; 10 &times; 1,2 = 30 J, bukan 24 J seperti pernyataan kedua &mdash; <b>salah</b>. Pernyataan ketiga <b>salah</b> karena laju bola justru bisa diturunkan secara pasti lewat v = s/t dari data jarak dan waktu yang diberikan, tidak perlu menerka.</li><li><b>Kesimpulan jawaban:</b> I Benar, II Salah, III Salah.</li></ol>","review":"<p>Ketika laju tidak diberikan langsung tetapi jarak tempuh dan waktu tempuhnya diketahui, laju itu selalu bisa diturunkan secara pasti lewat v = s/t &mdash; tidak pernah perlu menerka nilai sebuah besaran yang sebenarnya bisa dihitung dari data yang ada.</p>"},{"no":13,"sub":4,"bentuk":"PG","level":"L2","stimulus":"Sebuah mobil mainan RC di sirkuit balap mini dilepas diam dari puncak lintasan licin sepenuhnya, pada ketinggian 0,8 m dari dasar lintasan (dijadikan acuan). Percepatan gravitasi diambil g = 10 m/s&sup2;. Mobil mainan itu dikendalikan lewat remote gelombang radio.","stem":"Laju mobil mainan itu tepat saat tiba di dasar lintasan adalah &hellip; m/s.","options":["2,0","4,0","8,0","16","160"],"correct":1,"distraktor":"Pengendalian lewat remote gelombang radio adalah keterangan mekanisme kendali mobil mainan, tidak muncul dalam perhitungan laju di dasar lintasan licin.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju mobil mainan tepat saat tiba di dasar lintasan, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> kekekalan energi mekanik pada lintasan licin, mgh = &frac12;mv&sup2;, dengan m tercoret dari kedua ruas sehingga v = &radic;(2gh).</li><li><b>Identifikasi data:</b> ketinggian pelepasan h = 0,8 m disebut langsung, dan g = 10 m/s&sup2; disebut langsung. Mobil dilepas diam, sehingga energi kinetik awalnya nol.</li><li><b>Informasi distraktor (tidak diperlukan):</b> pengendalian lewat remote gelombang radio. Itu keterangan mekanisme kendali, tidak muncul dalam rumus laju.</li><li><b>Substitusi nilai ke formula:</b> v = &radic;(2 &times; 10 &times; 0,8).</li><li><b>Penyelesaian:</b> 2 &times; 10 &times; 0,8 = 16, sehingga v = &radic;16 = 4,0 m/s. Opsi 16 lahir dari lupa mengakarkan; opsi 2,0 lahir dari salah menghitung isi akar.</li><li><b>Kesimpulan jawaban:</b> laju mobil mainan di dasar lintasan adalah 4,0 m/s, yakni <b>opsi B</b>.</li></ol>","review":"<p>Pada lintasan licin sepenuhnya, seluruh energi potensial di titik pelepasan berubah menjadi energi kinetik di titik acuan, dan massa selalu tercoret dari persamaannya: v = &radic;(2gh).</p>"},{"no":14,"sub":4,"bentuk":"PG","level":"L3","stimulus":"Sebuah kamera crane di studio film meluncur licin sepenuhnya dari posisi tertinggi menuju posisi terendahnya. Posisi tertinggi kamera itu berada 2,5 m dari lantai studio (dijadikan acuan), sedangkan rel penyangga crane itu sendiri dipasang 0,7 m di atas lantai yang sama, dan posisi terendah kamera tepat berada di rel penyangga tersebut. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Laju kamera crane itu tepat saat tiba di posisi terendahnya adalah &hellip; m/s.","options":["3,0","5,0","6,0","18","36"],"correct":2,"distraktor":"Tidak ada angka pengganggu tersendiri pada soal ini; kekeliruan yang perlu dihindari adalah memakai ketinggian posisi tertinggi (2,5 m) langsung tanpa mengurangkan tinggi rel penyangganya.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju kamera crane tepat saat tiba di posisi terendahnya, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> v = &radic;(2gh), dengan h = beda ketinggian antara posisi tertinggi dan posisi terendah (acuan rel penyangga).</li><li><b>Identifikasi data:</b> tinggi posisi tertinggi dari lantai, 2,5 m, dan tinggi rel penyangga (posisi terendah) dari lantai yang sama, 0,7 m, keduanya disebut langsung. Beda ketinggian h yang sebenarnya tidak disebut langsung sebagai angka, sehingga harus diturunkan: h = 2,5 &minus; 0,7.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka tersendiri yang tidak relevan di sini; kewaspadaan diperlukan pada penentuan h yang benar.</li><li><b>Substitusi nilai ke formula:</b> h = 2,5 &minus; 0,7 = 1,8 m. v = &radic;(2 &times; 10 &times; 1,8).</li><li><b>Penyelesaian:</b> h = 2,5 &minus; 0,7 = 1,8 m. Lalu 2 &times; 10 &times; 1,8 = 36, dan v = &radic;36 = 6,0 m/s. Opsi 18 lahir dari lupa mengakarkan; opsi 5,0 lahir dari salah memakai h = 2,5 m langsung tanpa mengurangkan tinggi rel penyangga.</li><li><b>Kesimpulan jawaban:</b> laju kamera crane di posisi terendahnya adalah 6,0 m/s, yakni <b>opsi C</b>.</li></ol>","review":"<p>Ketika titik acuan bukan berada di lantai, tinggi h yang dipakai pada v = &radic;(2gh) adalah <b>beda ketinggian</b> antara titik pelepasan dan titik acuan itu sendiri, bukan tinggi salah satu titik saja diukur dari lantai.</p>"},{"no":15,"sub":4,"bentuk":"PG","level":"L3","stimulus":"Sebuah bidang miring licin sepenuhnya di taman rekreasi air membentuk sudut 53&deg; terhadap lantai mendatar (sin53&deg; = 0,8; cos53&deg; = 0,6). Seorang pengunjung meluncur licin dari puncak bidang miring itu sepanjang 4,0 m mengikuti kemiringannya menuju dasar. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Laju pengunjung itu tepat saat tiba di dasar bidang miring adalah &hellip; m/s.","options":["4,8","6,0","8,0","9,6","64"],"correct":2,"distraktor":"Tidak ada angka pengganggu tersendiri pada soal ini; kekeliruan yang perlu dihindari adalah salah memakai cos53&deg; alih-alih sin53&deg; untuk mencari tinggi vertikal turunnya pengunjung.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju pengunjung tepat saat tiba di dasar bidang miring, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> v = &radic;(2gh), dengan h = tinggi vertikal turunnya pengunjung, bukan panjang lintasan miring itu sendiri. Karena yang diketahui adalah panjang lintasan s sepanjang kemiringan dan sudutnya, tinggi vertikal diturunkan lewat h = s &times; sin&theta;.</li><li><b>Identifikasi data:</b> panjang lintasan sepanjang kemiringan s = 4,0 m dan sudut &theta; = 53&deg; disebut langsung. Tinggi vertikal h tidak disebut langsung sebagai angka, sehingga harus diturunkan lebih dulu dari s dan sin&theta;.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka tersendiri yang tidak relevan; kewaspadaan diperlukan pada pemilihan sin&theta; yang benar untuk mencari tinggi.</li><li><b>Substitusi nilai ke formula:</b> h = 4,0 &times; 0,8 = 3,2 m. v = &radic;(2 &times; 10 &times; 3,2).</li><li><b>Penyelesaian:</b> h = 4,0 &times; 0,8 = 3,2 m. Lalu 2 &times; 10 &times; 3,2 = 64, dan v = &radic;64 = 8,0 m/s. Opsi 6,0 lahir dari salah memakai cos53&deg; (0,6) alih-alih sin53&deg; (0,8) untuk mencari tinggi; opsi 64 lahir dari lupa mengakarkan.</li><li><b>Kesimpulan jawaban:</b> laju pengunjung di dasar bidang miring adalah 8,0 m/s, yakni <b>opsi C</b>.</li></ol>","review":"<p>Pada bidang miring, rumus v = &radic;(2gh) tetap memakai <b>tinggi vertikal</b> h, bukan panjang lintasan sepanjang kemiringannya. Ketika yang diketahui adalah panjang lintasan miring dan sudutnya, tinggi vertikal harus diturunkan lebih dulu lewat h = s sin&theta; sebelum dimasukkan ke rumus laju.</p>"},{"no":16,"sub":4,"bentuk":"PGK","level":"L3","stimulus":"Dua kelereng identik dilepas diam secara bersamaan dari titik pelepasan yang sama tingginya, yaitu 0,15 m di bawah gantungan penanda yang dipasang 0,60 m dari dasar lintasan, pada dua lintasan licin sepenuhnya yang bentuknya berbeda: satu lurus, satu melengkung landai. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Dari pernyataan berikut tentang kedua kelereng itu, manakah yang <b>benar</b>? (jawaban bisa lebih dari satu)","options":["Kedua kelereng tiba di dasar lintasan masing-masing dengan laju yang sama besar, yaitu 3,0 m/s.","Massa kelereng tidak memengaruhi laju di dasar lintasan pada kasus ini.","Bentuk lintasan (asalkan licin sepenuhnya) tidak memengaruhi laju akhir, hanya beda ketinggian yang menentukan.","Bila ketinggian pelepasan diperbesar menjadi 4 kali semula, laju di dasar akan menjadi 4 kali lebih besar pula.","Karena posisi gantungan penanda dan jarak titik pelepasan di bawahnya sudah diketahui, tinggi pelepasan yang sebenarnya bisa dihitung tanpa perlu diberi secara langsung."],"correct":[0,1,2,4],"distraktor":"Bentuk lintasan yang berbeda (lurus dan melengkung) sengaja disebutkan agar tampak relevan, padahal rumus v = &radic;(2gh) sama sekali tidak memuat bentuk lintasan, hanya beda ketinggian yang menentukan.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> pernyataan mana yang benar tentang laju kedua kelereng di dasar lintasan masing-masing.</li><li><b>Formulasi yang digunakan:</b> v = &radic;(2gh); massa tercoret dari persamaan ini, dan bentuk lintasan tidak memengaruhi hasilnya selama seluruhnya licin.</li><li><b>Identifikasi data:</b> ketinggian pelepasan h tidak disebut langsung sebagai satu angka, melainkan lewat posisi gantungan penanda (0,60 m dari dasar lintasan) dan jarak titik pelepasan di bawahnya (0,15 m), sehingga h = 0,60 &minus; 0,15 = 0,45 m, sama untuk kedua kelereng.</li><li><b>Informasi distraktor (tidak diperlukan):</b> bentuk lintasan yang berbeda. Rumus v = &radic;(2gh) tidak memuat bentuk lintasan sama sekali, hanya beda ketinggian yang menentukan.</li><li><b>Substitusi nilai ke formula:</b> h = 0,60 &minus; 0,15 = 0,45 m. v = &radic;(2 &times; 10 &times; 0,45) untuk kedua kelereng.</li><li><b>Penyelesaian:</b> h = 0,60 &minus; 0,15 = 0,45 m. 2 &times; 10 &times; 0,45 = 9,0, sehingga v = &radic;9,0 = 3,0 m/s untuk kedua kelereng &mdash; pernyataan pertama <b>benar</b>. Pernyataan kedua <b>benar</b> karena massa tercoret dari persamaan v = &radic;(2gh). Pernyataan ketiga <b>benar</b> karena bentuk lintasan tidak memengaruhi hasil selama licin. Pernyataan keempat <b>salah</b> karena menaikkan ketinggian 4 kali hanya melipatgandakan laju &radic;4 = 2 kali, bukan 4 kali. Pernyataan kelima <b>benar</b> karena h memang bisa diturunkan dari posisi gantungan dan jarak di bawahnya tanpa perlu diberi langsung.</li><li><b>Kesimpulan jawaban:</b> pernyataan yang benar adalah <b>opsi A, B, C, dan E</b>.</li></ol>","review":"<p>Pada lintasan licin sepenuhnya, laju di dasar hanya ditentukan oleh beda ketinggian antara titik pelepasan dan titik acuan &mdash; sama sekali tidak oleh massa benda maupun bentuk lintasan di antara keduanya, dan tinggi itu sendiri kadang perlu diturunkan dari dua posisi acuan yang diketahui.</p>"},{"no":17,"sub":5,"bentuk":"PG","level":"L2","stimulus":"Sebuah balok uji keramik di pabrik ubin memasuki segmen datar kasar dengan laju 8,0 m/s. Segmen kasar itu sepanjang 3,0 m dengan koefisien gesek kinetik 0,25. Percepatan gravitasi diambil g = 10 m/s&sup2;. Pabrik itu memproduksi ubin dengan lima varian motif berbeda.","stem":"Laju balok uji itu tepat saat keluar dari segmen kasar tersebut adalah &hellip; m/s.","options":["3,0","5,0","7,0","24","49"],"correct":2,"distraktor":"Lima varian motif ubin yang diproduksi pabrik adalah keterangan produk, tidak muncul dalam rumus laju keluar segmen kasar.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju balok uji tepat saat keluar dari segmen kasar, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&mu;<sub>k</sub>gd, dengan v<sub>B</sub> = laju masuk segmen kasar, &mu;<sub>k</sub> = koefisien gesek, d = panjang segmen kasar.</li><li><b>Identifikasi data:</b> laju masuk v<sub>B</sub> = 8,0 m/s, panjang segmen d = 3,0 m, dan &mu;<sub>k</sub> = 0,25 semuanya disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> lima varian motif ubin. Itu keterangan produk pabrik, tidak muncul dalam rumus laju keluar segmen kasar.</li><li><b>Substitusi nilai ke formula:</b> v<sub>C</sub>&sup2; = 8,0&sup2; &minus; 2 &times; 0,25 &times; 10 &times; 3,0.</li><li><b>Penyelesaian:</b> 8,0&sup2; = 64. Lalu 2 &times; 0,25 &times; 10 &times; 3,0 = 15. Sehingga v<sub>C</sub>&sup2; = 64 &minus; 15 = 49, dan v<sub>C</sub> = &radic;49 = 7,0 m/s. Opsi 49 lahir dari lupa mengakarkan; opsi 3,0 lahir dari kekeliruan aritmetika pada suku gesekan.</li><li><b>Kesimpulan jawaban:</b> laju balok uji keluar dari segmen kasar adalah 7,0 m/s, yakni <b>opsi C</b>.</li></ol>","review":"<p>Laju keluar dari segmen kasar dihitung dari v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&mu;<sub>k</sub>gd &mdash; kuadrat laju masuk dikurangi suku gesekan, baru diakarkan di langkah terakhir.</p>"},{"no":18,"sub":5,"bentuk":"PG","level":"L3","stimulus":"Sebuah balok logam uji di bengkel las bermassa 4,0 kg diketahui momentumnya 20 kg&middot;m/s saat memasuki sebuah segmen datar kasar. Segmen kasar itu sepanjang 3,0 m dengan koefisien gesek kinetik 0,15. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Laju balok logam itu tepat saat keluar dari segmen datar kasar tersebut adalah &hellip; m/s.","options":["3,0","4,0","5,0","16","25"],"correct":1,"distraktor":"Tidak ada angka pengganggu tersendiri pada soal ini; kekeliruan yang perlu dihindari adalah berhenti di laju masuk (v<sub>B</sub>) tanpa memperhitungkan gesekan segmen kasar.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju balok logam tepat saat keluar dari segmen datar kasar, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&mu;<sub>k</sub>gd, dengan v<sub>B</sub> diturunkan dari momentum lewat v<sub>B</sub> = p/m.</li><li><b>Identifikasi data:</b> massa m = 4,0 kg dan momentum p = 20 kg&middot;m/s disebut langsung, tetapi laju masuk v<sub>B</sub> tidak disebut langsung sebagai angka, sehingga harus diturunkan lebih dulu: v<sub>B</sub> = p/m. Panjang segmen d = 3,0 m dan &mu;<sub>k</sub> = 0,15 disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka tersendiri yang tidak relevan di sini; kewaspadaan diperlukan agar tidak berhenti di v<sub>B</sub> saja.</li><li><b>Substitusi nilai ke formula:</b> v<sub>B</sub> = 20/4,0. v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2 &times; 0,15 &times; 10 &times; 3,0.</li><li><b>Penyelesaian:</b> v<sub>B</sub> = 20 &divide; 4,0 = 5,0 m/s. Lalu v<sub>C</sub>&sup2; = 5,0&sup2; &minus; 2 &times; 0,15 &times; 10 &times; 3,0 = 25 &minus; 9,0 = 16, sehingga v<sub>C</sub> = &radic;16 = 4,0 m/s. Opsi 5,0 keliru karena berhenti di v<sub>B</sub> tanpa memperhitungkan gesekan; opsi 16 lahir dari lupa mengakarkan.</li><li><b>Kesimpulan jawaban:</b> laju balok logam keluar dari segmen kasar adalah 4,0 m/s, yakni <b>opsi B</b>.</li></ol>","review":"<p>Ketika laju masuk tidak diberikan langsung tetapi momentum dan massa diketahui, laju itu harus diturunkan lebih dulu lewat v = p/m, baru dipakai pada rumus laju keluar segmen kasar.</p>"},{"no":19,"sub":5,"bentuk":"PGK","level":"L3","stimulus":"Sebuah peti kemas uji di gudang distribusi memasuki lantai beton kasar dengan laju 10 m/s dan koefisien gesek kinetik 0,20. Lantai kasar itu ditandai mulai pada posisi 1,0 m dan berakhir pada posisi 10 m dari titik awal jalur gudang. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Dari pernyataan berikut tentang peti kemas itu, manakah yang <b>benar</b>? (jawaban bisa lebih dari satu)","options":["Panjang lantai kasar yang dilalui peti kemas itu adalah 9,0 m.","Laju peti kemas itu tepat saat keluar dari lantai kasar adalah 8,0 m/s.","Dengan asumsi massa peti kemas 1,0 kg, usaha gesekan total sepanjang lintasan itu adalah 180 J.","Bila panjang lantai kasar itu diperpendek (dengan laju masuk dan &mu;<sub>k</sub> tetap sama), laju keluarnya akan menjadi lebih besar daripada 8,0 m/s.","Koefisien gesek kinetik tidak memengaruhi laju keluar peti kemas pada kasus ini."],"correct":[0,1,3],"distraktor":"Kedua posisi (mulai dan akhir) sengaja diberikan sebagai titik acuan pada jalur gudang, bukan sebagai panjang lintasan itu sendiri, sehingga panjang lintasan harus diturunkan lebih dulu dari selisih keduanya.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> pernyataan mana yang benar tentang panjang lintasan, laju keluar, dan usaha gesekan pada peti kemas itu.</li><li><b>Formulasi yang digunakan:</b> d = posisi akhir &minus; posisi mulai; v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&mu;<sub>k</sub>gd; W<sub>f</sub> = &mu;<sub>k</sub>mgd untuk usaha gesekan (bila massa diketahui).</li><li><b>Identifikasi data:</b> laju masuk v<sub>B</sub> = 10 m/s dan &mu;<sub>k</sub> = 0,20 disebut langsung. Panjang lintasan d tidak disebut langsung sebagai angka, melainkan lewat posisi mulai (1,0 m) dan posisi akhir (10 m), sehingga d = 10 &minus; 1,0 = 9,0 m.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka yang sepenuhnya tidak relevan, tetapi kedua posisi sengaja diberikan sebagai data antara, bukan panjang lintasan langsung.</li><li><b>Substitusi nilai ke formula:</b> d = 10 &minus; 1,0 = 9,0 m. v<sub>C</sub>&sup2; = 10&sup2; &minus; 2 &times; 0,20 &times; 10 &times; 9,0. W<sub>f</sub> (m=1,0 kg) = 0,20 &times; 1,0 &times; 10 &times; 9,0.</li><li><b>Penyelesaian:</b> d = 10 &minus; 1,0 = 9,0 m &mdash; pernyataan pertama <b>benar</b>. v<sub>C</sub>&sup2; = 100 &minus; 36 = 64, sehingga v<sub>C</sub> = &radic;64 = 8,0 m/s &mdash; pernyataan kedua <b>benar</b>. W<sub>f</sub> (m=1,0 kg) = 0,20 &times; 1,0 &times; 10 &times; 9,0 = 18 J, bukan 180 J seperti pernyataan ketiga &mdash; <b>salah</b> (selisih faktor sepuluh). Pernyataan keempat <b>benar</b> karena memperpendek jarak berarti mengurangi suku gesekan yang dikurangkan, sehingga v<sub>C</sub> akan lebih besar dari 8,0 m/s. Pernyataan kelima <b>salah</b> karena &mu;<sub>k</sub> justru muncul langsung dalam suku pengurang pada rumus v<sub>C</sub>&sup2;.</li><li><b>Kesimpulan jawaban:</b> pernyataan yang benar adalah <b>opsi A, B, dan D</b>.</li></ol>","review":"<p>Ketika panjang lintasan diberikan lewat dua titik posisi (bukan langsung sebagai satu angka), panjang itu harus diturunkan lebih dulu dari selisihnya sebelum dipakai pada rumus laju keluar segmen kasar.</p>"},{"no":20,"sub":5,"bentuk":"BS","level":"L3","stimulus":"Sebuah balok gokart uji di sirkuit uji rem bermassa 1,5 kg diketahui mengalami gaya gesek kinetik 4,5 N ketika ditimbang beratnya sebesar 15 N pada permukaan mendatar. Balok itu memasuki segmen datar kasar dengan permukaan yang sama, sepanjang 6,0 m, dengan laju masuk 10 m/s. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Tentukan benar atau salah untuk setiap pernyataan berikut mengenai balok gokart tersebut.","options":["Koefisien gesek kinetik &mu;<sub>k</sub> permukaan itu adalah 0,30.","Laju balok tepat saat keluar dari segmen kasar itu adalah 6,0 m/s.","Laju balok tepat saat keluar dari segmen kasar itu adalah 8,0 m/s."],"correct":["B","S","B"],"distraktor":"Berat balok 15 N sengaja disertakan bukan sebagai angka yang langsung dipakai di rumus laju keluar, melainkan sebagai data antara untuk menurunkan koefisien gesek kinetiknya lebih dulu.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> kebenaran tiga pernyataan tentang koefisien gesek kinetik dan laju keluar balok dari segmen kasar.</li><li><b>Formulasi yang digunakan:</b> f = &mu;<sub>k</sub>mg dibalik menjadi &mu;<sub>k</sub> = f/(mg) untuk mencari koefisien gesek, karena berat mg = 15 N sudah diketahui langsung. Lalu v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&mu;<sub>k</sub>gd untuk laju keluar.</li><li><b>Identifikasi data:</b> gaya gesek f = 4,5 N dan berat balok mg = 15 N disebut langsung, sehingga &mu;<sub>k</sub> harus diturunkan lebih dulu: &mu;<sub>k</sub> = f/(mg). Laju masuk v<sub>B</sub> = 10 m/s dan panjang segmen d = 6,0 m disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka yang sepenuhnya tidak relevan di sini, tetapi berat 15 N sengaja diberikan sebagai data antara untuk mencari &mu;<sub>k</sub>, bukan untuk dipakai langsung pada rumus laju keluar.</li><li><b>Substitusi nilai ke formula:</b> &mu;<sub>k</sub> = 4,5/15. v<sub>C</sub>&sup2; = 10&sup2; &minus; 2 &times; &mu;<sub>k</sub> &times; 10 &times; 6,0.</li><li><b>Penyelesaian:</b> &mu;<sub>k</sub> = 4,5 &divide; 15 = 0,30 &mdash; pernyataan pertama <b>benar</b>. Lalu v<sub>C</sub>&sup2; = 100 &minus; (2 &times; 0,30 &times; 10 &times; 6,0) = 100 &minus; 36 = 64, sehingga v<sub>C</sub> = &radic;64 = 8,0 m/s, bukan 6,0 m/s seperti pernyataan kedua &mdash; pernyataan kedua <b>salah</b>, dan pernyataan ketiga (8,0 m/s) <b>benar</b>.</li><li><b>Kesimpulan jawaban:</b> I Benar, II Salah, III Benar.</li></ol>","review":"<p>Ketika koefisien gesek tidak diberikan langsung tetapi gaya gesek dan berat benda diketahui, &mu;<sub>k</sub> harus diturunkan lebih dulu lewat &mu;<sub>k</sub> = f/(mg) sebelum dipakai pada rumus laju keluar segmen kasar.</p>"},{"no":21,"sub":6,"bentuk":"PG","level":"L2","stimulus":"Sebuah rancangan wahana bola luncur di taman rekreasi kota terdiri dari tiga segmen berurutan. Segmen A&ndash;B licin, dengan bola bermassa tertentu dilepas diam dari ketinggian 1,6 m di atas titik acuan B. Segmen B&ndash;C datar kasar sepanjang 2,0 m dengan koefisien gesek kinetik 0,20. Segmen C&ndash;D licin naik menuju ketinggian 1,0 m di atas acuan yang sama. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Laju bola itu tepat saat tiba di titik D adalah &hellip; m/s.","options":["1,0","2,0","3,0","4,0","12"],"correct":1,"distraktor":"Tidak ada angka pengganggu tersendiri pada soal ini; kekeliruan yang perlu dihindari adalah melompati urutan segmen, misalnya mengurangkan energi potensial di D sebelum memperhitungkan gesekan di BC.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju bola tepat saat tiba di titik D, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> rencana tiga baris (per satuan massa): E<sub>k,B</sub>/m = gh<sub>A</sub>; E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; &mu;<sub>k</sub>gd; E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; gh<sub>D</sub>, lalu v<sub>D</sub> = &radic;(2E<sub>k,D</sub>/m).</li><li><b>Identifikasi data:</b> h<sub>A</sub> = 1,6 m, d = 2,0 m, &mu;<sub>k</sub> = 0,20, dan h<sub>D</sub> = 1,0 m semuanya disebut langsung. Keempatnya dipakai berurutan mengikuti rencana per segmen.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka tersendiri yang tidak relevan; kewaspadaan diperlukan pada urutan pengerjaan tiap segmen.</li><li><b>Substitusi nilai ke formula:</b> E<sub>k,B</sub>/m = 10 &times; 1,6. E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; (0,20 &times; 10 &times; 2,0). E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; (10 &times; 1,0). v<sub>D</sub> = &radic;(2 &times; E<sub>k,D</sub>/m).</li><li><b>Penyelesaian:</b> E<sub>k,B</sub>/m = 10 &times; 1,6 = 16. Usaha gesek per satuan massa: 0,20 &times; 10 &times; 2,0 = 4,0, sehingga E<sub>k,C</sub>/m = 16 &minus; 4,0 = 12. Energi potensial di D per satuan massa: 10 &times; 1,0 = 10, sehingga E<sub>k,D</sub>/m = 12 &minus; 10 = 2,0. Karena positif, v<sub>D</sub> = &radic;(2 &times; 2,0) = &radic;4,0 = 2,0 m/s. Opsi 12 lahir dari berhenti di E<sub>k,C</sub> tanpa memperhitungkan segmen CD.</li><li><b>Kesimpulan jawaban:</b> laju bola di titik D adalah 2,0 m/s, yakni <b>opsi B</b>.</li></ol>","review":"<p>Rencana tiga baris untuk lintasan licin-kasar-licin harus dijalankan berurutan &mdash; hasil satu baris menjadi bahan baris berikutnya, tidak boleh dibalik atau dilompati.</p>"},{"no":22,"sub":6,"bentuk":"PG","level":"L3","stimulus":"Sebuah menara wahana di taman rekreasi kota memiliki puncak setinggi 2,0 m dari lantai dasar wahana. Titik acuan B, tempat segmen datar kasar dimulai, berada 0,4 m dari lantai yang sama. Segmen datar kasar dari B sepanjang 3,0 m dengan koefisien gesek kinetik 0,10, dilanjutkan segmen licin naik menuju titik D pada ketinggian 0,5 m di atas acuan B. Percepatan gravitasi diambil g = 10 m/s&sup2; dan lintasan A&ndash;B (dari puncak menara ke acuan) dianggap licin sepenuhnya.","stem":"Laju bola itu tepat saat tiba di titik D adalah &hellip; m/s.","options":["2,0","3,0","4,0","8,0","16"],"correct":2,"distraktor":"Ketinggian puncak menara 2,0 m dari lantai bukan tinggi jatuh yang sebenarnya dipakai pada rumus; tinggi jatuh yang berlaku adalah selisihnya terhadap titik acuan B, bukan tinggi puncak itu sendiri diukur dari lantai.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> laju bola tepat saat tiba di titik D, dalam m/s.</li><li><b>Formulasi yang digunakan:</b> rencana tiga baris seperti biasa: E<sub>k,B</sub>/m = gh<sub>A</sub> (dengan h<sub>A</sub> = beda ketinggian puncak menara terhadap acuan B), E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; &mu;<sub>k</sub>gd, E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; gh<sub>D</sub>, lalu v<sub>D</sub> = &radic;(2E<sub>k,D</sub>/m).</li><li><b>Identifikasi data:</b> tinggi puncak menara dari lantai, 2,0 m, dan tinggi titik acuan B dari lantai yang sama, 0,4 m, keduanya disebut langsung. Karena acuan yang dipakai adalah B, tinggi jatuh h<sub>A</sub> yang sebenarnya tidak disebut langsung, sehingga harus diturunkan: h<sub>A</sub> = 2,0 &minus; 0,4. Panjang segmen kasar d = 3,0 m, &mu;<sub>k</sub> = 0,10, dan h<sub>D</sub> = 0,5 m disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> ketinggian puncak menara 2,0 m dari lantai. Itu bukan tinggi jatuh yang dipakai langsung; tinggi jatuh yang berlaku adalah selisihnya terhadap acuan B.</li><li><b>Substitusi nilai ke formula:</b> h<sub>A</sub> = 2,0 &minus; 0,4 = 1,6 m. E<sub>k,B</sub>/m = 10 &times; 1,6. E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; (0,10 &times; 10 &times; 3,0). E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; (10 &times; 0,5).</li><li><b>Penyelesaian:</b> h<sub>A</sub> = 2,0 &minus; 0,4 = 1,6 m, sehingga E<sub>k,B</sub>/m = 10 &times; 1,6 = 16. Usaha gesek per satuan massa: 0,10 &times; 10 &times; 3,0 = 3,0, sehingga E<sub>k,C</sub>/m = 16 &minus; 3,0 = 13. Energi potensial di D per satuan massa: 10 &times; 0,5 = 5,0, sehingga E<sub>k,D</sub>/m = 13 &minus; 5,0 = 8,0. Karena positif, v<sub>D</sub> = &radic;(2 &times; 8,0) = &radic;16 = 4,0 m/s. Opsi 2,0 lahir dari salah memakai h<sub>A</sub> = 2,0 m langsung tanpa mengurangkan tinggi acuan B.</li><li><b>Kesimpulan jawaban:</b> laju bola di titik D adalah 4,0 m/s, yakni <b>opsi C</b>.</li></ol>","review":"<p>Ketika titik acuan bukan berada di lantai, tinggi jatuh h<sub>A</sub> yang dipakai pada rencana penyelesaian adalah <b>beda ketinggian</b> terhadap acuan itu, bukan tinggi mutlak diukur dari lantai.</p>"},{"no":23,"sub":6,"bentuk":"PG","level":"L2","stimulus":"Sebuah rancangan wahana bola luncur di taman rekreasi kota gagal memenuhi syarat lajunya. Bola dilepas diam dari ketinggian 1,8 m di atas titik acuan B, lalu memasuki segmen datar kasar sepanjang 3,0 m dengan koefisien gesek kinetik 0,20 menuju titik C. Panitia ingin tahu, seandainya segmen licin naik dari C dilanjutkan menuju sebuah titik akhir baru, berapa ketinggian maksimum titik akhir itu (diukur dari acuan B) yang masih bisa dicapai bola, yaitu tepat sampai dengan laju nol. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Ketinggian maksimum titik akhir (diukur dari acuan B) yang masih bisa dicapai bola itu adalah &hellip; m.","options":["0,60","0,90","1,2","1,8","12"],"correct":2,"distraktor":"Tidak ada angka pengganggu tersendiri pada soal ini; kekeliruan yang perlu dihindari adalah memakai energi kinetik di B (bukan di C, setelah gesekan) sebagai dasar mencari ketinggian maksimum.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> ketinggian maksimum titik akhir, diukur dari acuan B, yang masih bisa dicapai bola dengan laju tepat nol, dalam meter (m).</li><li><b>Formulasi yang digunakan:</b> E<sub>k,C</sub>/m = gh<sub>A</sub> &minus; &mu;<sub>k</sub>gd; ketinggian maksimum tercapai ketika seluruh sisa energi kinetik ini habis menjadi energi potensial, sehingga h<sub>maks</sub> = (E<sub>k,C</sub>/m)/g.</li><li><b>Identifikasi data:</b> h<sub>A</sub> = 1,8 m, d = 3,0 m, dan &mu;<sub>k</sub> = 0,20 disebut langsung.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka tersendiri yang tidak relevan; yang perlu dihindari adalah memakai energi kinetik di B, bukan di C, sebagai dasar perhitungan.</li><li><b>Substitusi nilai ke formula:</b> E<sub>k,B</sub>/m = 10 &times; 1,8. E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; (0,20 &times; 10 &times; 3,0). h<sub>maks</sub> = (E<sub>k,C</sub>/m)/10.</li><li><b>Penyelesaian:</b> E<sub>k,B</sub>/m = 10 &times; 1,8 = 18. Usaha gesek per satuan massa: 0,20 &times; 10 &times; 3,0 = 6,0, sehingga E<sub>k,C</sub>/m = 18 &minus; 6,0 = 12. Ketinggian maksimum: h<sub>maks</sub> = 12/10 = 1,2 m. Opsi 1,8 keliru karena memakai h<sub>A</sub> langsung tanpa mengurangkan kehilangan energi akibat gesekan.</li><li><b>Kesimpulan jawaban:</b> ketinggian maksimum yang masih bisa dicapai adalah 1,2 m, yakni <b>opsi C</b>.</li></ol>","review":"<p>Ketinggian maksimum yang bisa dicapai sesudah segmen kasar dihitung dari energi kinetik yang <b>tersisa setelah gesekan</b> (di titik C), bukan dari energi kinetik awal di titik B.</p>"},{"no":24,"sub":6,"bentuk":"PGK","level":"L3","stimulus":"Sebuah rancangan wahana bola luncur di taman rekreasi kota terdiri dari tiga segmen: A&ndash;B licin (bola dilepas diam dari ketinggian 1,5 m di atas acuan B), B&ndash;C datar kasar sepanjang 2,5 m, dan C&ndash;D licin naik menuju ketinggian 0,8 m di atas acuan B. Bola uji itu diketahui mengalami gaya gesek kinetik 3,0 N ketika ditimbang beratnya sebesar 15 N pada permukaan mendatar yang sama.","stem":"Dari pernyataan berikut tentang rancangan wahana ini, manakah yang <b>benar</b>? (jawaban bisa lebih dari satu)","options":["Koefisien gesek kinetik &mu;<sub>k</sub> pada segmen BC adalah 0,20.","Energi kinetik per satuan massa di titik C adalah 10 J/kg.","Laju bola tepat saat tiba di titik D adalah 4,0 m/s.","Rancangan ini GAGAL karena energi kinetik di titik D ternyata negatif.","Energi kinetik di titik C tidak dipengaruhi oleh panjang segmen BC."],"correct":[0,1],"distraktor":"Berat bola 15 N sengaja disertakan bukan sebagai angka yang langsung dipakai di rumus laju keluar, melainkan sebagai data antara untuk menurunkan koefisien gesek kinetiknya lebih dulu.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> pernyataan mana yang benar tentang koefisien gesek, energi kinetik, dan laju bola pada rancangan wahana ini.</li><li><b>Formulasi yang digunakan:</b> &mu;<sub>k</sub> = f/(mg); rencana tiga baris per satuan massa: E<sub>k,B</sub>/m = gh<sub>A</sub>; E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; &mu;<sub>k</sub>gd; E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; gh<sub>D</sub>.</li><li><b>Identifikasi data:</b> h<sub>A</sub> = 1,5 m, d = 2,5 m, dan h<sub>D</sub> = 0,8 m disebut langsung. Koefisien gesek &mu;<sub>k</sub> tidak disebut langsung sebagai angka, melainkan lewat gaya gesek (3,0 N) dan berat bola (15 N), sehingga &mu;<sub>k</sub> = f/(mg) = 3,0/15 = 0,20.</li><li><b>Informasi distraktor (tidak diperlukan):</b> tidak ada angka yang sepenuhnya tidak relevan, tetapi berat 15 N sengaja diberikan sebagai data antara untuk mencari &mu;<sub>k</sub>, bukan untuk dipakai langsung pada rumus energi kinetik.</li><li><b>Substitusi nilai ke formula:</b> &mu;<sub>k</sub> = 3,0/15 = 0,20. E<sub>k,B</sub>/m = 10 &times; 1,5. E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; (0,20 &times; 10 &times; 2,5). E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; (10 &times; 0,8).</li><li><b>Penyelesaian:</b> &mu;<sub>k</sub> = 3,0 &divide; 15 = 0,20 &mdash; pernyataan pertama <b>benar</b>. E<sub>k,B</sub>/m = 10 &times; 1,5 = 15. Usaha gesek per satuan massa: 0,20 &times; 10 &times; 2,5 = 5,0, sehingga E<sub>k,C</sub>/m = 15 &minus; 5,0 = 10 J/kg &mdash; pernyataan kedua <b>benar</b>. Energi potensial di D per satuan massa: 10 &times; 0,8 = 8,0, sehingga E<sub>k,D</sub>/m = 10 &minus; 8,0 = 2,0, dan v<sub>D</sub> = &radic;(2 &times; 2,0) = &radic;4,0 = 2,0 m/s, bukan 4,0 m/s seperti pernyataan ketiga &mdash; <b>salah</b>. Pernyataan keempat <b>salah</b> karena E<sub>k,D</sub> ternyata positif (2,0 J/kg), bukan negatif, sehingga rancangan ini justru LOLOS, bukan GAGAL. Pernyataan kelima <b>salah</b> karena E<sub>k,C</sub> jelas dipengaruhi oleh panjang segmen BC lewat suku &mu;<sub>k</sub>gd.</li><li><b>Kesimpulan jawaban:</b> pernyataan yang benar adalah <b>opsi A dan B</b>.</li></ol>","review":"<p>Ketika koefisien gesek tidak diberikan langsung tetapi gaya gesek dan berat benda diketahui, &mu;<sub>k</sub> harus diturunkan lebih dulu lewat &mu;<sub>k</sub> = f/(mg) sebelum dipakai pada rencana penyelesaian lintasan bertingkat.</p>"},{"no":25,"sub":6,"bentuk":"BS","level":"L3","stimulus":"Sebuah rancangan wahana bola luncur di taman rekreasi kota terdiri dari tiga segmen: A&ndash;B licin (bola dilepas diam dari ketinggian 1,6 m di atas acuan B), B&ndash;C datar kasar sepanjang 4,0 m dengan koefisien gesek kinetik 0,15, dan C&ndash;D licin naik menuju titik D. Puncak menara akhir tempat titik D berada tercatat 2,4 m dari lantai dasar wahana, sedangkan acuan B sendiri berada 0,4 m dari lantai yang sama. Percepatan gravitasi diambil g = 10 m/s&sup2;.","stem":"Tentukan benar atau salah untuk setiap pernyataan berikut mengenai rancangan wahana tersebut.","options":["Bola itu tiba di titik D dengan laju yang bisa dihitung sebagai bilangan nyata, sebab energi kinetik di D masih bernilai positif.","Rancangan ini GAGAL, karena bola sudah berhenti sebelum mencapai titik D.","Ketinggian maksimum (diukur dari acuan B) yang masih bisa dicapai bola ini adalah 1,0 m."],"correct":["S","B","B"],"distraktor":"Ketinggian titik D pada rancangan ini sengaja diberikan lewat tinggi puncak menara dan tinggi acuan B, bukan sebagai satu angka langsung, agar tampak seperti tinggal dikurangkan begitu saja tanpa menyadari bahwa gesekan di BC sudah menghabiskan sebagian energinya lebih dulu.","pembahasan":"<ol><li><b>Apa yang ditanyakan:</b> kebenaran tiga pernyataan tentang keberhasilan rancangan wahana ini mencapai titik D.</li><li><b>Formulasi yang digunakan:</b> h<sub>D</sub> = tinggi puncak menara akhir &minus; tinggi acuan B; rencana tiga baris per satuan massa: E<sub>k,B</sub>/m = gh<sub>A</sub>; E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; &mu;<sub>k</sub>gd; E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; gh<sub>D</sub>. Bila E<sub>k,D</sub> ternyata negatif, itu bukan kesalahan hitung, melainkan pertanda bola sudah berhenti sebelum titik D, dan ketinggian maksimumnya dicari dari h<sub>maks</sub> = (E<sub>k,C</sub>/m)/g.</li><li><b>Identifikasi data:</b> h<sub>A</sub> = 1,6 m, d = 4,0 m, dan &mu;<sub>k</sub> = 0,15 disebut langsung. Ketinggian h<sub>D</sub> tidak disebut langsung sebagai angka, melainkan lewat tinggi puncak menara dari lantai (2,4 m) dan tinggi acuan B dari lantai yang sama (0,4 m), sehingga h<sub>D</sub> = 2,4 &minus; 0,4 = 2,0 m.</li><li><b>Informasi distraktor (tidak diperlukan):</b> cara penyajian h<sub>D</sub> lewat dua tinggi terpisah. Ini bukan angka pengganggu yang sepenuhnya lepas, melainkan data antara yang memang harus dikurangkan lebih dulu, sebelum menyadari bahwa gesekan di BC sudah menghabiskan sebagian energi bola.</li><li><b>Substitusi nilai ke formula:</b> h<sub>D</sub> = 2,4 &minus; 0,4 = 2,0 m. E<sub>k,B</sub>/m = 10 &times; 1,6. E<sub>k,C</sub>/m = E<sub>k,B</sub>/m &minus; (0,15 &times; 10 &times; 4,0). E<sub>k,D</sub>/m = E<sub>k,C</sub>/m &minus; (10 &times; 2,0).</li><li><b>Penyelesaian:</b> h<sub>D</sub> = 2,4 &minus; 0,4 = 2,0 m. E<sub>k,B</sub>/m = 10 &times; 1,6 = 16. Usaha gesek per satuan massa: 0,15 &times; 10 &times; 4,0 = 6,0, sehingga E<sub>k,C</sub>/m = 16 &minus; 6,0 = 10. Energi potensial di D per satuan massa: 10 &times; 2,0 = 20, sehingga E<sub>k,D</sub>/m = 10 &minus; 20 = &minus;10, yaitu <b>negatif</b>. Karena itu, bola tidak pernah mencapai D sama sekali, sehingga tidak ada laju nyata untuk dihitung di sana &mdash; pernyataan pertama <b>salah</b>. Rancangan ini memang <b>GAGAL</b>, bola berhenti sebelum mencapai D &mdash; pernyataan kedua <b>benar</b>. Ketinggian maksimum yang masih bisa dicapai: h<sub>maks</sub> = 10/10 = 1,0 m &mdash; pernyataan ketiga <b>benar</b>.</li><li><b>Kesimpulan jawaban:</b> I Salah, II Benar, III Benar.</li></ol>","review":"<p>Energi kinetik akhir yang negatif bukan pertanda kesalahan aritmetika &mdash; ia pertanda rancangan itu sendiri gagal sebelum mencapai titik yang ditanyakan. Batas sejauh mana rancangan itu masih bisa mencapai dihitung dari sisa energi kinetik di titik sebelum kegagalan.</p>"}];
+
+  var SUB = [{"nama":"Usaha","ket":"kapan gaya benar-benar bekerja"},{"nama":"Usaha &amp; Energi Kinetik","ket":"usaha total = perubahan energi kinetik"},{"nama":"Energi Kinetik &amp; Potensial","ket":"dua wajah energi, satu bergantung acuan"},{"nama":"Kekekalan Energi Mekanik (Licin)","ket":"v=&radic;(2gh), massa tercoret"},{"nama":"Energi Berubah Bentuk (Kasar)","ket":"gesekan mengurangi energi kinetik"},{"nama":"Rancangan Lintasan Majemuk","ket":"rencana per segmen, verdikt LOLOS/GAGAL"}];
+
+  var STRATEGY = ["Ulangi soal-soal usaha pada Modul Konsep F.USE.1-pra bagian K1.1, khususnya menghitung komponen gaya yang searah perpindahan sebelum mengalikannya dengan jarak. Perhatikan baik-baik tanda usaha ketika sudut antara gaya dan arah perpindahan lebih dari 90&deg;, dan latih soal yang menyembunyikan jarak di balik data kelajuan dan waktu.","Ulangi soal-soal teorema usaha-energi (W<sub>total</sub> = &Delta;E<sub>k</sub>) pada Modul Konsep F.USE.1-pra bagian K1.2, terutama kasus gaya gesek yang menghabiskan energi kinetik sebuah benda. Pastikan kamu bisa menjelaskan mengapa energi kinetik berbanding lurus dengan kuadrat laju, bukan dengan laju itu sendiri.","Ulangi soal-soal energi potensial pada Modul Konsep F.USE.1-pra bagian K1.3, dengan fokus pada ketergantungan energi potensial terhadap titik acuan yang dipilih. Latih diri membedakan besaran mana yang berubah ketika acuan berpindah (energi potensial) dan mana yang tidak pernah berubah karenanya (energi kinetik).","Ulangi soal-soal kekekalan energi mekanik pada Modul Konsep F.USE.1 bagian K1.1, dengan fokus pada v = &radic;(2gh) dan alasan massa benda selalu tercoret dari persamaannya. Latih juga soal yang menyembunyikan tinggi jatuh di balik data jarak-sepanjang-kemiringan atau beda ketinggian dua acuan.","Ulangi soal-soal segmen kasar pada Modul Konsep F.USE.1 bagian K1.2, terutama rumus v<sub>C</sub>&sup2; = v<sub>B</sub>&sup2; &minus; 2&mu;<sub>k</sub>gd. Pastikan kamu selalu mengurangkan suku gesekan sebelum mengakarkan, bukan sebaliknya, dan latih soal yang menyembunyikan laju masuk atau panjang segmen di balik data lain.","Ulangi soal-soal rancangan lintasan majemuk pada Modul Konsep F.USE.1 bagian K2.1&ndash;K2.2. Biasakan menyusun rencana per segmen (licin memakai kekekalan penuh, kasar memakai satu suku pengurang) sebelum satu angka pun dimasukkan, jalankan hitungannya berurutan, lalu selalu tutup dengan satu kalimat verdikt yang membandingkan hasil akhir dengan syarat yang diminta."];
+
+  var DURASI = 120;                 // detik per soal; disetel sekali di layar pembuka
+  var KELILING = 2 * Math.PI * 26;  // keliling cincin SVG
+
+  var i = 0, skor = 0, sisaDetik = DURASI, jam = null, terkunci = false;
+  var pilihan = null;               // PG: angka · PGK: array · BS: array "B"/"S"
+  var hasil = [];                   // benar/salah tiap soal
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  /* ---------- pencerminan ke atribut (agar tahan serialisasi LMS) ---------- */
+  function cermin(el) {
+    if (!el || !el.tagName) return;
+    if (el.tagName.toUpperCase() === "INPUT") el.setAttribute("value", el.value);
+  }
+  function cerminSemua() {
+    var k = document.querySelectorAll("input");
+    for (var n = 0; n < k.length; n++) cermin(k[n]);
+  }
+  function simpan() {
+    var s = $("simpanan");
+    s.value = JSON.stringify({ i: i, skor: skor, hasil: hasil,
+                               nama: $("nama").value, kelas: $("kelas").value });
+    cermin(s);
+  }
+  document.addEventListener("input", function (ev) { cermin(ev.target); });
+  document.addEventListener("blur", function (ev) { cermin(ev.target); }, true);
+  window.addEventListener("beforeunload", cerminSemua);
+  window.addEventListener("pagehide", cerminSemua);
+
+  /* ---------- nilai untuk LMS ---------- */
+  window.hitungNilai = function () {
+    cerminSemua();
+    return Math.round((skor / Q.length) * 100);
+  };
+
+  /* ---------- legenda bagian ---------- */
+  (function legenda() {
+    var h = "";
+    for (var k = 0; k < SUB.length; k++) {
+      var n = Q.filter(function (q) { return q.sub === k + 1; }).length;
+      h += '<div><b>' + SUB[k].nama + '</b>' + n + ' soal &middot; ' + SUB[k].ket + '</div>';
+    }
+    $("legenda").innerHTML = h;
+  })();
+
+  /* Pembaca bilangan: murid Indonesia menulis 1,5 — koma maupun titik diterima. */
+  function angka(teks) {
+    var t = String(teks).trim().replace(/\s/g, "").replace(",", ".");
+    if (!/^\d*\.?\d+$/.test(t)) return null;
+    var n = parseFloat(t);
+    return isNaN(n) ? null : n;
+  }
+
+  function cekPembuka() {
+    $("mulai").disabled = !($("nama").value.trim() && $("kelas").value.trim());
+  }
+  $("nama").addEventListener("input", cekPembuka);
+  $("kelas").addEventListener("input", cekPembuka);
+
+  $("mulai").addEventListener("click", function () {
+    var m = angka($("durasi").value);
+    if (m === null || m < 0.5 || m > 30) {
+      $("pesanPembuka").textContent =
+        "Isi waktu tiap soal dengan bilangan 0,5 sampai 30 menit.";
+      $("durasi").focus();
+      return;
+    }
+    $("pesanPembuka").textContent = "";
+    DURASI = Math.round(m * 60);
+    $("pembuka").hidden = true;
+    $("layarSoal").hidden = false;
+    tampil();
+  });
+
+  /* ---------- jam ---------- */
+  function tulisJam() {
+    var m = Math.floor(sisaDetik / 60), d = sisaDetik % 60;
+    $("detik").textContent = m + ":" + (d < 10 ? "0" : "") + d;
+    $("detik").setAttribute("aria-label", "Sisa waktu " + m + " menit " + d + " detik");
+    var lewat = (DURASI - sisaDetik) / DURASI;
+    $("sisa").setAttribute("stroke-dashoffset", (KELILING * lewat).toFixed(2));
+    // batas warna mengikuti durasi yang dipilih, bukan angka tetap
+    var seperenam = DURASI / 6, sepertiga = DURASI / 3;
+    $("sisa").setAttribute("stroke",
+      sisaDetik <= seperenam ? "#C05621" : (sisaDetik <= sepertiga ? "#E9B308" : "#17A2AF"));
+  }
+  function mulaiJam() {
+    sisaDetik = DURASI; tulisJam();
+    jam = setInterval(function () {
+      sisaDetik--; tulisJam();
+      if (sisaDetik <= 0) { clearInterval(jam); jam = null; nilai(true); }
+    }, 1000);
+  }
+  function hentikanJam() { if (jam) { clearInterval(jam); jam = null; } }
+
+  /* ---------- render soal ---------- */
+  function tampil() {
+    var q = Q[i];
+    terkunci = false; pilihan = (q.bentuk === "PG") ? null : [];
+    if (q.bentuk === "BS") pilihan = [null, null, null];
+
+    $("nomor").textContent = "Soal " + (i + 1) + " dari " + Q.length;
+    $("maju").style.width = (i / Q.length) * 100 + "%";
+    $("lencana").innerHTML =
+      '<span class="pil sub">' + SUB[q.sub - 1].nama + '</span>' +
+      '<span class="pil lvl">' + q.level + '</span>' +
+      '<span class="pil bnt">' + (q.bentuk === "PG" ? "Pilihan ganda"
+        : q.bentuk === "PGK" ? "Pilihan ganda kompleks" : "Benar&ndash;Salah") + '</span>';
+    $("stimulus").innerHTML = q.stimulus;
+    $("stem").innerHTML = q.stem;
+    $("umpan").innerHTML = "";
+    $("tombolBar").innerHTML = '<button id="kirim" disabled>Kirim jawaban</button>';
+    $("kirim").addEventListener("click", function () { nilai(false); });
+
+    var h = "", j;
+    if (q.bentuk === "BS") {
+      h += '<table class="bs"><thead><tr><th>No</th><th>Pernyataan</th>' +
+           '<th class="c">Benar</th><th class="c">Salah</th></tr></thead><tbody>';
+      var rom = ["I", "II", "III"];
+      for (j = 0; j < 3; j++) {
+        h += '<tr id="bar' + j + '"><td class="kode">' + rom[j] + '</td><td>' + q.options[j] + '</td>' +
+             '<td class="c"><input type="radio" name="bs' + j + '" value="B" aria-label="Pernyataan ' + rom[j] + ' benar"></td>' +
+             '<td class="c"><input type="radio" name="bs' + j + '" value="S" aria-label="Pernyataan ' + rom[j] + ' salah"></td></tr>';
+      }
+      h += '</tbody></table>';
+    } else {
+      for (j = 0; j < q.options.length; j++) {
+        h += '<label class="opsi" data-idx="' + j + '">' +
+             '<input type="' + (q.bentuk === "PGK" ? "checkbox" : "radio") + '" name="opsi" value="' + j + '">' +
+             '<span class="huruf">' + "ABCDE".charAt(j) + '.</span>' + q.options[j] + '</label>';
+      }
+    }
+    $("jawaban").innerHTML = h;
+
+    mulaiJam();
+  }
+
+  /* Satu pendengar saja, dipasang sekali. Memasangnya ulang di dalam tampil()
+     akan menumpuk pendengar pada elemen #jawaban yang tidak pernah diganti,
+     sehingga penangan soal sebelumnya ikut berjalan dan merusak jawabannya. */
+  $("jawaban").addEventListener("change", function (ev) {
+    if (terkunci) return;
+    var q = Q[i];
+    if (q.bentuk === "BS") {
+      if (!ev.target.name || ev.target.name.indexOf("bs") !== 0) return;
+      pilihan[parseInt(ev.target.name.slice(2), 10)] = ev.target.value;
+      $("kirim").disabled = pilihan.some(function (x) { return x === null; });
+      return;
+    }
+    var kotak = $("jawaban").querySelectorAll(".opsi");
+    for (var n = 0; n < kotak.length; n++) {
+      kotak[n].classList.toggle("dipilih", kotak[n].querySelector("input").checked);
+    }
+    if (q.bentuk === "PG") {
+      pilihan = parseInt(ev.target.value, 10);
+      $("kirim").disabled = false;
+    } else {
+      pilihan = [];
+      for (var m = 0; m < kotak.length; m++) {
+        if (kotak[m].querySelector("input").checked) pilihan.push(m);
+      }
+      $("kirim").disabled = pilihan.length === 0;
+    }
+  });
+
+  /* ---------- penilaian satu soal ---------- */
+  function cocok(q) {
+    if (q.bentuk === "PG") return pilihan === q.correct;
+    if (q.bentuk === "PGK") {
+      var a = (pilihan || []).slice().sort().join(",");
+      var b = q.correct.slice().sort().join(",");
+      return a === b && a !== "";
+    }
+    for (var j = 0; j < 3; j++) { if (pilihan[j] !== q.correct[j]) return false; }
+    return true;
+  }
+
+  function nilai(habis) {
+    if (terkunci) return;
+    terkunci = true; hentikanJam();
+    var q = Q[i], benar = habis ? false : cocok(q);
+    if (benar) skor++;
+    hasil.push({ no: q.no, sub: q.sub, benar: benar, habis: !!habis,
+                 jawab: (q.bentuk === "PG") ? pilihan
+                        : (pilihan ? pilihan.slice() : null) });
+    simpan();
+
+    var kotak = $("jawaban").querySelectorAll("input");
+    for (var n = 0; n < kotak.length; n++) kotak[n].disabled = true;
+
+    if (q.bentuk === "BS") {
+      for (var j = 0; j < 3; j++) {
+        $("bar" + j).classList.add(pilihan[j] === q.correct[j] ? "benar" : "salah");
+      }
+    } else {
+      var opsi = $("jawaban").querySelectorAll(".opsi");
+      for (var m = 0; m < opsi.length; m++) {
+        var kunci = (q.bentuk === "PG") ? (m === q.correct) : (q.correct.indexOf(m) >= 0);
+        var dipilih = (q.bentuk === "PG") ? (m === pilihan) : ((pilihan || []).indexOf(m) >= 0);
+        opsi[m].classList.remove("dipilih");
+        if (kunci) opsi[m].classList.add("benar");
+        else if (dipilih) opsi[m].classList.add("salah");
+      }
+    }
+
+    var pillClass = habis ? "tm" : (benar ? "ok" : "no");
+    var pillTxt = habis ? "Waktu habis" : (benar ? "Jawabanmu benar" : "Jawabanmu belum tepat");
+    var html = "";
+    html += '  <div class="feedback-head"><span class="result-pill ' + pillClass + '">' + pillTxt + '</span></div>';
+    html += '  <div class="panel pembahasan"><h3>Pembahasan</h3>' + q.pembahasan + '</div>';
+    html += '  <div class="panel review"><h3>Review Konsep</h3>' + q.review + '</div>';
+    $("umpan").innerHTML = html;
+
+    $("tombolBar").innerHTML = '<button id="lanjut">' +
+      (i + 1 < Q.length ? "Soal berikutnya" : "Lihat hasil") + '</button>';
+    $("lanjut").addEventListener("click", function () {
+      i++;
+      if (i < Q.length) { tampil(); window.scrollTo({ top: 0, behavior: "smooth" }); }
+      else selesai();
+    });
+  }
+
+  /* ---------- layar hasil ---------- */
+  function selesai() {
+    $("layarSoal").hidden = true;
+    $("layarHasil").hidden = false;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    var nilaiAkhir = Math.round((skor / Q.length) * 100);
+    $("skorAngka").textContent = nilaiAkhir;
+    $("skorKet").textContent = skor + " benar dari " + Q.length + " soal";
+    $("sapaan").textContent = $("nama").value.trim() + " · kelas " + $("kelas").value.trim();
+
+    var baris = "", rek = "";
+    for (var k = 0; k < SUB.length; k++) {
+      var milik = hasil.filter(function (h) { return h.sub === k + 1; });
+      var benar = milik.filter(function (h) { return h.benar; }).length;
+      var persen = milik.length ? Math.round((benar / milik.length) * 100) : 0;
+      baris += '<tr><td>' + SUB[k].nama + '</td><td>' + benar + ' / ' + milik.length +
+               '</td><td>' + persen + ' %</td></tr>';
+      if (persen < 75) {
+        rek += '<div class="rek"><b>' + SUB[k].nama + ' &mdash; ' + persen + ' %</b><br>' +
+               STRATEGY[k] + '</div>';
+      }
+    }
+    $("anaBody").innerHTML = baris;
+    $("rekomendasi").innerHTML = rek ||
+      '<div class="rek" style="background:var(--toscaB);border-color:var(--tosca2);border-left-color:var(--tosca)">' +
+      '<b>Seluruh bagian sudah di atas 75 %.</b><br>Lanjutkan ke soal bertipe penalaran yang ' +
+      'menggabungkan lebih dari satu konsep, dan biasakan menuliskan arah positif sebelum angka pertama disentuh.</div>';
+    simpan();
+  }
+
+
+  /* ---------- review jawaban ---------- */
+  var reviewAktif = null;
+
+  function labelJawab(q, h) {
+    if (h.habis && (h.jawab === null || (h.jawab && h.jawab.length === 0))) return "tidak dijawab";
+    if (q.bentuk === "PG") {
+      return (h.jawab === null || h.jawab === undefined) ? "tidak dijawab"
+                                                         : "ABCDE".charAt(h.jawab);
+    }
+    if (q.bentuk === "PGK") {
+      if (!h.jawab || !h.jawab.length) return "tidak dijawab";
+      return h.jawab.map(function (k) { return "ABCDE".charAt(k); }).join(", ");
+    }
+    var rom = ["I", "II", "III"], isi = [];
+    for (var j = 0; j < 3; j++) {
+      isi.push(rom[j] + ": " + (h.jawab && h.jawab[j]
+        ? (h.jawab[j] === "B" ? "Benar" : "Salah") : "\u2014"));
+    }
+    return isi.join(" \u00b7 ");
+  }
+
+  function gambarNomor() {
+    var h = "", n;
+    for (n = 0; n < Q.length; n++) {
+      h += '<button type="button" class="rnum' + (hasil[n].benar ? " benar" : " salah") +
+           '" data-i="' + n + '" aria-label="Soal ' + (n + 1) + ", " +
+           (hasil[n].benar ? "jawabanmu benar" : "belum tepat") + '">' + (n + 1) + '</button>';
+    }
+    $("kisinum").innerHTML = h;
+  }
+
+  function tampilReview(n) {
+    reviewAktif = n;
+    var q = Q[n], h = hasil[n], j, html = "";
+    var tombol = $("kisinum").querySelectorAll(".rnum");
+    for (j = 0; j < tombol.length; j++) tombol[j].classList.toggle("aktif", j === n);
+
+    html += '<div class="kartu">';
+    html += '<div id="lencanaR">' +
+      '<span class="pil sub">' + SUB[q.sub - 1].nama + '</span>' +
+      '<span class="pil lvl">' + q.level + '</span>' +
+      '<span class="pil bnt">' + (q.bentuk === "PG" ? "Pilihan ganda"
+        : q.bentuk === "PGK" ? "Pilihan ganda kompleks" : "Benar&ndash;Salah") + '</span>' +
+      '<span class="pil bnt">Soal ' + (n + 1) + '</span></div>';
+    html += '<div class="stimulus">' + q.stimulus + '</div>';
+    html += '<div class="stem">' + q.stem + '</div>';
+    html += '<p class="rjawabmu">Jawabanmu: <b>' + labelJawab(q, h) + '</b></p>';
+
+    if (q.bentuk === "BS") {
+      var rom = ["I", "II", "III"];
+      html += '<table class="bs"><thead><tr><th>No</th><th>Pernyataan</th>' +
+              '<th class="c">Jawabanmu</th><th class="c">Kunci</th></tr></thead><tbody>';
+      for (j = 0; j < 3; j++) {
+        var milik = (h.jawab && h.jawab[j]) ? h.jawab[j] : null;
+        var tepat = milik === q.correct[j];
+        html += '<tr class="' + (tepat ? "benar" : "salah") + '">' +
+                '<td class="kode">' + rom[j] + '</td><td>' + q.options[j] + '</td>' +
+                '<td class="c">' + (milik ? (milik === "B" ? "Benar" : "Salah") : "&mdash;") + '</td>' +
+                '<td class="c">' + (q.correct[j] === "B" ? "Benar" : "Salah") + '</td></tr>';
+      }
+      html += '</tbody></table>';
+    } else {
+      for (j = 0; j < q.options.length; j++) {
+        var kunci = (q.bentuk === "PG") ? (j === q.correct) : (q.correct.indexOf(j) >= 0);
+        var dipilih = (q.bentuk === "PG") ? (h.jawab === j)
+                                          : (h.jawab ? h.jawab.indexOf(j) >= 0 : false);
+        var kelas = "opsi" + (kunci ? " benar" : "") + (dipilih && !kunci ? " pilihanmu" : "");
+        var tanda = kunci ? '<span class="tandaop k">KUNCI</span>'
+                          : (dipilih ? '<span class="tandaop p">PILIHANMU</span>' : "");
+        html += '<div class="' + kelas + '">' + tanda +
+                '<span class="huruf">' + "ABCDE".charAt(j) + '.</span>' + q.options[j] + '</div>';
+      }
+    }
+
+    html += '<div class="feedback-head"><span class="result-pill ' +
+            (h.benar ? "ok" : (h.habis ? "tm" : "no")) + '">' +
+            (h.benar ? "Jawabanmu benar"
+                     : (h.habis ? "Waktu habis &mdash; soal ini tidak dijawab"
+                                : "Jawabanmu belum tepat")) + '</span></div>';
+    html += '<div class="panel pembahasan"><h3>Pembahasan</h3>' + q.pembahasan + '</div>';
+    html += '<div class="panel review"><h3>Review Konsep</h3>' + q.review + '</div>';
+    html += '</div>';
+
+    $("reviewIsi").innerHTML = html;
+    $("reviewIsi").scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  $("kisinum").addEventListener("click", function (ev) {
+    var t = ev.target;
+    if (!t.classList || !t.classList.contains("rnum")) return;
+    tampilReview(parseInt(t.getAttribute("data-i"), 10));
+  });
+
+  $("tblReview").addEventListener("click", function () {
+    gambarNomor();
+    $("reviewIsi").innerHTML = "";
+    reviewAktif = null;
+    $("layarHasil").hidden = true;
+    $("layarReview").hidden = false;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  $("tblKembali").addEventListener("click", function () {
+    $("layarReview").hidden = true;
+    $("layarHasil").hidden = false;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  $("ulang").addEventListener("click", function () {
+    i = 0; skor = 0; hasil = [];
+    $("layarHasil").hidden = true;
+    $("layarReview").hidden = true;
+    // kembali ke layar pembuka, supaya waktu tiap soal dapat disetel ulang
+    $("pembuka").hidden = false;
+    $("pesanPembuka").textContent = "";
+    cekPembuka();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  cerminSemua();
+})();
+</script>
+</body>
+</html>
